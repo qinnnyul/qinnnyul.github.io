@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="领域驱动设计,微服务," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
+<meta name="keywords" content="领域驱动设计,微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="领域驱动设计之战略篇">
+<meta property="og:url" content="http://yoursite.com/2018/08/13/ddd-concept/index.html">
+<meta property="og:site_name" content="魔镜的技术心经">
+<meta property="og:description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-287cb9266c2cb0c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-97e6a79b03bb0d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-443773ceb5f6ad79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-a225bff26a7c1417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-15T12:20:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="领域驱动设计之战略篇">
+<meta name="twitter:description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/13/ddd-concept/"/>
+
+
+
+
+
+  <title>领域驱动设计之战略篇 | 魔镜的技术心经</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123487001-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">魔镜的技术心经</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一叶知秋</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/ddd-concept/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">领域驱动设计之战略篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T23:21:00+08:00">
+                2018-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/13/ddd-concept/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/08/13/ddd-concept/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="DDD是什么？"><a href="#DDD是什么？" class="headerlink" title="DDD是什么？"></a>DDD是什么？</h3><blockquote>
+<p>领域驱动设计是一种处理<strong>高度复杂域</strong>的设计方法，试图分离技术实现的复杂性，围绕<strong>业务概念</strong>构建<strong>领域模型</strong>来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发<strong>复杂业务</strong>软件系统，使系统在演进时任然保持敏捷。</p>
+</blockquote>
+<p>另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终目标还是</p>
+<blockquote>
+<p>高内聚，底耦合</p>
+</blockquote>
+<h3 id="DDD主要解决的问题？"><a href="#DDD主要解决的问题？" class="headerlink" title="DDD主要解决的问题？"></a>DDD主要解决的问题？</h3><ol>
+<li><p><strong>如何合理的划分业务系统？</strong><br>这为微服务的划分提供了方法论（微服务的粒度的问题，多大算大，多小又算小，在微服务刚兴起时，很多企业或者架构师对它都没有统一且明确的定义，这里给些examples，e.g：代码行数？职责的划分？披萨原则？组织结构？）界限上下文很好的回答了这个问题，这也是DDD最近几年借微服务的东风，火起来的原因之一(领域驱动设计的提出距今已经十多年，但真正火热起来大约是在2013年微服务架构被提出来之后)。</p>
+</li>
+<li><p><strong>如何保持业务架构和系统架构的一致性？</strong><br>与传统的系统相比，DDD里面强调领域专家和技术团队的合作，建立统一语言“普通话”， 聚焦在领域，领域逻辑和业务流程上面，使整体团队对同一个业务术语有统一的认识，避免理解的偏差，并将这些“术语”映射到代码中，随着系统的演进变迁。</p>
+</li>
+</ol>
+<h3 id="DDD战略设计？"><a href="#DDD战略设计？" class="headerlink" title="DDD战略设计？"></a>DDD战略设计？</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="战略设计.png"></p>
+<h3 id="DDD领域划分"><a href="#DDD领域划分" class="headerlink" title="DDD领域划分?"></a>DDD领域划分?</h3><p>根据问题域，将问题划分为Core domain，Sub domain， Support subdomain和generic subdomian，大概标准如下：</p>
+<ol>
+<li>核心域：核心竞争力，核心业务 (需要投入最好的人力和资源)</li>
+<li>支持子域： 没有，很糟糕; 有，也不足以脱颖而出(可以考虑外包)</li>
+<li>通用子域：都有的东西, 比如认证, 发短信, 客服系统等(可以考虑购买商业解决方案或者采用开源方案)</li>
+</ol>
+<h3 id="DDD领域建模方法？"><a href="#DDD领域建模方法？" class="headerlink" title="DDD领域建模方法？"></a>DDD领域建模方法？</h3><p>领域建模的方式很多种，比如四色建模、OOAD还有事件风暴，我们这里只简单聊聊如何使用事件风暴梳理业务流程，建立领域模型，划分边界。</p>
+<h3 id="DDD事件风暴四部曲？"><a href="#DDD事件风暴四部曲？" class="headerlink" title="DDD事件风暴四部曲？"></a>DDD事件风暴四部曲？</h3><ol>
+<li><strong>识别领域事件</strong></li>
+</ol>
+<p>事件是对结果进行建模，我们在寻找领域事件时，首先需要明白领域事件具备的几个特征：</p>
+<ul>
+<li>具有业务意义</li>
+<li>过去时，e.g: “XX已XX”</li>
+<li>时序性</li>
+</ul>
+<p>事件风暴以过去发生的事件追溯系统的数据和行为，从而进行合适的建模，e.g：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-287cb9266c2cb0c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="事件风暴.png"></p>
+<ol start="2">
+<li><p><strong>识别命令</strong><br>命令可以理解为<strong>不同角色用户在界面上面的操作</strong>，比如“添加商品”，“编辑库存”，“提交订单”等； 有些命令可能产生多个事件，可以将他们用箭头联系起来;  在进行这个过程中，我们也需要将角色，通过不同的颜色标示出来 e.g:<br><img src="https://upload-images.jianshu.io/upload_images/12636540-97e6a79b03bb0d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="命令风暴.png"></p>
+</li>
+<li><p><strong>寻找聚合</strong><br>在DDD中，聚合是一组相关的领域对象，其目的是要确保<strong>业务规则</strong>在边界内的不变性，聚合根具有全局标识，所有对聚合根内对象的修改，都只能通过聚合根进行，聚合帮助我们简化了复杂的对象网络，逐步做到“高内聚，低耦合”。<br>在识别聚合的时候，我们可以通过对命令和事件的划分找到聚合边界，识别出分布在时间轴上面不同位置的相关命令和事件，e.g：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-443773ceb5f6ad79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="寻找聚合.png"></p>
+</li>
+<li><p><strong>边界划分</strong><br>划分服务的边界，它一定程度上面对应的是“界限上下文”，关于它有一个非常形象的定义：</p>
+<blockquote>
+<p>细胞之所以会存在，是因为细胞膜定义了什么在细胞内，什么在细胞外，并且确定了什么物质可以通过细胞膜</p>
+</blockquote>
+</li>
+</ol>
+<p>一个聚合可能是最小颗粒度的界限上下文，同时，我们常合并业务相关性很高的聚合。e.g:<br><img src="https://upload-images.jianshu.io/upload_images/12636540-a225bff26a7c1417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="界限上下文.png"></p>
+<p>最后在领域划分的时候，需要团队一起对业务达成共识，首先建立统一语言，然后识别领域模型，划分子域和界限上下文，在验证界限上下文的时候，如果你发现有过多的角色在同一个子域或者界限上下文时，就需要注意了，这就是典型的坏味道，需要及时调整的讯号。</p>
+<h3 id="DDD与微服务"><a href="#DDD与微服务" class="headerlink" title="DDD与微服务"></a>DDD与微服务</h3><p>理想情况下，界限上下文与微服务可以一一对应，在实际项目中，有些调整，比如根据业务的相关度和变化频率，有时候我们会将多个界限上下文进行合并；另外微服务在开发，测试，部署，发布和运维等等时，相比单体应用而言，它面临了所有分布式系统面临的问题，带来了额外的复杂度和开销，所以将微服务粒度拆分过细反而是一种<strong>反模式</strong>，需要考虑需要解决问题的复杂度，将相对简单的服务合并在一起；在微服务拆分的时候，也要注意：“聚合是服务的最小单元”（一个界限上下文可以包括多个聚合），打破聚合，就很有可能破坏事物一致性和业务约束。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://www.developerfusion.com/article/9794/domain-driven-design-a-step-by-step-guide-part-1" target="_blank" rel="noopener">https://www.developerfusion.com/article/9794/domain-driven-design-a-step-by-step-guide-part-1</a></li>
+<li><a href="http://eventstorming.com/" target="_blank" rel="noopener">http://eventstorming.com/</a></li>
+<li><a href="https://www.infoq.com/domain-driven-design" target="_blank" rel="noopener">https://www.infoq.com/domain-driven-design</a></li>
+<li><a href="https://dddeurope.com/" target="_blank" rel="noopener">https://dddeurope.com/</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/04/event_driven_architecture/" rel="next" title="Event-driven architecture">
+                <i class="fa fa-chevron-left"></i> Event-driven architecture
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/3600881"
+               alt="Qin Yulin" />
+          <p class="site-author-name" itemprop="name">Qin Yulin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinnnyul" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.jianshu.com/u/f557906ceafc" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.huangyunkun.com/" title="夜明的孤行灯" target="_blank">夜明的孤行灯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zhewuzhou.github.io/" title="硬核技术" target="_blank">硬核技术</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD是什么？"><span class="nav-number">1.</span> <span class="nav-text">DDD是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD主要解决的问题？"><span class="nav-number">2.</span> <span class="nav-text">DDD主要解决的问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD战略设计？"><span class="nav-number">3.</span> <span class="nav-text">DDD战略设计？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD领域划分"><span class="nav-number">4.</span> <span class="nav-text">DDD领域划分?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD领域建模方法？"><span class="nav-number">5.</span> <span class="nav-text">DDD领域建模方法？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD事件风暴四部曲？"><span class="nav-number">6.</span> <span class="nav-text">DDD事件风暴四部曲？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD与微服务"><span class="nav-number">7.</span> <span class="nav-text">DDD与微服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin Yulin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://qinnnyul-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/08/13/ddd-concept/';
+          this.page.identifier = '2018/08/13/ddd-concept/';
+          this.page.title = '领域驱动设计之战略篇';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
