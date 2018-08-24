@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="领域驱动设计,微服务," />
+  <meta name="keywords" content="API,架构," />
 
 
 
@@ -94,24 +94,22 @@
 
 
 
-<meta name="description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
-<meta name="keywords" content="领域驱动设计,微服务">
+<meta name="description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
+<meta name="keywords" content="API,架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="领域驱动设计之战略篇">
-<meta property="og:url" content="http://yoursite.com/2018/08/13/ddd-concept/index.html">
+<meta property="og:title" content="API异步 &amp; 同步的决策树">
+<meta property="og:url" content="http://yoursite.com/2018/07/29/async-sync-decision-tree/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
+<meta property="og:description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-287cb9266c2cb0c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-97e6a79b03bb0d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-443773ceb5f6ad79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-a225bff26a7c1417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-24T12:33:27.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-ee2173db1814b1da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-dbe99efa996f3098.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-24T12:41:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="领域驱动设计之战略篇">
-<meta name="twitter:description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="API异步 &amp; 同步的决策树">
+<meta name="twitter:description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -140,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/13/ddd-concept/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/29/async-sync-decision-tree/"/>
 
 
 
 
 
-  <title>领域驱动设计之战略篇 | 魔镜的技术心经</title>
+  <title>API异步 & 同步的决策树 | 魔镜的技术心经</title>
   
 
 
@@ -288,7 +286,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/ddd-concept/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/29/async-sync-decision-tree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -305,7 +303,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">领域驱动设计之战略篇</h1>
+          <h1 class="post-title" itemprop="name headline">API异步 & 同步的决策树</h1>
         
 
         <div class="post-meta">
@@ -317,8 +315,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T23:21:00+08:00">
-                2018-08-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T20:31:00+08:00">
+                2018-07-29
               </time>
             
 
@@ -336,9 +334,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/13/ddd-concept/#comments" itemprop="discussionUrl">
+                <a href="/2018/07/29/async-sync-decision-tree/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/13/ddd-concept/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/07/29/async-sync-decision-tree/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -366,62 +364,53 @@
       
 
       
-        <h3 id="DDD是什么？"><a href="#DDD是什么？" class="headerlink" title="DDD是什么？"></a>DDD是什么？</h3><blockquote>
-<p>领域驱动设计是一种处理<strong>高度复杂域</strong>的设计方法，试图分离技术实现的复杂性，围绕<strong>业务概念</strong>构建<strong>领域模型</strong>来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发<strong>复杂业务</strong>软件系统，使系统在演进时任然保持敏捷。</p>
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>Synchronous: A business transaction done in <strong>a single</strong> HTTP request/response exchange, which means that the HTTP response provides <strong>all data</strong> and associated resources resulting from the transaction</p>
 </blockquote>
-<p>另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终目标还是</p>
 <blockquote>
-<p>高内聚，底耦合</p>
+<p>Asynchronous: A business transaction done <strong>over multiple</strong> HTTP request/response exchanges, which means that the initial HTTP response <strong>does not provide all data</strong> and associated resources resulting from the transaction, such data and resources can be obtained in subsequent interactions.</p>
 </blockquote>
-<h3 id="DDD主要解决的问题？"><a href="#DDD主要解决的问题？" class="headerlink" title="DDD主要解决的问题？"></a>DDD主要解决的问题？</h3><ol>
-<li><p><strong>如何合理的划分业务系统？</strong><br>这为微服务的划分提供了方法论（微服务的粒度的问题，多大算大，多小又算小，在微服务刚兴起时，很多企业或者架构师对它都没有统一且明确的定义，这里给些examples，e.g：代码行数？职责的划分？披萨原则？组织结构？）界限上下文很好的回答了这个问题，这也是DDD最近几年借微服务的东风，火起来的原因之一(领域驱动设计的提出距今已经十多年，但真正火热起来大约是在2013年微服务架构被提出来之后)。</p>
-</li>
-<li><p><strong>如何保持业务架构和系统架构的一致性？</strong><br>与传统的系统相比，DDD里面强调领域专家和技术团队的合作，建立统一语言“普通话”， 聚焦在领域，领域逻辑和业务流程上面，使整体团队对同一个业务术语有统一的认识，避免理解的偏差，并将这些“术语”映射到代码中，随着系统的演进变迁。</p>
-</li>
-</ol>
-<h3 id="DDD战略设计？"><a href="#DDD战略设计？" class="headerlink" title="DDD战略设计？"></a>DDD战略设计？</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="战略设计.png"></p>
-<h3 id="DDD领域划分"><a href="#DDD领域划分" class="headerlink" title="DDD领域划分?"></a>DDD领域划分?</h3><p>根据问题域，将问题划分为Core domain，Sub domain， Support subdomain和generic subdomian，大概标准如下：</p>
-<ol>
-<li>核心域：核心竞争力，核心业务 (需要投入最好的人力和资源)</li>
-<li>支持子域： 没有，很糟糕; 有，也不足以脱颖而出(可以考虑外包)</li>
-<li>通用子域：都有的东西, 比如认证, 发短信, 客服系统等(可以考虑购买商业解决方案或者采用开源方案)</li>
-</ol>
-<h3 id="DDD领域建模方法？"><a href="#DDD领域建模方法？" class="headerlink" title="DDD领域建模方法？"></a>DDD领域建模方法？</h3><p>领域建模的方式很多种，比如四色建模、OOAD还有事件风暴，我们这里只简单聊聊如何使用事件风暴梳理业务流程，建立领域模型，划分边界。</p>
-<h3 id="DDD事件风暴四部曲？"><a href="#DDD事件风暴四部曲？" class="headerlink" title="DDD事件风暴四部曲？"></a>DDD事件风暴四部曲？</h3><ol>
-<li><strong>识别领域事件</strong></li>
-</ol>
-<p>事件是对结果进行建模，我们在寻找领域事件时，首先需要明白领域事件具备的几个特征：</p>
+<h2 id="问题域"><a href="#问题域" class="headerlink" title="问题域"></a>问题域</h2><p><strong>HTTP是一个同步协议：</strong></p>
 <ul>
-<li>具有业务意义</li>
-<li>过去时，e.g: “XX已XX”</li>
-<li>时序性</li>
+<li>客户端和服务器端通过三次握手建立TCP连接。</li>
+<li>客户端发出请求，然后就等待响应。</li>
+<li>服务器端处理请求，并返回相应的状态码和数据。</li>
+<li>客户端完成接收，通过四次挥手，断开连接。</li>
 </ul>
-<p>事件风暴以过去发生的事件追溯系统的数据和行为，从而进行合适的建模，e.g：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-287cb9266c2cb0c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="事件风暴.png"></p>
+<p>一些情况下，这种同步-blocking的通信方式，并不适合，比如以下的场景：</p>
+<ul>
+<li>复杂的服务编排， 比如一个请求需要通过调用多个downstream系统来更新或者创建一个资源（一个long running的http连接，可能会影响web server的性能或者API gateway的性能）。</li>
+<li>系统的可用性和稳定性， 比如一个后端系统，响应非常的慢，不稳定，甚至不可用（一个请求响应时间长短，直接影响到用户体验和转化率）。</li>
+</ul>
+<h2 id="方法域"><a href="#方法域" class="headerlink" title="方法域"></a>方法域</h2><p>异步模式：</p>
+<ol>
+<li><strong>Web hook</strong></li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="web hook.png"></p>
+<ul>
+<li>作为Consumer，需要提供成功或者失败的回调接口</li>
+<li>作为Provider，需要在一次接收到请求的时候，返回202；需要在resource成功或者失败创建后，调用callback接口，通知Consumer； 如果consumer提供的callback接口，返回失败的status code，需要设置一定的retry机制。</li>
+</ul>
+<p>2.<strong>Asynchronous Notification</strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-ee2173db1814b1da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="async-notification.png"></p>
+<h2 id="什么时候使用异步呢？"><a href="#什么时候使用异步呢？" class="headerlink" title="什么时候使用异步呢？"></a>什么时候使用异步呢？</h2><ol>
+<li><strong>根据HTTP操作来判断</strong>：</li>
+</ol>
+<ul>
+<li>HEAD, OPTIONS, CONNECT, TRACE等方法不能使用异步。</li>
+<li>GET方法通常不使用异步，如果你的GET请求时间太长，可以考虑以下的这些方法改进：e.g： 将你的聚合根拆分为更细粒度的resource、引入分页、引入缓存、将你的GET操作改为POST（比如search）。</li>
+<li>其他的HTTP操作，比如PUT, POST, PATCH和DELETE能够异步就尽量异步。</li>
+</ul>
 <ol start="2">
-<li><strong>识别命令</strong><br>命令可以理解为<strong>不同角色用户在界面上面的操作</strong>，比如“添加商品”，“编辑库存”，“提交订单”等； 有些命令可能产生多个事件，可以将他们用箭头联系起来;  在进行这个过程中，我们也需要将角色，通过不同的颜色标示出来 e.g:</li>
+<li><strong>根据响应时间来判断</strong>：</li>
 </ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-97e6a79b03bb0d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="命令风暴.png"></p>
-<ol start="3">
-<li><strong>寻找聚合</strong><br>在DDD中，聚合是一组相关的领域对象，其目的是要确保<strong>业务规则</strong>在边界内的不变性，聚合根具有全局标识，所有对聚合根内对象的修改，都只能通过聚合根进行，聚合帮助我们简化了复杂的对象网络，逐步做到“高内聚，低耦合”。<br>在识别聚合的时候，我们可以通过对命令和事件的划分找到聚合边界，识别出分布在时间轴上面不同位置的相关命令和事件，e.g：</li>
-</ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-443773ceb5f6ad79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="寻找聚合.png"></p>
-<ol start="4">
-<li><strong>边界划分</strong><br>划分服务的边界，它一定程度上面对应的是“界限上下文”，关于它有一个非常形象的定义：<blockquote>
-<p>细胞之所以会存在，是因为细胞膜定义了什么在细胞内，什么在细胞外，并且确定了什么物质可以通过细胞膜</p>
-</blockquote>
-</li>
-</ol>
-<p>一个聚合可能是最小颗粒度的界限上下文，同时，我们常合并业务相关性很高的聚合。e.g:</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-a225bff26a7c1417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="界限上下文.png"></p>
-<p>最后在领域划分的时候，需要团队一起对业务达成共识，首先建立统一语言，然后识别领域模型，划分子域和界限上下文，在验证界限上下文的时候，如果你发现有过多的角色在同一个子域或者界限上下文时，就需要注意了，这就是典型的坏味道，需要及时调整的讯号。</p>
-<h3 id="DDD与微服务"><a href="#DDD与微服务" class="headerlink" title="DDD与微服务"></a>DDD与微服务</h3><p>理想情况下，界限上下文与微服务可以一一对应，在实际项目中，有些调整，比如根据业务的相关度和变化频率，有时候我们会将多个界限上下文进行合并；另外微服务在开发，测试，部署，发布和运维等等时，相比单体应用而言，它面临了所有分布式系统面临的问题，带来了额外的复杂度和开销，所以将微服务粒度拆分过细反而是一种<strong>反模式</strong>，需要考虑需要解决问题的复杂度，将相对简单的服务合并在一起；在微服务拆分的时候，也要注意：“聚合是服务的最小单元”（一个界限上下文可以包括多个聚合），打破聚合，就很有可能破坏事务一致性和业务约束。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://www.developerfusion.com/article/9794/domain-driven-design-a-step-by-step-guide-part-1" target="_blank" rel="noopener">https://www.developerfusion.com/article/9794/domain-driven-design-a-step-by-step-guide-part-1</a></li>
-<li><a href="http://eventstorming.com/" target="_blank" rel="noopener">http://eventstorming.com/</a></li>
-<li><a href="https://www.infoq.com/domain-driven-design" target="_blank" rel="noopener">https://www.infoq.com/domain-driven-design</a></li>
-<li><a href="https://dddeurope.com/" target="_blank" rel="noopener">https://dddeurope.com/</a></li>
+<ul>
+<li>如果你的API操作，大于5秒的时间，就选择异步。</li>
+<li>如果你的API操作，大于1秒并小于5秒，应选择异步。</li>
+<li>如果你的API操作，小于1秒，则可以选择同步。<br>P.S: 关于响应时间，根据用户行为调查，发现用户在等待大约5秒左右，就会失去耐心;  关于HTTP Client的timeout设置，浏览器，客户端JS库，服务器端http client库，他们的timeout设置都不一样，从20s到几分钟都有。</li>
 </ul>
+<h2 id="辅助决策树"><a href="#辅助决策树" class="headerlink" title="辅助决策树"></a>辅助决策树</h2><p><img src="https://upload-images.jianshu.io/upload_images/12636540-dbe99efa996f3098.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Sync &amp; Async decision tree .png"></p>
+<h2 id="异步参考资料"><a href="#异步参考资料" class="headerlink" title="异步参考资料"></a>异步参考资料</h2><p>[1]<a href="http://restcookbook.com/Resources/asynchroneous-operations/" target="_blank" rel="noopener">I cannot have my users wait on the API on finish</a><br>[2]<a href="http://jsonapi.org/recommendations/#asynchronous-processing" target="_blank" rel="noopener">http://jsonapi.org/recommendations/#asynchronous-processing</a></p>
 
       
     </div>
@@ -439,9 +428,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
+            <a href="/tags/API/" rel="tag"># API</a>
           
-            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+            <a href="/tags/架构/" rel="tag"># 架构</a>
           
         </div>
       
@@ -454,8 +443,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/04/event-driven-architecture/" rel="next" title="事件驱动架构">
-                <i class="fa fa-chevron-left"></i> 事件驱动架构
+              <a href="/2018/07/26/api-concpet/" rel="next" title="API到底是什么？">
+                <i class="fa fa-chevron-left"></i> API到底是什么？
               </a>
             
           </div>
@@ -464,8 +453,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/20/microservice-design-principal/" rel="prev" title="微服务六大设计原则">
-                微服务六大设计原则 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/04/event-driven-architecture/" rel="prev" title="事件驱动架构">
+                事件驱动架构 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -644,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD是什么？"><span class="nav-number">1.</span> <span class="nav-text">DDD是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD主要解决的问题？"><span class="nav-number">2.</span> <span class="nav-text">DDD主要解决的问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD战略设计？"><span class="nav-number">3.</span> <span class="nav-text">DDD战略设计？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD领域划分"><span class="nav-number">4.</span> <span class="nav-text">DDD领域划分?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD领域建模方法？"><span class="nav-number">5.</span> <span class="nav-text">DDD领域建模方法？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD事件风暴四部曲？"><span class="nav-number">6.</span> <span class="nav-text">DDD事件风暴四部曲？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD与微服务"><span class="nav-number">7.</span> <span class="nav-text">DDD与微服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题域"><span class="nav-number">2.</span> <span class="nav-text">问题域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法域"><span class="nav-number">3.</span> <span class="nav-text">方法域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候使用异步呢？"><span class="nav-number">4.</span> <span class="nav-text">什么时候使用异步呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助决策树"><span class="nav-number">5.</span> <span class="nav-text">辅助决策树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步参考资料"><span class="nav-number">6.</span> <span class="nav-text">异步参考资料</span></a></li></ol></div>
             
 
           </div>
@@ -794,9 +783,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/08/13/ddd-concept/';
-          this.page.identifier = '2018/08/13/ddd-concept/';
-          this.page.title = '领域驱动设计之战略篇';
+          this.page.url = 'http://yoursite.com/2018/07/29/async-sync-decision-tree/';
+          this.page.identifier = '2018/07/29/async-sync-decision-tree/';
+          this.page.title = 'API异步 & 同步的决策树';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';

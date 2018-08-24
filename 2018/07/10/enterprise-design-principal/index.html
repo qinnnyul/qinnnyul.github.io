@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="架构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="当我们在为新的产品或者项目进行系统架构设计、制定演进路线、技术选型的时候，我们需要一些架构原则，来指导我们的架构设计和选型。 架构解决的问题架构作为构架在业务与技术之间鸿沟的桥梁，e.g：业务需求 –&amp;gt; 架构 –&amp;gt; 技术实现其主要目的：   为了解决当下或未来软件系统复杂度带来的问题，而架构其实并非设计出来，而是随着业务的发展逐步演变出来的结果  架构的一些原则1.Security -">
+<meta name="keywords" content="架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="企业级架构设计原则">
+<meta property="og:url" content="http://yoursite.com/2018/07/10/enterprise-design-principal/index.html">
+<meta property="og:site_name" content="魔镜的技术心经">
+<meta property="og:description" content="当我们在为新的产品或者项目进行系统架构设计、制定演进路线、技术选型的时候，我们需要一些架构原则，来指导我们的架构设计和选型。 架构解决的问题架构作为构架在业务与技术之间鸿沟的桥梁，e.g：业务需求 –&amp;gt; 架构 –&amp;gt; 技术实现其主要目的：   为了解决当下或未来软件系统复杂度带来的问题，而架构其实并非设计出来，而是随着业务的发展逐步演变出来的结果  架构的一些原则1.Security -">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-15T11:26:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="企业级架构设计原则">
+<meta name="twitter:description" content="当我们在为新的产品或者项目进行系统架构设计、制定演进路线、技术选型的时候，我们需要一些架构原则，来指导我们的架构设计和选型。 架构解决的问题架构作为构架在业务与技术之间鸿沟的桥梁，e.g：业务需求 –&amp;gt; 架构 –&amp;gt; 技术实现其主要目的：   为了解决当下或未来软件系统复杂度带来的问题，而架构其实并非设计出来，而是随着业务的发展逐步演变出来的结果  架构的一些原则1.Security -">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/10/enterprise-design-principal/"/>
+
+
+
+
+
+  <title>企业级架构设计原则 | 魔镜的技术心经</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123487001-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">魔镜的技术心经</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一叶知秋</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/10/enterprise-design-principal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">企业级架构设计原则</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T17:37:00+08:00">
+                2018-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/10/enterprise-design-principal/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/10/enterprise-design-principal/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>当我们在为新的产品或者项目进行系统架构设计、制定演进路线、技术选型的时候，我们需要一些架构原则，来指导我们的架构设计和选型。</p>
+<h2 id="架构解决的问题"><a href="#架构解决的问题" class="headerlink" title="架构解决的问题"></a>架构解决的问题</h2><p>架构作为构架在业务与技术之间鸿沟的桥梁，e.g：业务需求 –&gt; 架构 –&gt; 技术实现<br>其主要目的： </p>
+<blockquote>
+<p>为了解决当下或未来软件系统复杂度带来的问题，而架构其实并非设计出来，而是随着业务的发展逐步演变出来的结果</p>
+</blockquote>
+<h2 id="架构的一些原则"><a href="#架构的一些原则" class="headerlink" title="架构的一些原则"></a>架构的一些原则</h2><p>1.<strong>Security - Built security in</strong>， “安全”带来的品牌名声损失、用户流失、金钱的直接损失，都是企业级应用不能容忍的事故。</p>
+<p>可参考的实践：</p>
+<ul>
+<li><p>端到端的加密，传输的数据通过SSL加密，e.g:  Request -&gt; ELB(https) -&gt; EC2(https)</p>
+</li>
+<li><p>根据系统不同的用途，将各个系统进行网络分区，设置不同的防火墙</p>
+</li>
+</ul>
+<p>2.<strong>Scalability - 动态伸缩</strong>， 至少支持两个维度的伸缩，比如水平伸缩和垂直伸缩。</p>
+<p>可参考的实践：</p>
+<ul>
+<li><p>根据用户访问量或系统负载，进行水平的增加或者减少服务器实例</p>
+</li>
+<li><p>可根据Segment分流，比如产品线类型，多品牌划分。</p>
+</li>
+</ul>
+<p>3.<strong>Resilient to Failures - 健壮性，容错</strong></p>
+<p>可参考的实践：</p>
+<ul>
+<li><p>为API设置timeouts，重试机制</p>
+</li>
+<li><p>异步优于同步集成</p>
+</li>
+<li><p>设置自动熔断，做到服务降级的同时，为终端用户提供有意义的信息</p>
+</li>
+<li><p>防御性代码和测试</p>
+</li>
+<li><p>通过ELB或者F5，隔离内部服务与用户的交互的直接交互，屏蔽内部服务状态变化对用户操作的影响。</p>
+</li>
+</ul>
+<p>4.<strong>Logs，Instrumented and Monitored - 日志与监控</strong></p>
+<p>可参考的实践：</p>
+<ul>
+<li><p>分布式追踪， e.g： dynatrace，zipkin等</p>
+</li>
+<li><p>中心化日志管理， e.g： splunk</p>
+</li>
+<li><p>服务监控与告警， 定义监控指标，设置告警触发条件</p>
+</li>
+</ul>
+<p>5.<strong>Configurable - 可配置，将系统容易变化的部分，通过配置进行管理</strong></p>
+<p>可参考的实践：</p>
+<ul>
+<li><p>前端样式styleguide的可配置，可以轻易更换网站风格（换皮肤）</p>
+</li>
+<li><p>功能的可配置，比如feature toggle</p>
+</li>
+<li><p>熔断器的可配置</p>
+</li>
+<li><p>配置服务器，比如Spring cloud config server，实现配置的动态管理</p>
+</li>
+</ul>
+<p>6.<strong>Automated - 自动化一切可以自动化的任务</strong></p>
+<p>可参考的实践：</p>
+<ul>
+<li>CI &amp; CD</li>
+</ul>
+<p>7.<strong>Modular - 模块化</strong></p>
+<p>可参考的实践： </p>
+<ul>
+<li><p>划分清楚的职责 - Single responsibility of a component (done well)</p>
+</li>
+<li><p>关注点分离</p>
+</li>
+<li><p>高内聚，低耦合</p>
+</li>
+<li><p>Just good enough - not over engineered</p>
+</li>
+</ul>
+<p>8.<strong>Reuse - 重用已用API资产，避免不必要的重复构建</strong></p>
+<p>可参考的实践：</p>
+<ul>
+<li><p>API文档，e.g： SwaggerUI</p>
+</li>
+<li><p>API资产管理，比如有些商用的API Gateway， Axway能够集中管理所有注册的API生命周期</p>
+</li>
+</ul>
+<p>9.<strong>Predictable - Release - 可控发布，而不是祈祷式发布</strong></p>
+<p>可参考的实践：</p>
+<ul>
+<li><p>增量发布</p>
+</li>
+<li><p>回滚计划</p>
+</li>
+<li><p>蓝绿部署</p>
+</li>
+<li><p>灰度发布</p>
+</li>
+<li><p>隔离持续集成和持续部署</p>
+</li>
+</ul>
+<p>10.<strong>Consume over Rent over Buy over Build</strong>，除非需要构建Core能力，优先选择Build，否则依次考虑Consume &gt; Rent &gt; Buy &gt; Build</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/26/api-concpet/" rel="prev" title="API到底是什么？">
+                API到底是什么？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/3600881"
+               alt="Qin Yulin" />
+          <p class="site-author-name" itemprop="name">Qin Yulin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinnnyul" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.jianshu.com/u/f557906ceafc" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.huangyunkun.com/" title="夜明的孤行灯" target="_blank">夜明的孤行灯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zhewuzhou.github.io/" title="硬核技术" target="_blank">硬核技术</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.himateng.com/" title="小马哥的管理日记" target="_blank">小马哥的管理日记</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构解决的问题"><span class="nav-number">1.</span> <span class="nav-text">架构解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构的一些原则"><span class="nav-number">2.</span> <span class="nav-text">架构的一些原则</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin Yulin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://qinnnyul-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/07/10/enterprise-design-principal/';
+          this.page.identifier = '2018/07/10/enterprise-design-principal/';
+          this.page.title = '企业级架构设计原则';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
