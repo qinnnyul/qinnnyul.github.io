@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="微服务,Spring Cloud," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Spring Cloud   发布于2015年3月 引入NetflixOSS的开源技术栈 基于Spring boot 构建了分布式系统的公共模式  Spring boot是Spring框架对“约定优于配置”理念的最佳实践的产物，比如自动配置，它背后通过了Springfactoriesloader，它属于Spring框架私有的一种扩展方案（类似于Java的SPI-Service provider i">
+<meta name="keywords" content="微服务,Spring Cloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Spring Cloud的微服务架构">
+<meta property="og:url" content="http://yoursite.com/2018/08/22/spring-cloud-based-microservice/index.html">
+<meta property="og:site_name" content="魔镜的技术心经">
+<meta property="og:description" content="Spring Cloud   发布于2015年3月 引入NetflixOSS的开源技术栈 基于Spring boot 构建了分布式系统的公共模式  Spring boot是Spring框架对“约定优于配置”理念的最佳实践的产物，比如自动配置，它背后通过了Springfactoriesloader，它属于Spring框架私有的一种扩展方案（类似于Java的SPI-Service provider i">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-4bf7e1dba13ad03b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-b6a0103c6fd872ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-28adb388dde2ec20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-b3feed0e3bfb32a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-b7e3209797c22a60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-9515db12ceb09b3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-551c3ef95d8214be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-8c067b601e2a84a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-9213fffbac537038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-e81a49b42792534d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-d85740ea776189d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-a39d43d85450efeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-83682859170afe46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-821e2087be13e178.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-bb0efbc1631c665d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-24T12:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Spring Cloud的微服务架构">
+<meta name="twitter:description" content="Spring Cloud   发布于2015年3月 引入NetflixOSS的开源技术栈 基于Spring boot 构建了分布式系统的公共模式  Spring boot是Spring框架对“约定优于配置”理念的最佳实践的产物，比如自动配置，它背后通过了Springfactoriesloader，它属于Spring框架私有的一种扩展方案（类似于Java的SPI-Service provider i">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-4bf7e1dba13ad03b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/22/spring-cloud-based-microservice/"/>
+
+
+
+
+
+  <title>基于Spring Cloud的微服务架构 | 魔镜的技术心经</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123487001-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">魔镜的技术心经</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一叶知秋</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/22/spring-cloud-based-microservice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于Spring Cloud的微服务架构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-22T23:21:00+08:00">
+                2018-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/22/spring-cloud-based-microservice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/08/22/spring-cloud-based-microservice/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><blockquote>
+</blockquote>
+<ul>
+<li>发布于2015年3月</li>
+<li>引入NetflixOSS的开源技术栈</li>
+<li>基于Spring boot</li>
+<li>构建了分布式系统的公共模式</li>
+</ul>
+<p>Spring boot是Spring框架对“约定优于配置”理念的最佳实践的产物，比如自动配置，它背后通过了<code>Springfactoriesloader</code>，它属于Spring框架私有的一种扩展方案（类似于Java的<code>SPI</code>-Service provider interface）， 其主要的功能就是从指定的配置文件meta-inf/spring.factories加载配置。</p>
+<h3 id="常见的微服务组件"><a href="#常见的微服务组件" class="headerlink" title="常见的微服务组件"></a>常见的微服务组件</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-4bf7e1dba13ad03b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="微服务组件.png"></p>
+<h4 id="服务端负载均衡"><a href="#服务端负载均衡" class="headerlink" title="服务端负载均衡"></a>服务端负载均衡</h4><ul>
+<li>HTTP重定向负载均衡（类似DNS域名解析负载均衡）<ul>
+<li>优点<ul>
+<li>实现比较简单</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>浏览器需要两次请求才能完成一次访问</li>
+<li>性能较差</li>
+<li>重定向服务器自身的处理能力有可能成为瓶颈</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-b6a0103c6fd872ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重定向服务器.png"></p>
+<ul>
+<li>反向代理均衡器的优点（以Nginx，HA Proxy为代表）<ul>
+<li>比较简单</li>
+<li>可以利用反向代理缓存资源</li>
+<li>改善网站的性能</li>
+</ul>
+</li>
+<li>反向代理均衡器的缺点<ul>
+<li>所有请求和响应的中转站</li>
+<li>其性能可能会成为瓶颈</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-28adb388dde2ec20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="反向代理.png"></p>
+<ul>
+<li>数据链路层的负载均衡优点<ul>
+<li>不需要修改数据包的源地址</li>
+<li>响应数据不需要通过负载均衡器</li>
+</ul>
+</li>
+</ul>
+<p>使用三角传输模式的链路层负载均衡是目前大型网站使用最为广泛的一种负载均衡手段，在Linux平台上面最好的链路层负载均衡开源产品是LVS(Linux Virtual Server)。</p>
+<p>以上都是<code>服务端的负载均衡</code>，代表的产品有F5，LVS，Nginx，HA Proxy和ELB/ALB等。</p>
+<h4 id="客户端的负载均衡"><a href="#客户端的负载均衡" class="headerlink" title="客户端的负载均衡"></a>客户端的负载均衡</h4><p>在Spring Cloud中提供了<code>Ribbon</code> 作为客户端的负载均衡，一般<code>Ribbon</code>和<code>服务注册与发现Eureka</code>一起协同实现对请求的负载均衡，如图：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-b3feed0e3bfb32a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clientside-loadblancer.png"><br>从一个服务注册器中查询，获得其中所有可用实例。然后使用负载均衡算法（常见的算法：可支持最小连接数、轮询、比例、最快响应、哈希、预测、观察、动态比例等）从多个服务实例中选择出一个，发出请求。</p>
+<p>如果在有客户端的负载均衡情况下，是否还有与服务端的负载均衡（比如AWS ELB）混用的情况呢？ 在服务消费者与服务提供者之间增加了ELB类的服务器端负载均衡，反而增加了额外的网络跳转，所以并不推荐，但是可以考虑在Edge Server外添加，如下图：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-b7e3209797c22a60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ELB+Ribbon.png"></p>
+<h4 id="服务注册与发现"><a href="#服务注册与发现" class="headerlink" title="服务注册与发现"></a>服务注册与发现</h4><p>一个服务如何发现另外一个服务的IP和端口呢？ 你可能会说，Hardcode式的静态配置，但是当服务按需动态伸缩之后呢？这时我们就可以引入服务治理里面非常重要的一个组件 - <code>服务注册于发现</code>。</p>
+<p>Spring Cloud内可选的服务注册与发现Starter很多，这里简单聊下Eureka和Consul。</p>
+<ul>
+<li>Eureka<ul>
+<li>提供REST接口</li>
+<li>支持多点的同步（支持集群实现高可用，P2P的注册信息同步）</li>
+<li>支持客户端缓存（CAP原理中，它保证AP)</li>
+<li>自注册的方式（服务实例使用 POST 请求来注册网络地址，每三十秒使用 PUT 请求来刷新注册信息）</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-9515db12ceb09b3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Eureka.png"></p>
+<ul>
+<li>Consul<ul>
+<li>来自Hashicorp公司（旗下知名产品很多，e.g <code>vagrant</code>,<code>valut</code>）</li>
+<li>提供REST接口（从服务注册，查询存储键值对到健康检查，都提供RESTful接口，使得集成不同的技术栈变的很容易）</li>
+<li>提供现成的DNS服务器</li>
+<li>第三方注册 - 服务管理器模式（服务注册器会通过查询部署环境或订阅事件的方式来跟踪运行实例的更改；一旦侦测到有新的可用服务实例，会向注册表注册此服务；服务管理器也负责注销终止的服务实例）</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-551c3ef95d8214be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="注册方式.png"></p>
+<ul>
+<li>其他几个主流竞品对比图：</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-8c067b601e2a84a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="服务注册与发现.png"></p>
+<h4 id="熔断器"><a href="#熔断器" class="headerlink" title="熔断器"></a>熔断器</h4><p>Hystrix记录那些超过预设定的极限值的调用。它实现了circuit break模式，从而避免了无休止的等待无响应的服务。如果一个服务的错误率超过预设值，Hystrix将中断服务，并且在一段时间内所有对该服务的请求会立刻失效。Hystrix可以为请求失败定义一个fallback操作，例如读取缓存或者返回默认值（想象一个场景，一个下游系统响应非常慢，即使我们设置了超时，也需要等待很长的时间才能得到错误返回，假如现在是请求高峰，大量的等待，大量的消耗系统资源，从而让我们的整个系统变得非常慢。当我们使用断路器时，或超时，或者返回错误码，达到一定阈值后，它会自动停止向它发送消息，并调用相应的fallback函数，等同于启动了快速失败。当它恢复健康后，他会自动重新发送消息到下游服务）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-9213fffbac537038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="熔断器.png"></p>
+<h4 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h4><p>我们如何做配置管理呢？12军规里面有描述：将配置一定要从代码中分离，原因很明显， 配置是最容易改变的部分， 比如不同regions， 像dev，sys，prod他们连接的第三方服务地址可能是不一样的， <code>feature toggle</code>也可能是不一样的。难道我们每更改一次配置，就需要重新部署吗？<br><img src="https://upload-images.jianshu.io/upload_images/12636540-e81a49b42792534d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="config-server.png"></p>
+<p>Spring cloud推荐用配置服务器做配置管理：</p>
+<ul>
+<li>默认使用GIT，在版本控制之下</li>
+<li>支持PROPERTY和YAML</li>
+<li>中心化的动态配置</li>
+<li>当配置改变时，一些BEANS会被重新初始化，无须重启，但需要调用/POST  /refresh触发</li>
+</ul>
+<p>Spring cloud config server可以与Spring cloud bus(基于Spring cloud stream)配合使用，实现集群配置文件的动态更新：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-d85740ea776189d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="config-server-cluster.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-a39d43d85450efeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="configuration-sever.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-83682859170afe46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="example-for-dev-region.png"></p>
+<h4 id="API网关"><a href="#API网关" class="headerlink" title="API网关"></a>API网关</h4><ul>
+<li><p>客户端与服务端直接通信又有那些弊端？</p>
+<ul>
+<li>客户端为了获取某个数据集，可能需要多次请求。</li>
+<li>UI端和微服务直接耦合在一起。</li>
+</ul>
+</li>
+<li><p>API网关的好处？</p>
+<ul>
+<li>减少API请求次数</li>
+<li>限流量</li>
+<li>缓存</li>
+<li>认证</li>
+<li>监控</li>
+<li>对外提供统一的接口，使背后的微服务对UI端来说是透明的</li>
+</ul>
+</li>
+</ul>
+<p>Spring Cloud提供的组件是<code>ZUUL</code>看门人，一般它负责请求转发、聚合返回的数据集，所有来自客户端的请求都要先经过API Gateway，然后路由这些请求到对应的微服务。</p>
+<h4 id="分布式链式追踪"><a href="#分布式链式追踪" class="headerlink" title="分布式链式追踪"></a>分布式链式追踪</h4><p>Spring Cloud里面对应的组件是Sleuth（埋点和发送） + zipkin（收集和展示)，其实现原理都来至于Google Dapper： <a href="http://bigbully.github.io/Dapper-translation/" target="_blank" rel="noopener">http://bigbully.github.io/Dapper-translation/</a><br><img src="https://upload-images.jianshu.io/upload_images/12636540-821e2087be13e178.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>以下的操作都会被自动追踪：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-bb0efbc1631c665d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="案例演示"><a href="#案例演示" class="headerlink" title="案例演示"></a>案例演示</h4><p>之前准备的一个用于演示的代码库，它采用了常见的微服务组件，比如我们讲过的服务注册与发现，负载均衡，分布式配置服务，网关，hystrix，并使用docker-compose来进行服务的编排，可以下来感受下。<br>Repo： <a href="https://github.com/qinnnyul/spring-cloud-with-docker-demo" target="_blank" rel="noopener">https://github.com/qinnnyul/spring-cloud-with-docker-demo</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/tags/Spring-Cloud/" rel="tag"># Spring Cloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/20/microservice-design-principal/" rel="next" title="微服务六大设计原则">
+                <i class="fa fa-chevron-left"></i> 微服务六大设计原则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/3600881"
+               alt="Qin Yulin" />
+          <p class="site-author-name" itemprop="name">Qin Yulin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinnnyul" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.jianshu.com/u/f557906ceafc" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.huangyunkun.com/" title="夜明的孤行灯" target="_blank">夜明的孤行灯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zhewuzhou.github.io/" title="硬核技术" target="_blank">硬核技术</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.himateng.com/" title="小马哥的管理日记" target="_blank">小马哥的管理日记</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Cloud"><span class="nav-number">1.</span> <span class="nav-text">Spring Cloud</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的微服务组件"><span class="nav-number">2.</span> <span class="nav-text">常见的微服务组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端负载均衡"><span class="nav-number">2.1.</span> <span class="nav-text">服务端负载均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端的负载均衡"><span class="nav-number">2.2.</span> <span class="nav-text">客户端的负载均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务注册与发现"><span class="nav-number">2.3.</span> <span class="nav-text">服务注册与发现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#熔断器"><span class="nav-number">2.4.</span> <span class="nav-text">熔断器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置管理"><span class="nav-number">2.5.</span> <span class="nav-text">配置管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#API网关"><span class="nav-number">2.6.</span> <span class="nav-text">API网关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式链式追踪"><span class="nav-number">2.7.</span> <span class="nav-text">分布式链式追踪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例演示"><span class="nav-number">2.8.</span> <span class="nav-text">案例演示</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin Yulin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://qinnnyul-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/08/22/spring-cloud-based-microservice/';
+          this.page.identifier = '2018/08/22/spring-cloud-based-microservice/';
+          this.page.title = '基于Spring Cloud的微服务架构';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
