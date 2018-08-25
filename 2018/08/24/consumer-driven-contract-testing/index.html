@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="API,架构," />
+  <meta name="keywords" content="架构,测试,微服务," />
 
 
 
@@ -94,22 +94,22 @@
 
 
 
-<meta name="description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
-<meta name="keywords" content="API,架构">
+<meta name="description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
+<meta name="keywords" content="架构,测试,微服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="API异步 &amp; 同步的决策树">
-<meta property="og:url" content="http://yoursite.com/2018/07/29/async-sync-decision-tree/index.html">
+<meta property="og:title" content="不得不说的微服务测试">
+<meta property="og:url" content="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
+<meta property="og:description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-ee2173db1814b1da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-dbe99efa996f3098.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-24T13:37:07.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-b15d3c16e24d23ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-8bdf4aba4416c85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-25T01:46:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="API异步 &amp; 同步的决策树">
-<meta name="twitter:description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="不得不说的微服务测试">
+<meta name="twitter:description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -138,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/29/async-sync-decision-tree/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/"/>
 
 
 
 
 
-  <title>API异步 & 同步的决策树 | 魔镜的技术心经</title>
+  <title>不得不说的微服务测试 | 魔镜的技术心经</title>
   
 
 
@@ -286,7 +286,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/29/async-sync-decision-tree/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -303,7 +303,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">API异步 & 同步的决策树</h1>
+          <h1 class="post-title" itemprop="name headline">不得不说的微服务测试</h1>
         
 
         <div class="post-meta">
@@ -315,8 +315,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T20:31:00+08:00">
-                2018-07-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-24T23:21:00+08:00">
+                2018-08-24
               </time>
             
 
@@ -334,9 +334,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/29/async-sync-decision-tree/#comments" itemprop="discussionUrl">
+                <a href="/2018/08/24/consumer-driven-contract-testing/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/07/29/async-sync-decision-tree/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/08/24/consumer-driven-contract-testing/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -364,53 +364,68 @@
       
 
       
-        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
-<p>Synchronous: A business transaction done in <strong>a single</strong> HTTP request/response exchange, which means that the HTTP response provides <strong>all data</strong> and associated resources resulting from the transaction</p>
-</blockquote>
+        <p>在微服务架构下，给我们测试带来了如下挑战：</p>
+<ul>
+<li><strong>验证成本高</strong>，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。</li>
+<li><strong>结果不稳定</strong>， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临<code>网络延时</code>、<code>超时</code>、<code>带宽</code>等因素，容易导致不稳定的测试结果。</li>
+<li><strong>反馈周期长</strong>， 相比单体应用而言，微服务架构下，可独立部署的单元多，因此集成测试的反馈周期比之前会更长，定位问题的时间就会更久。</li>
+<li><strong>沟通成本高</strong>， 微服务常由不同团队开发并维护，当服务频繁进行改动和版本升级的时候，很容易导致不兼容，加大团队之间的沟通成本。</li>
+</ul>
+<h3 id="测试金字塔"><a href="#测试金字塔" class="headerlink" title="测试金字塔"></a>测试金字塔</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>测试金字塔很好的帮助我们在制定测试策略的时候，区分不同层次测试关注点，同时，一般来说，测试颗粒度越粗，越脆弱，执行的时间越长，维护成本也越高。</p>
+<h3 id="不得不说的契约测试"><a href="#不得不说的契约测试" class="headerlink" title="不得不说的契约测试"></a>不得不说的契约测试</h3><p>在微服务中，不得不聊聊消费者契约测试，</p>
 <blockquote>
-<p>Asynchronous: A business transaction done <strong>over multiple</strong> HTTP request/response exchanges, which means that the initial HTTP response <strong>does not provide all data</strong> and associated resources resulting from the transaction, such data and resources can be obtained in subsequent interactions.</p>
+<p>契约，一种定义在Consumer与Provider之间的交互方式</p>
 </blockquote>
-<h2 id="问题域"><a href="#问题域" class="headerlink" title="问题域"></a>问题域</h2><p><strong>HTTP是一个同步协议：</strong></p>
-<ul>
-<li>客户端和服务器端通过三次握手建立TCP连接。</li>
-<li>客户端发出请求，然后就等待响应。</li>
-<li>服务器端处理请求，并返回相应的状态码和数据。</li>
-<li>客户端完成接收，通过四次挥手，断开连接。</li>
+<h4 id="消费者驱动的契约测试"><a href="#消费者驱动的契约测试" class="headerlink" title="消费者驱动的契约测试"></a>消费者驱动的契约测试</h4><p><img src="https://upload-images.jianshu.io/upload_images/12636540-b15d3c16e24d23ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>契约是Consumer和Provider团队之间达成的交互协议，更多的看中的是请求和响应的Payload结构（<code>Schema</code>），由服务消费者构建并生成contract，然后将contact上传到Pact broker or server； 对应的服务提供者，需要在Pipeline中，有一个task进行契约的验证，保证契约不会被破坏。</p>
+<h4 id="契约测试的好处"><a href="#契约测试的好处" class="headerlink" title="契约测试的好处"></a>契约测试的好处</h4><ul>
+<li><strong>测试分层</strong>，Consumer和Provider分别测试。</li>
+<li><strong>测试前移</strong>，为Consumer提供Mock，不需要真实的集成环境，<code>稳定性高</code>。</li>
+<li><strong>反馈周期短</strong>，单元测试级别，测试运行快，<code>毫米级</code>。</li>
+<li><strong>沟通成本底</strong></li>
 </ul>
-<p>一些情况下，这种同步-blocking的通信方式，并不适合，比如以下的场景：</p>
-<ul>
-<li>复杂的服务编排， 比如一个请求需要通过调用多个downstream系统来更新或者创建一个资源（一个long running的http连接，可能会影响web server的性能或者API gateway的性能）。</li>
-<li>系统的可用性和稳定性， 比如一个后端系统，响应非常的慢，不稳定，甚至不可用（一个请求响应时间长短，直接影响到用户体验和转化率）。</li>
+<p>为服务消费者提供了信心，更为服务提供者提供了更大的价值（通过与不同消费者约定的契约，可以保证服务安全的升级变迁，不会破坏之前已有的功能）<br><img src="https://upload-images.jianshu.io/upload_images/12636540-8bdf4aba4416c85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="契约测试的应用场景"><a href="#契约测试的应用场景" class="headerlink" title="契约测试的应用场景"></a>契约测试的应用场景</h4><ul>
+<li>一个服务需要被多个消费者使用，每个消费者的诉求并不完全一样（一对一的场景，没有太大意义）。</li>
+<li>服务消费者与服务提供者由不同的团队开发维护。</li>
+<li>服务消费者与服务提供者，一定要对契约达成一致，并一直保持这种<code>约束</code>（如果有一方没有遵守，比如提供者根本不将契约验证集成到流水线中，那么就没有任何意义），契约的不符合预期的变化应当会造成测试的失败。</li>
 </ul>
-<h2 id="方法域"><a href="#方法域" class="headerlink" title="方法域"></a>方法域</h2><p>异步模式：</p>
-<ol>
-<li><strong>Web hook</strong></li>
-</ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="web hook.png"></p>
-<ul>
-<li>作为Consumer，需要提供成功或者失败的回调接口</li>
-<li>作为Provider，需要在一次接收到请求的时候，返回202；需要在resource成功或者失败创建后，调用callback接口，通知Consumer； 如果consumer提供的callback接口，返回失败的status code，需要设置一定的retry机制。</li>
+<h4 id="应该关注"><a href="#应该关注" class="headerlink" title="应该关注"></a>应该关注</h4><ul>
+<li>检查Consumer构建的请求是否匹配到了对应的Contract</li>
+<li>检查Provider的响应是否满足Consumer的需要</li>
 </ul>
-<p>2.<strong>Asynchronous Notification</strong></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-ee2173db1814b1da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="async-notification.png"></p>
-<h2 id="什么时候使用异步呢？"><a href="#什么时候使用异步呢？" class="headerlink" title="什么时候使用异步呢？"></a>什么时候使用异步呢？</h2><ol>
-<li><strong>根据HTTP操作来判断</strong>：</li>
-</ol>
-<ul>
-<li>HEAD, OPTIONS, CONNECT, TRACE等方法不能使用异步。</li>
-<li>GET方法通常不使用异步，如果你的GET请求时间太长，可以考虑以下的这些方法改进：e.g： 将你的聚合根拆分为更细粒度的resource、引入分页、引入缓存、将你的GET操作改为POST（比如search）。</li>
-<li>其他的HTTP操作，比如PUT, POST, PATCH和DELETE能够异步就尽量异步。</li>
+<h4 id="不应该关注"><a href="#不应该关注" class="headerlink" title="不应该关注"></a>不应该关注</h4><ul>
+<li>Provider的业务逻辑是否正确</li>
+<li>Consumer的处理响应的逻辑</li>
 </ul>
-<ol start="2">
-<li><strong>根据响应时间来判断</strong>：</li>
-</ol>
-<ul>
-<li>如果你的API操作，大于5秒的时间，就选择异步。</li>
-<li>如果你的API操作，大于1秒并小于5秒，应选择异步。</li>
-<li>如果你的API操作，小于1秒，则可以选择同步。<br>P.S: 关于响应时间，根据用户行为调查，发现用户在等待大约5秒左右，就会失去耐心;  关于HTTP Client的timeout设置，浏览器，客户端JS库，服务器端http client库，他们的timeout设置都不一样，从20s到几分钟都有。</li>
+<p>可参考的工具： <code>Pact</code>, <code>Spring Cloud Contract</code>等</p>
+<h3 id="不得不说的集成测试"><a href="#不得不说的集成测试" class="headerlink" title="不得不说的集成测试"></a>不得不说的集成测试</h3><p>集成测试验证服务或者组件之间的<code>连通性</code>和<code>交互</code>以检查接口缺陷，集成测试旨在通过集成不同的Downstream服务，来覆盖基本的成功和错误的场景，在我们项目中，选用<code>REST Assured</code>作为集成测试工具，使用非常方便:</p>
+<pre><code class="java"><span class="meta">@RunWith</span>(SpringRunner.class)
+<span class="meta">@SpringBootTest</span>(webEnvironment = WebEnvironment.RANDOM_PORT)
+<span class="meta">@AutoConfigureRestDocs</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDocumentationTests</span> </span>{
+
+    <span class="meta">@LocalServerPort</span>
+    <span class="keyword">private</span> <span class="keyword">int</span> port;
+
+    <span class="meta">@Autowired</span>
+    <span class="keyword">private</span> RequestSpecification documentationSpec;
+
+    <span class="meta">@Test</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">listUsers</span><span class="params">()</span> </span>{
+        given(<span class="keyword">this</span>.documentationSpec).filter(document(<span class="string">"list-users"</span>)).when()
+                .port(<span class="keyword">this</span>.port).get(<span class="string">"/"</span>).then().assertThat().statusCode(is(<span class="number">200</span>));
+    }
+
+}
+</code></pre>
+<p>当downstream服务非常<code>不稳定</code>的时候，我们会通过<code>wiremock</code>作为proxy对请求和响应进行录制，使用wiremock做测试替身，隔离外部调用，避免多服务间的复杂情况（网络，其他团队服务可用性等），并以可重复的方式模拟任何场景（超时，Down机，SSL验证失败，丢失HTTP头，请求响应不匹配等），运行稳定，且反馈周期短。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://www.pact.net.cn/best_practices/consumer.html" target="_blank" rel="noopener">https://www.pact.net.cn/best_practices/consumer.html</a></li>
+<li><a href="https://martinfowler.com/articles/consumerDrivenContracts.html" target="_blank" rel="noopener">https://martinfowler.com/articles/consumerDrivenContracts.html</a></li>
+<li><a href="https://github.com/realestate-com-au/pact" target="_blank" rel="noopener">https://github.com/realestate-com-au/pact</a></li>
 </ul>
-<h2 id="辅助决策树"><a href="#辅助决策树" class="headerlink" title="辅助决策树"></a>辅助决策树</h2><p><img src="https://upload-images.jianshu.io/upload_images/12636540-dbe99efa996f3098.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Sync &amp; Async decision tree .png"></p>
-<h2 id="异步参考资料"><a href="#异步参考资料" class="headerlink" title="异步参考资料"></a>异步参考资料</h2><p>[1]<a href="http://restcookbook.com/Resources/asynchroneous-operations/" target="_blank" rel="noopener">I cannot have my users wait on the API on finish</a><br>[2]<a href="http://jsonapi.org/recommendations/#asynchronous-processing" target="_blank" rel="noopener">http://jsonapi.org/recommendations/#asynchronous-processing</a></p>
 
       
     </div>
@@ -428,9 +443,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/API/" rel="tag"># API</a>
-          
             <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/tags/测试/" rel="tag"># 测试</a>
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
           
         </div>
       
@@ -443,8 +460,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/26/api-concpet/" rel="next" title="API到底是什么？">
-                <i class="fa fa-chevron-left"></i> API到底是什么？
+              <a href="/2018/08/22/spring-cloud-based-microservice/" rel="next" title="基于Spring Cloud的微服务架构">
+                <i class="fa fa-chevron-left"></i> 基于Spring Cloud的微服务架构
               </a>
             
           </div>
@@ -452,10 +469,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/04/event-driven-architecture/" rel="prev" title="事件驱动架构">
-                事件驱动架构 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -633,7 +646,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题域"><span class="nav-number">2.</span> <span class="nav-text">问题域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法域"><span class="nav-number">3.</span> <span class="nav-text">方法域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候使用异步呢？"><span class="nav-number">4.</span> <span class="nav-text">什么时候使用异步呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助决策树"><span class="nav-number">5.</span> <span class="nav-text">辅助决策树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步参考资料"><span class="nav-number">6.</span> <span class="nav-text">异步参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试金字塔"><span class="nav-number">1.</span> <span class="nav-text">测试金字塔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不得不说的契约测试"><span class="nav-number">2.</span> <span class="nav-text">不得不说的契约测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消费者驱动的契约测试"><span class="nav-number">2.1.</span> <span class="nav-text">消费者驱动的契约测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#契约测试的好处"><span class="nav-number">2.2.</span> <span class="nav-text">契约测试的好处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#契约测试的应用场景"><span class="nav-number">2.3.</span> <span class="nav-text">契约测试的应用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应该关注"><span class="nav-number">2.4.</span> <span class="nav-text">应该关注</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不应该关注"><span class="nav-number">2.5.</span> <span class="nav-text">不应该关注</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不得不说的集成测试"><span class="nav-number">3.</span> <span class="nav-text">不得不说的集成测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -783,9 +796,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/07/29/async-sync-decision-tree/';
-          this.page.identifier = '2018/07/29/async-sync-decision-tree/';
-          this.page.title = 'API异步 & 同步的决策树';
+          this.page.url = 'http://yoursite.com/2018/08/24/consumer-driven-contract-testing/';
+          this.page.identifier = '2018/08/24/consumer-driven-contract-testing/';
+          this.page.title = '不得不说的微服务测试';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
