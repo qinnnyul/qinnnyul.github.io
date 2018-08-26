@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="架构,微服务,Spring Cloud," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="定义 RxJava extends the observer pattern to support sequences of data/events and adds operations that allow you to compose sequences together declaratively while abstracting away concerns about things l">
+<meta name="keywords" content="架构,微服务,Spring Cloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异步编程神器RxJava">
+<meta property="og:url" content="http://yoursite.com/2018/08/26/rxjava-programming/index.html">
+<meta property="og:site_name" content="魔镜的技术心经">
+<meta property="og:description" content="定义 RxJava extends the observer pattern to support sequences of data/events and adds operations that allow you to compose sequences together declaratively while abstracting away concerns about things l">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-b529161b54eabfae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-693a2d61dec2ac7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-3e69f22bcce21bde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-345cfc3f0c919b29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-26T09:28:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="异步编程神器RxJava">
+<meta name="twitter:description" content="定义 RxJava extends the observer pattern to support sequences of data/events and adds operations that allow you to compose sequences together declaratively while abstracting away concerns about things l">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-b529161b54eabfae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/26/rxjava-programming/"/>
+
+
+
+
+
+  <title>异步编程神器RxJava | 魔镜的技术心经</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123487001-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">魔镜的技术心经</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一叶知秋</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/26/rxjava-programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">异步编程神器RxJava</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T10:21:00+08:00">
+                2018-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/26/rxjava-programming/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/08/26/rxjava-programming/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>RxJava extends the <strong>observer pattern</strong> to support sequences of data/events and adds operations that allow you to compose sequences together declaratively while <strong>abstracting away concerns about things</strong> like low-level threading, synchronisation, thread-safety and concurrent data structures.</p>
+</blockquote>
+<p>RxJava简单来说是建立在<code>观察者模式</code>上面的编程范式，它一定程度抽象和屏蔽了低层的线程创建管理和多线程并发安全问题，从而提供更好的编程体验，降低了开发者使用门槛。</p>
+<h3 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h3><ul>
+<li><code>一切皆是Stream</code>，那么什么是流呢？ Stream可以简单理解为<code>按时间排序的Events序列</code>, 其中<code>Observable</code> 就是一个Stream, 它是不可变的，任何操作都会返回一个全新的Stream， 这种<code>Immutability</code>性，很好的规避了多线程并发问题。</li>
+<li>另外一个重要的是<code>Subscriber</code>，订阅者或者观察者， 他们是事件的消费者，重要的三个方法有<code>onNext</code>, <code>onCompleted</code>, <code>onError</code></li>
+<li>在使用RxJava过程中，你会发现它体现了很多<code>函数式编程</code>的风格，e.g:<br><code>函数作为一等公民</code>, 其定义如下：<blockquote>
+<p>The ability to store a function as a variable and pass that function as a parameter.</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.function.Function;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstClassCitizenParameterIllustration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Function&lt;String, String&gt; transformToLower = (s) -&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> s.toLowerCase();</span><br><span class="line">        &#125;;</span><br><span class="line">        System.out.println(concatAndTransform(<span class="string">"Hello "</span>, <span class="string">"World"</span>, transformToLower));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">concatAndTransform</span><span class="params">(String a, String b, Function&lt;String, String&gt; stringTransform)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (stringTransform != <span class="keyword">null</span>) &#123;</span><br><span class="line">            a = stringTransform.apply(a);</span><br><span class="line">            b = stringTransform.apply(b);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>高阶函数</code>, 其定义如下：</p>
+<blockquote>
+<p>A high order function is a function that can return a function.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.function.Function;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Supplier;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HighOrderFunctionIllustration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Supplier&lt;String&gt; xformOperation = createCombineAndTransform(<span class="string">"Hello "</span>, <span class="string">"World"</span>, (a) -&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> a.toUpperCase();</span><br><span class="line">        &#125;);</span><br><span class="line">        System.out.println(xformOperation.get());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Supplier&lt;String&gt; <span class="title">createCombineAndTransform</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">final</span> String a, <span class="keyword">final</span> String b,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">final</span> Function&lt;String, String&gt; transformer</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> () -&gt; &#123;</span><br><span class="line"></span><br><span class="line">            String aa = a;</span><br><span class="line">            String bb = b;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (transformer != <span class="keyword">null</span>) &#123;</span><br><span class="line">                aa = transformer.apply(a);</span><br><span class="line">                bb = transformer.apply(b);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> aa + bb;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<ul>
+<li><code>Scheduler</code>指定工作线程池</li>
+</ul>
+<h3 id="常见的操作"><a href="#常见的操作" class="headerlink" title="常见的操作"></a>常见的操作</h3><ul>
+<li>Creating Observables：<code>Create</code>, From, <code>Just</code></li>
+<li>Transforming Observables: <code>Map</code>, Flatmap, groupBy</li>
+<li>Filtering Observables: <code>Filter</code>, <code>First</code>, Last, Skip</li>
+<li>Combining Observables: <code>Zip</code>, Join, Merge</li>
+<li>Error Handling Operators: Catch, Retry</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-b529161b54eabfae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="rxjava.png"></p>
+<h3 id="响应时间的优化"><a href="#响应时间的优化" class="headerlink" title="响应时间的优化"></a>响应时间的优化</h3><p>在进行多个API调用编排的时候，如果采用同步阻塞的编排方式，其响应时间约等于所有API执行时间之和：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-693a2d61dec2ac7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="同步编排.png"></p>
+<p>如果是采用异步并发的方式，则响应时间会明显缩短：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-3e69f22bcce21bde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="异步编排1.png"></p>
+<p>在我们真实的项目中，大量采用Rxjava的响应式编程，用于服务异步编排，减少服务响应时间，提供用户体验。</p>
+<h3 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h3><p><strong>需求说明：</strong></p>
+<blockquote>
+<p>一个订单服务，它的数据需要聚合其他三个服务的数据，服务调用没有先后之分，没有相互依赖，调用过程中，如果任何一个服务出现问题，需要及时在响应体中加入对应的错误信息并返回。</p>
+</blockquote>
+<p>在采用RxJava进行编程的时候，首选应该考虑Stream， 每个服务的返回可以是一个Stream（Observable），但是每个服务的返回都不一样， 不能将所有的三个服务直接通过Stream连起来。</p>
+<p>所以第一步是提取并封装公共的返回对象：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncResult</span>&lt;<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> V value;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Exception exception;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">AsyncResult</span><span class="params">(V value, Exception exception)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">        <span class="keyword">this</span>.exception = exception;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;V&gt; <span class="function">AsyncResult&lt;V&gt; <span class="title">success</span><span class="params">(V value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AsyncResult&lt;&gt;(value, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;V&gt; <span class="function">AsyncResult&lt;V&gt; <span class="title">failed</span><span class="params">(Exception exception)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AsyncResult&lt;&gt;(<span class="keyword">null</span>, exception);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">getValue</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (exception != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> exception;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Exception <span class="title">getException</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> exception;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasException</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> exception != <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第二步，为每个服务调用创建对应的<code>Observable Stream</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Observable&lt;AsyncResult&lt;UserModel&gt;&gt; getUserAsyncStream(String userId) &#123;</span><br><span class="line">    <span class="keyword">return</span> Observable.create((ObservableOnSubscribe&lt;AsyncResult&lt;UserModel&gt;&gt;) emitter -&gt; &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            UserModel user = userDao.getUser(userId);</span><br><span class="line">            emitter.onNext(AsyncResult.success(user));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception exception) &#123;</span><br><span class="line">            emitter.onNext(AsyncResult.failed(exception));</span><br><span class="line">        &#125;</span><br><span class="line">        emitter.onComplete();</span><br><span class="line">    &#125;).subscribeOn(Schedulers.io());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第三步，通过Stream将所有的服务进行聚合：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;OrderContainer&gt; orderContainer = Observable.just(new OrderContainer())</span><br><span class="line">                .zipWith(userStream, new UserAssembler())</span><br><span class="line">                .zipWith(logisticsStream, new LogisticsAssembler())</span><br><span class="line">                .zipWith(productStream, new ProductAssembler())</span><br><span class="line">                .subscribeOn(Schedulers.io());</span><br><span class="line">                </span><br><span class="line">return orderContainer.blockingGet();</span><br></pre></td></tr></table></figure></p>
+<p>其中，每个Assember作为具体的聚合逻辑处理器, 分别针对正常情况和异常情况进行处理。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class UserAssembler implements BiFunction&lt;OrderContainer, AsyncResult&lt;UserModel&gt;, OrderContainer&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public OrderContainer apply(OrderContainer orderContainer, AsyncResult&lt;UserModel&gt; userModel) throws Exception &#123;</span><br><span class="line">        if (userModel.hasException()) &#123;</span><br><span class="line">            orderContainer.addErrors(ErrorBuilder.buildServiceError(userModel.getException().getMessage()));</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            orderContainer.setUser(userModel.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">        return orderContainer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>整体流程如下：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-345cfc3f0c919b29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li>异常也可以作为返回的一部分，而不是直接<code>throw</code>出去，可以在服务层（更高层次）而不是资源层（更低层次）进行处理，e.g: AsyncResult封装了异常。</li>
+<li>尽量保持对象<code>不可变特性</code>，避免线程并发安全。</li>
+<li>在下游服务出现不稳定、异常、挂掉的时候，如果你发现调用时间很长，很可能是底层的Httpclient timeout时间并没有被覆写，默认为20~30s，可以配合<code>hystrix</code>做熔断和避免级联错误的产生，在<code>hystrix</code>中，也需要设置正确的<code>timeout</code>时间和线程池大小。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/tags/Spring-Cloud/" rel="tag"># Spring Cloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/24/consumer-driven-contract-testing/" rel="next" title="不得不说的微服务测试">
+                <i class="fa fa-chevron-left"></i> 不得不说的微服务测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/3600881"
+               alt="Qin Yulin" />
+          <p class="site-author-name" itemprop="name">Qin Yulin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinnnyul" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.jianshu.com/u/f557906ceafc" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.huangyunkun.com/" title="夜明的孤行灯" target="_blank">夜明的孤行灯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zhewuzhou.github.io/" title="硬核技术" target="_blank">硬核技术</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.himateng.com/" title="小马哥的管理日记" target="_blank">小马哥的管理日记</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些概念"><span class="nav-number">2.</span> <span class="nav-text">一些概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的操作"><span class="nav-number">3.</span> <span class="nav-text">常见的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应时间的优化"><span class="nav-number">4.</span> <span class="nav-text">响应时间的优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举个例子"><span class="nav-number">5.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin Yulin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://qinnnyul-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/08/26/rxjava-programming/';
+          this.page.identifier = '2018/08/26/rxjava-programming/';
+          this.page.title = '异步编程神器RxJava';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
