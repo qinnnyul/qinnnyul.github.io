@@ -105,7 +105,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-14935184856aa087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-66bd988a7b9406dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-0d5cb7143fe38db6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-01T03:03:54.000Z">
+<meta property="og:updated_time" content="2018-09-01T03:36:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务架构：最终一致性 + 事务补偿">
 <meta name="twitter:description" content="分布式事务产生的原因 数据库分库分表 微服务化 在微服务架构中，每个服务在用本地事务的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入协调者TM，负责协调参与者RM的行为，并最终决定这些参与者是否把事务进行提交。  随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？ 刚性事务">
@@ -417,7 +417,7 @@
 <h4 id="保证最终一致性的模式"><a href="#保证最终一致性的模式" class="headerlink" title="保证最终一致性的模式"></a>保证最终一致性的模式</h4><ul>
 <li><strong>可查询模式</strong>，任何一个服务操作都提供一个可查询接口，用来向外部输出操作执行的状态，下游Consumer可以通过接口得知服务操作执行的状态，然后根据不同的状态做不同的处理操作（执行或者取消）， 该模式对业务接口有一定侵入性。</li>
 <li><strong>补偿模式</strong>， 有了查询模式，我们能够知道操作的具体状态，如果处于不正常状态，我们可以<code>修正</code>操作中出现的问题，或许是重新执行，或许取消已经完成的操作，通过修复是的整个分布式系统达到最终一致。</li>
-<li><strong>最大努力通知模式</strong>， 在调用支付宝交易接口或微信支付接口时，我们一般会在回调页面和接口里，解密参数，然后调用系统中更新交易状态相关的服务，将订单更新为付款成功。同时，只有当我们回调页面中输出了success字样或者标识业务处理成功相应状态码时，支付宝才会停止回调请求。否则，支付宝会每间隔一段时间后，再向客户方发起回调请求，直到输出成功标识为止。</li>
+<li><strong>最大努力通知模式</strong>， 在调用支付宝交易接口或微信支付接口时，一般会在回调页面和接口里，解密参数，然后调用系统中更新交易状态相关的服务，将订单更新为付款成功。同时，只有当回调页面中输出了success字样或者标识业务处理成功相应状态码时，支付宝才会停止回调请求。否则，支付宝会每间隔一段时间后，再向客户方发起回调请求，直到输出成功标识为止。</li>
 </ul>
 
       
