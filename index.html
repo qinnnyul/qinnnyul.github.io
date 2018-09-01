@@ -227,6 +227,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -265,6 +275,159 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/01/distributed-tx-solutions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/01/distributed-tx-solutions/" itemprop="url">微服务架构：最终一致性 + 事务补偿</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-01T23:21:00+08:00">
+                2018-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/01/distributed-tx-solutions/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/01/distributed-tx-solutions/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          分布式事务产生的原因
+数据库分库分表
+微服务化
+在微服务架构中，每个服务在用本地事务的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入协调者TM，负责协调参与者RM的行为，并最终决定这些参与者是否把事务进行提交。
+
+随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？
+刚性事务 - 强一致性
+如上图，这是个标准的全局事务，事务管理器控制着全局事务，管理事务的生命周期，并通过XA协议与资源管理器协调资源；资源管理器负责控制和管理实际的资源 （这里的资源管理器，可以是一个DBMS，或者消息服务管理系统）
+两阶段提交它是XA用于在全局事务中协调多个资源的机制，常用于事务管理器和资源管理器之间，解决一致性问题，分两阶段：
+
+提交事务请求
+执行事务请求
+
+
+2PC的问题
+效率低，与本地事务相比，XA协议的系统开销比较大（数据被锁定的时间跨度整个事务，直到全局事务的结束），只有支持XA协议的资源才能参与分布式事务。
+2PC是反可伸缩模式的，在事务处理过程中，参与者需要一直持有资
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/01/distributed-tx-solutions/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -1683,7 +1846,7 @@ API一直作为软件工程里面的重要组成部分，由于“API economy”
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

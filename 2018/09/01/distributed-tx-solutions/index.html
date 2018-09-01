@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="微服务,领域驱动设计," />
+  <meta name="keywords" content="架构,微服务," />
 
 
 
@@ -94,24 +94,22 @@
 
 
 
-<meta name="description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
-<meta name="keywords" content="微服务,领域驱动设计">
+<meta name="description" content="分布式事务产生的原因 数据库分库分表 微服务化 在微服务架构中，每个服务在用本地事务的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入协调者TM，负责协调参与者RM的行为，并最终决定这些参与者是否把事务进行提交。  随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？ 刚性事务">
+<meta name="keywords" content="架构,微服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="领域驱动设计之战略篇">
-<meta property="og:url" content="http://yoursite.com/2018/08/13/ddd-concept/index.html">
+<meta property="og:title" content="微服务架构：最终一致性 + 事务补偿">
+<meta property="og:url" content="http://yoursite.com/2018/09/01/distributed-tx-solutions/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
+<meta property="og:description" content="分布式事务产生的原因 数据库分库分表 微服务化 在微服务架构中，每个服务在用本地事务的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入协调者TM，负责协调参与者RM的行为，并最终决定这些参与者是否把事务进行提交。  随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？ 刚性事务">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-287cb9266c2cb0c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-97e6a79b03bb0d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-443773ceb5f6ad79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-a225bff26a7c1417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-24T12:33:27.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-14935184856aa087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-66bd988a7b9406dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-0d5cb7143fe38db6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-01T03:03:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="领域驱动设计之战略篇">
-<meta name="twitter:description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="微服务架构：最终一致性 + 事务补偿">
+<meta name="twitter:description" content="分布式事务产生的原因 数据库分库分表 微服务化 在微服务架构中，每个服务在用本地事务的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入协调者TM，负责协调参与者RM的行为，并最终决定这些参与者是否把事务进行提交。  随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？ 刚性事务">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-14935184856aa087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -140,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/13/ddd-concept/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/01/distributed-tx-solutions/"/>
 
 
 
 
 
-  <title>领域驱动设计之战略篇 | 魔镜的技术心经</title>
+  <title>微服务架构：最终一致性 + 事务补偿 | 魔镜的技术心经</title>
   
 
 
@@ -298,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/ddd-concept/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/01/distributed-tx-solutions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -315,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">领域驱动设计之战略篇</h1>
+          <h1 class="post-title" itemprop="name headline">微服务架构：最终一致性 + 事务补偿</h1>
         
 
         <div class="post-meta">
@@ -327,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T23:21:00+08:00">
-                2018-08-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-01T23:21:00+08:00">
+                2018-09-01
               </time>
             
 
@@ -346,9 +344,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/13/ddd-concept/#comments" itemprop="discussionUrl">
+                <a href="/2018/09/01/distributed-tx-solutions/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/13/ddd-concept/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/09/01/distributed-tx-solutions/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -376,61 +374,50 @@
       
 
       
-        <h3 id="DDD是什么？"><a href="#DDD是什么？" class="headerlink" title="DDD是什么？"></a>DDD是什么？</h3><blockquote>
-<p>领域驱动设计是一种处理<strong>高度复杂域</strong>的设计方法，试图分离技术实现的复杂性，围绕<strong>业务概念</strong>构建<strong>领域模型</strong>来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发<strong>复杂业务</strong>软件系统，使系统在演进时任然保持敏捷。</p>
-</blockquote>
-<p>另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终目标还是</p>
-<blockquote>
-<p>高内聚，底耦合</p>
-</blockquote>
-<h3 id="DDD主要解决的问题？"><a href="#DDD主要解决的问题？" class="headerlink" title="DDD主要解决的问题？"></a>DDD主要解决的问题？</h3><ol>
-<li><p><strong>如何合理的划分业务系统？</strong><br>这为微服务的划分提供了方法论（微服务的粒度的问题，多大算大，多小又算小，在微服务刚兴起时，很多企业或者架构师对它都没有统一且明确的定义，这里给些examples，e.g：代码行数？职责的划分？披萨原则？组织结构？）界限上下文很好的回答了这个问题，这也是DDD最近几年借微服务的东风，火起来的原因之一(领域驱动设计的提出距今已经十多年，但真正火热起来大约是在2013年微服务架构被提出来之后)。</p>
-</li>
-<li><p><strong>如何保持业务架构和系统架构的一致性？</strong><br>与传统的系统相比，DDD里面强调领域专家和技术团队的合作，建立统一语言“普通话”， 聚焦在领域，领域逻辑和业务流程上面，使整体团队对同一个业务术语有统一的认识，避免理解的偏差，并将这些“术语”映射到代码中，随着系统的演进变迁。</p>
-</li>
-</ol>
-<h3 id="DDD战略设计？"><a href="#DDD战略设计？" class="headerlink" title="DDD战略设计？"></a>DDD战略设计？</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="战略设计.png"></p>
-<h3 id="DDD领域划分"><a href="#DDD领域划分" class="headerlink" title="DDD领域划分?"></a>DDD领域划分?</h3><p>根据问题域，将问题划分为Core domain，Sub domain， Support subdomain和generic subdomian，大概标准如下：</p>
-<ol>
-<li>核心域：核心竞争力，核心业务 (需要投入最好的人力和资源)</li>
-<li>支持子域： 没有，很糟糕; 有，也不足以脱颖而出(可以考虑外包)</li>
-<li>通用子域：都有的东西, 比如认证, 发短信, 客服系统等(可以考虑购买商业解决方案或者采用开源方案)</li>
-</ol>
-<h3 id="DDD领域建模方法？"><a href="#DDD领域建模方法？" class="headerlink" title="DDD领域建模方法？"></a>DDD领域建模方法？</h3><p>领域建模的方式很多种，比如四色建模、OOAD还有事件风暴，我们这里只简单聊聊如何使用事件风暴梳理业务流程，建立领域模型，划分边界。</p>
-<h3 id="DDD事件风暴四部曲？"><a href="#DDD事件风暴四部曲？" class="headerlink" title="DDD事件风暴四部曲？"></a>DDD事件风暴四部曲？</h3><ol>
-<li><strong>识别领域事件</strong></li>
-</ol>
-<p>事件是对结果进行建模，我们在寻找领域事件时，首先需要明白领域事件具备的几个特征：</p>
-<ul>
-<li>具有业务意义</li>
-<li>过去时，e.g: “XX已XX”</li>
-<li>时序性</li>
+        <h3 id="分布式事务产生的原因"><a href="#分布式事务产生的原因" class="headerlink" title="分布式事务产生的原因"></a>分布式事务产生的原因</h3><ul>
+<li>数据库分库分表</li>
+<li>微服务化</li>
+<li>在微服务架构中，每个服务在用<code>本地事务</code>的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入<code>协调者TM</code>，负责协调<code>参与者RM</code>的行为，并最终决定这些参与者是否把事务进行提交。</li>
 </ul>
-<p>事件风暴以过去发生的事件追溯系统的数据和行为，从而进行合适的建模，e.g：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-287cb9266c2cb0c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="事件风暴.png"></p>
-<ol start="2">
-<li><strong>识别命令</strong><br>命令可以理解为<strong>不同角色用户在界面上面的操作</strong>，比如“添加商品”，“编辑库存”，“提交订单”等； 有些命令可能产生多个事件，可以将他们用箭头联系起来;  在进行这个过程中，我们也需要将角色，通过不同的颜色标示出来 e.g:</li>
-</ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-97e6a79b03bb0d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="命令风暴.png"></p>
-<ol start="3">
-<li><strong>寻找聚合</strong><br>在DDD中，聚合是一组相关的领域对象，其目的是要确保<strong>业务规则</strong>在边界内的不变性，聚合根具有全局标识，所有对聚合根内对象的修改，都只能通过聚合根进行，聚合帮助我们简化了复杂的对象网络，逐步做到“高内聚，低耦合”。<br>在识别聚合的时候，我们可以通过对命令和事件的划分找到聚合边界，识别出分布在时间轴上面不同位置的相关命令和事件，e.g：</li>
-</ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-443773ceb5f6ad79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="寻找聚合.png"></p>
-<ol start="4">
-<li><strong>边界划分</strong><br>划分服务的边界，它一定程度上面对应的是“界限上下文”，关于它有一个非常形象的定义：<blockquote>
-<p>细胞之所以会存在，是因为细胞膜定义了什么在细胞内，什么在细胞外，并且确定了什么物质可以通过细胞膜</p>
+<p>随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？</p>
+<h3 id="刚性事务-强一致性"><a href="#刚性事务-强一致性" class="headerlink" title="刚性事务 - 强一致性"></a>刚性事务 - 强一致性</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-14935184856aa087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>如上图，这是个标准的全局事务，<code>事务管理器</code>控制着全局事务，管理事务的生命周期，并通过XA协议与<code>资源管理器</code>协调资源；资源管理器负责控制和管理实际的资源 （这里的资源管理器，可以是一个DBMS，或者消息服务管理系统）</p>
+<h4 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h4><p>它是XA用于在全局事务中协调多个资源的机制，常用于<code>事务管理器</code>和<code>资源管理器</code>之间，解决一致性问题，分两阶段：</p>
+<ul>
+<li>提交事务请求</li>
+<li>执行事务请求</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-66bd988a7b9406dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="2PC的问题"><a href="#2PC的问题" class="headerlink" title="2PC的问题"></a>2PC的问题</h4><ul>
+<li>效率低，与本地事务相比，XA协议的系统开销比较大（数据被锁定的时间跨度整个事务，直到全局事务的结束），只有支持XA协议的资源才能参与分布式事务。</li>
+<li>2PC是反可伸缩模式的，在事务处理过程中，参与者需要一直持有资源直到整个事务的结束，这样当业务规模越来越大的情况下，它的局限性就越明显。</li>
+<li>数据不一致，在2pc中的第二阶段时，当TM向RM发送提交请求之后，发生局部的网络异常或者在发送提交请求过程中TM发生故障， 这会导致只有一部分RM收到了提交请求，然后没有收到提交请求的RM不会执行事务的提交，于是整个分布式系统便会出现数据不一致。</li>
+<li>单点故障， 由于TM的重要性，一旦发生故障，整个事务失效</li>
+</ul>
+<h4 id="3PC的改进"><a href="#3PC的改进" class="headerlink" title="3PC的改进"></a>3PC的改进</h4><p>增加了<code>超时机制</code>， 主要解决单点故障问题，并减少资源锁定时间，一旦RM无法及时收到来至TM的信息之后，它会默认执行Commit操作， 而不会一直持有事务资源并处于阻塞状态。但是这种机制同样会导致数据不一致的问题，由于网络的原因，TM发送的回滚动作，没有被RM及时的收到，那么RM等待超时后就执行了提交操作，这样就和收到回滚操作并执行的RM之间存在了数据不一致的情况。</p>
+<h3 id="柔性事务-最终一致性"><a href="#柔性事务-最终一致性" class="headerlink" title="柔性事务 - 最终一致性"></a>柔性事务 - 最终一致性</h3><p>在2008年，eBay公布了基于<code>BASE</code>准则的最终一致性解决方案，它主要采用了消息队列来辅助实现事务控制流程，其核心通过消息队列的方式来异步执行分布式处理的任务，如果事务失败，则可以发起人工重试的纠正流程（比如对账系统，对处于<code>dead letter queue</code>的问题进行处理）</p>
+<h4 id="消息发送一致性"><a href="#消息发送一致性" class="headerlink" title="消息发送一致性"></a>消息发送一致性</h4><p>微服务架构下，需要通过网络进行通信，就自然引入了数据传输的不确定性，也就是CAP原理中的P-分区容错，而这里的<code>消息发送一致性</code>是可靠消息的保证。</p>
+<blockquote>
+<p>生成消息的业务动作与消息发送的一致（e.g： 如果业务操作成功，那么由这个业务操作所产生的消息一定会成功投递出去，否则就丢失消息）</p>
 </blockquote>
-</li>
-</ol>
-<p>一个聚合可能是最小颗粒度的界限上下文，同时，我们常合并业务相关性很高的聚合。e.g:</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-a225bff26a7c1417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="界限上下文.png"></p>
-<p>最后在领域划分的时候，需要团队一起对业务达成共识，首先建立统一语言，然后识别领域模型，划分子域和界限上下文，在验证界限上下文的时候，如果你发现有过多的角色在同一个子域或者界限上下文时，就需要注意了，这就是典型的坏味道，需要及时调整的讯号。</p>
-<h3 id="DDD与微服务"><a href="#DDD与微服务" class="headerlink" title="DDD与微服务"></a>DDD与微服务</h3><p>理想情况下，界限上下文与微服务可以一一对应，在实际项目中，有些调整，比如根据业务的相关度和变化频率，有时候我们会将多个界限上下文进行合并；另外微服务在开发，测试，部署，发布和运维等等时，相比单体应用而言，它面临了所有分布式系统面临的问题，带来了额外的复杂度和开销，所以将微服务粒度拆分过细反而是一种<strong>反模式</strong>，需要考虑需要解决问题的复杂度，将相对简单的服务合并在一起；在微服务拆分的时候，也要注意：“聚合是服务的最小单元”（一个界限上下文可以包括多个聚合），打破聚合，就很有可能破坏事务一致性和业务约束。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://www.developerfusion.com/article/9794/domain-driven-design-a-step-by-step-guide-part-1" target="_blank" rel="noopener">https://www.developerfusion.com/article/9794/domain-driven-design-a-step-by-step-guide-part-1</a></li>
-<li><a href="http://eventstorming.com/" target="_blank" rel="noopener">http://eventstorming.com/</a></li>
-<li><a href="https://www.infoq.com/domain-driven-design" target="_blank" rel="noopener">https://www.infoq.com/domain-driven-design</a></li>
-<li><a href="https://dddeurope.com/" target="_blank" rel="noopener">https://dddeurope.com/</a></li>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-0d5cb7143fe38db6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="最终一致性.png"></p>
+<p>如上图，保证消息发送一致性的一般流程如下：</p>
+<ul>
+<li>Producer先把消息发送给消息中间件服务，消息的状态标记为<code>待确认</code>，这个状态并不会被Consumer消费，对于长期<code>待确认</code>的消息，消息中间件会调用Producer的查询接口，查看最新状态，根据结果决定是否删除消息。</li>
+<li>Producer执行完业务操作后，向消息中间件服务，发送确认消息 </li>
+<li>这时消息的状态会被更改为<code>待发送（可发送）</code></li>
+<li>Consumer监听并接收待发送状态的消息，执行业务处理</li>
+<li>Consumer业务处理后，向消息中间件服务发送<code>ACK</code>，确认消息已经收到（消息中间件服务将从队列中删除该消息）</li>
+</ul>
+<p><code>消息的ACK确认流程中，任何一个环节都可能会出问题！</code></p>
+<p>对<code>未ACK</code>的消息，采用按规则重新投递的方式进行处理（很多MQ都提供at least once的投递，持久化和重试机制），一般还会设置<code>重发</code>的次数， 超过次数的消息会进入<code>dead letter queue</code>，等待人工干预或者延后定时处理。</p>
+<h4 id="业务接口的幂等性"><a href="#业务接口的幂等性" class="headerlink" title="业务接口的幂等性"></a>业务接口的幂等性</h4><p>消息的重复发送会导致业务接口出现重复调用的问题，主要原因就是消息没有及时收到ACK确认导致的， 那如何实现幂等性设计呢？</p>
+<p>在实际的业务场景中， 业务接口的幂等性设计，常结合查询操作一起使用，</p>
+<p>比如根据<code>唯一标识</code>查询消息是否被处理过， 或者根据消费日志表，来维护消息消费的记录。</p>
+<h4 id="保证最终一致性的模式"><a href="#保证最终一致性的模式" class="headerlink" title="保证最终一致性的模式"></a>保证最终一致性的模式</h4><ul>
+<li><strong>可查询模式</strong>，任何一个服务操作都提供一个可查询接口，用来向外部输出操作执行的状态，下游Consumer可以通过接口得知服务操作执行的状态，然后根据不同的状态做不同的处理操作（执行或者取消）， 该模式对业务接口有一定侵入性。</li>
+<li><strong>补偿模式</strong>， 有了查询模式，我们能够知道操作的具体状态，如果处于不正常状态，我们可以<code>修正</code>操作中出现的问题，或许是重新执行，或许取消已经完成的操作，通过修复是的整个分布式系统达到最终一致。</li>
+<li><strong>最大努力通知模式</strong>， 在调用支付宝交易接口或微信支付接口时，我们一般会在回调页面和接口里，解密参数，然后调用系统中更新交易状态相关的服务，将订单更新为付款成功。同时，只有当我们回调页面中输出了success字样或者标识业务处理成功相应状态码时，支付宝才会停止回调请求。否则，支付宝会每间隔一段时间后，再向客户方发起回调请求，直到输出成功标识为止。</li>
 </ul>
 
       
@@ -449,9 +436,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+            <a href="/tags/架构/" rel="tag"># 架构</a>
           
-            <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
           
         </div>
       
@@ -464,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/04/event-driven-architecture/" rel="next" title="事件驱动架构">
-                <i class="fa fa-chevron-left"></i> 事件驱动架构
+              <a href="/2018/08/26/rxjava-programming/" rel="next" title="异步编程神器RxJava">
+                <i class="fa fa-chevron-left"></i> 异步编程神器RxJava
               </a>
             
           </div>
@@ -473,10 +460,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/20/microservice-design-principal/" rel="prev" title="微服务六大设计原则">
-                微服务六大设计原则 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -654,7 +637,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD是什么？"><span class="nav-number">1.</span> <span class="nav-text">DDD是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD主要解决的问题？"><span class="nav-number">2.</span> <span class="nav-text">DDD主要解决的问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD战略设计？"><span class="nav-number">3.</span> <span class="nav-text">DDD战略设计？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD领域划分"><span class="nav-number">4.</span> <span class="nav-text">DDD领域划分?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD领域建模方法？"><span class="nav-number">5.</span> <span class="nav-text">DDD领域建模方法？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD事件风暴四部曲？"><span class="nav-number">6.</span> <span class="nav-text">DDD事件风暴四部曲？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD与微服务"><span class="nav-number">7.</span> <span class="nav-text">DDD与微服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式事务产生的原因"><span class="nav-number">1.</span> <span class="nav-text">分布式事务产生的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刚性事务-强一致性"><span class="nav-number">2.</span> <span class="nav-text">刚性事务 - 强一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#两阶段提交"><span class="nav-number">2.1.</span> <span class="nav-text">两阶段提交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2PC的问题"><span class="nav-number">2.2.</span> <span class="nav-text">2PC的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3PC的改进"><span class="nav-number">2.3.</span> <span class="nav-text">3PC的改进</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#柔性事务-最终一致性"><span class="nav-number">3.</span> <span class="nav-text">柔性事务 - 最终一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消息发送一致性"><span class="nav-number">3.1.</span> <span class="nav-text">消息发送一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#业务接口的幂等性"><span class="nav-number">3.2.</span> <span class="nav-text">业务接口的幂等性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保证最终一致性的模式"><span class="nav-number">3.3.</span> <span class="nav-text">保证最终一致性的模式</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -804,9 +787,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/08/13/ddd-concept/';
-          this.page.identifier = '2018/08/13/ddd-concept/';
-          this.page.title = '领域驱动设计之战略篇';
+          this.page.url = 'http://yoursite.com/2018/09/01/distributed-tx-solutions/';
+          this.page.identifier = '2018/09/01/distributed-tx-solutions/';
+          this.page.title = '微服务架构：最终一致性 + 事务补偿';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
