@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="架构,测试,微服务," />
+  <meta name="keywords" content="数据库," />
 
 
 
@@ -94,22 +94,22 @@
 
 
 
-<meta name="description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
-<meta name="keywords" content="架构,测试,微服务">
+<meta name="description" content="Mysql存储引擎 MyISAM，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数">
+<meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不得不说的微服务测试">
-<meta property="og:url" content="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/index.html">
+<meta property="og:title" content="Mysql调优：表连接优化">
+<meta property="og:url" content="http://yoursite.com/2018/09/10/mysql-sql-optimization/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
+<meta property="og:description" content="Mysql存储引擎 MyISAM，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-b15d3c16e24d23ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-8bdf4aba4416c85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-25T01:46:05.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-34e670e1c66b5e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-54b2e5b9ee36cc42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-10T15:02:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不得不说的微服务测试">
-<meta name="twitter:description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Mysql调优：表连接优化">
+<meta name="twitter:description" content="Mysql存储引擎 MyISAM，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -138,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/10/mysql-sql-optimization/"/>
 
 
 
 
 
-  <title>不得不说的微服务测试 | 魔镜的技术心经</title>
+  <title>Mysql调优：表连接优化 | 魔镜的技术心经</title>
   
 
 
@@ -296,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/10/mysql-sql-optimization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -313,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">不得不说的微服务测试</h1>
+          <h1 class="post-title" itemprop="name headline">Mysql调优：表连接优化</h1>
         
 
         <div class="post-meta">
@@ -325,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-24T23:21:00+08:00">
-                2018-08-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T20:31:00+08:00">
+                2018-09-10
               </time>
             
 
@@ -344,9 +344,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/24/consumer-driven-contract-testing/#comments" itemprop="discussionUrl">
+                <a href="/2018/09/10/mysql-sql-optimization/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/24/consumer-driven-contract-testing/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/09/10/mysql-sql-optimization/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -374,67 +374,54 @@
       
 
       
-        <p>在微服务架构下，给我们测试带来了如下挑战：</p>
+        <h4 id="Mysql存储引擎"><a href="#Mysql存储引擎" class="headerlink" title="Mysql存储引擎"></a>Mysql存储引擎</h4><ul>
+<li><code>MyISAM</code>，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。 </li>
+<li><code>InnoDB</code>，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。</li>
+<li><code>MEMORY</code>， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数据是放在内存中的，并且默认使用HASH索引。<br><img src="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+</ul>
+<h4 id="表连接的类型"><a href="#表连接的类型" class="headerlink" title="表连接的类型"></a>表连接的类型</h4><ul>
+<li>Left Join</li>
+<li>Right Join</li>
+<li>Inner Join</li>
+<li>Full Join（Do not support）</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-34e670e1c66b5e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="临时表的使用"><a href="#临时表的使用" class="headerlink" title="临时表的使用"></a>临时表的使用</h4><p>一旦涉及排序和分组，就很大可能会使用临时表，而临时表分两类：</p>
 <ul>
-<li><strong>验证成本高</strong>，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。</li>
-<li><strong>结果不稳定</strong>， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临<code>网络延时</code>、<code>超时</code>、<code>带宽</code>等因素，容易导致不稳定的测试结果。</li>
-<li><strong>反馈周期长</strong>， 相比单体应用而言，微服务架构下，可独立部署的单元多，因此集成测试的反馈周期比之前会更长，定位问题的时间就会更久。</li>
-<li><strong>沟通成本高</strong>， 微服务常由不同团队开发并维护，当服务频繁进行改动和版本升级的时候，很容易导致不兼容，加大团队之间的沟通成本。</li>
+<li>内存临时表 - MEMORY Engine</li>
+<li>磁盘临时表 - MyISAM Engine</li>
 </ul>
-<h3 id="测试金字塔"><a href="#测试金字塔" class="headerlink" title="测试金字塔"></a>测试金字塔</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>测试金字塔很好的帮助我们在制定测试策略的时候，区分不同层次测试关注点，同时，一般来说，测试颗粒度越粗，越脆弱，执行的时间越长，维护成本也越高。</p>
-<h3 id="不得不说的契约测试"><a href="#不得不说的契约测试" class="headerlink" title="不得不说的契约测试"></a>不得不说的契约测试</h3><p>在微服务中，不得不聊聊消费者契约测试，</p>
-<blockquote>
-<p>契约，一种定义在Consumer与Provider之间的交互方式</p>
-</blockquote>
-<h4 id="消费者驱动的契约测试"><a href="#消费者驱动的契约测试" class="headerlink" title="消费者驱动的契约测试"></a>消费者驱动的契约测试</h4><p><img src="https://upload-images.jianshu.io/upload_images/12636540-b15d3c16e24d23ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>契约是Consumer和Provider团队之间达成的交互协议，更多的看中的是请求和响应的Payload结构（<code>Schema</code>），由服务消费者构建并生成contract，然后将contact上传到Pact broker or server； 对应的服务提供者，需要在Pipeline中，有一个task进行契约的验证，保证契约不会被破坏。</p>
-<h4 id="契约测试的好处"><a href="#契约测试的好处" class="headerlink" title="契约测试的好处"></a>契约测试的好处</h4><ul>
-<li><strong>测试分层</strong>，Consumer和Provider分别测试。</li>
-<li><strong>测试前移</strong>，为Consumer提供Mock，不需要真实的集成环境，<code>稳定性高</code>。</li>
-<li><strong>反馈周期短</strong>，单元测试级别，测试运行快，<code>毫米级</code>。</li>
-<li><strong>沟通成本底</strong></li>
+<p>根据临时表的大小（<code>tmp_table_size</code>），mysql会决定使用哪种临时表；众所周知，内存的IO速度远远超过了磁盘的IO速度，所以在做优化的时候，尽量避免使用<code>磁盘临时表</code>的情况。</p>
+<h4 id="常见优化方式"><a href="#常见优化方式" class="headerlink" title="常见优化方式"></a>常见优化方式</h4><ul>
+<li>先定位慢查询 <code>show status like ‘slow_queries’;</code></li>
+<li>使用<code>explain</code>查看SQL的执行计划，如果出现<code>Using temporary</code>的字段，就意味着Query使用了临时表，如下图：</li>
 </ul>
-<p>为服务消费者提供了信心，更为服务提供者提供了更大的价值（通过与不同消费者约定的契约，可以保证服务安全的升级变迁，不会破坏之前已有的功能）<br><img src="https://upload-images.jianshu.io/upload_images/12636540-8bdf4aba4416c85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="契约测试的应用场景"><a href="#契约测试的应用场景" class="headerlink" title="契约测试的应用场景"></a>契约测试的应用场景</h4><ul>
-<li>一个服务需要被多个消费者使用，每个消费者的诉求并不完全一样（一对一的场景，没有太大意义）。</li>
-<li>服务消费者与服务提供者由不同的团队开发维护。</li>
-<li>服务消费者与服务提供者，一定要对契约达成一致，并一直保持这种<code>约束</code>（如果有一方没有遵守，比如提供者根本不将契约验证集成到流水线中，那么就没有任何意义），契约的不符合预期的变化应当会造成测试的失败。</li>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-54b2e5b9ee36cc42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li>对<code>Order by</code>或者<code>Group by</code>的字段建立索引</li>
+<li>拆分SQL语句，将查询与排序进行分离，为了减少临时表的大小，可以先找到符合条件的查询结果集，然后通过<code>IN</code>或者<code>NOT IN</code>的方式连接在一起。</li>
+<li>业务变通，了解业务的真正需求，比如查询是否一定要实时，数据是否需要强一致性，是否可以<code>以空间换时间</code>的做法解决问题。<ul>
+<li>物化视图，预先将需要关联或者汇总的数据，通过实体表存放起来，避免Join查询</li>
+<li>增加冗余字段，减少连表查询</li>
+<li>增加冗余表，比如统计汇总表</li>
+<li>缓存， 数据库缓存或者程序的缓存</li>
+<li>增加索引</li>
 </ul>
-<h4 id="应该关注"><a href="#应该关注" class="headerlink" title="应该关注"></a>应该关注</h4><ul>
-<li>检查Consumer构建的请求是否匹配到了对应的Contract</li>
-<li>检查Provider的响应是否满足Consumer的需要</li>
+</li>
+<li>应用层的优化<ul>
+<li>业务代码进行结果集的组装（排序或者分组），减少数据库的Join。</li>
+<li>将不变的数据，从数据库读取出来后，就保存到内存中，直接调用相应的静态方法或者Map，减少和数据库的交互次数。</li>
 </ul>
-<h4 id="不应该关注"><a href="#不应该关注" class="headerlink" title="不应该关注"></a>不应该关注</h4><ul>
-<li>Provider的业务逻辑是否正确</li>
-<li>Consumer的处理响应的逻辑</li>
+</li>
+<li>架构层面优化<ul>
+<li>读写分离，通过slave节点，分担读的压力，提高性能（与硬件升级类似）</li>
+<li>分库分表，会使Join更加复杂和麻烦（特别是如何保证高效的分布式事务一致性），不到万不得已，千万别使用。</li>
+<li>Join太多，是否意味着这种多表联合查询，放在大数据分析里面会更合适？ </li>
 </ul>
-<p>可参考的工具： <code>Pact</code>, <code>Spring Cloud Contract</code>等</p>
-<h3 id="不得不说的集成测试"><a href="#不得不说的集成测试" class="headerlink" title="不得不说的集成测试"></a>不得不说的集成测试</h3><p>集成测试验证服务或者组件之间的<code>连通性</code>和<code>交互</code>以检查接口缺陷，集成测试旨在通过集成不同的Downstream服务，来覆盖基本的成功和错误的场景，在我们项目中，选用<code>REST Assured</code>作为集成测试工具，使用非常方便:</p>
-<pre><code class="java"><span class="meta">@RunWith</span>(SpringRunner.class)
-<span class="meta">@SpringBootTest</span>(webEnvironment = WebEnvironment.RANDOM_PORT)
-<span class="meta">@AutoConfigureRestDocs</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDocumentationTests</span> </span>{
-
-    <span class="meta">@LocalServerPort</span>
-    <span class="keyword">private</span> <span class="keyword">int</span> port;
-
-    <span class="meta">@Autowired</span>
-    <span class="keyword">private</span> RequestSpecification documentationSpec;
-
-    <span class="meta">@Test</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">listUsers</span><span class="params">()</span> </span>{
-        given(<span class="keyword">this</span>.documentationSpec).filter(document(<span class="string">"list-users"</span>)).when()
-                .port(<span class="keyword">this</span>.port).get(<span class="string">"/"</span>).then().assertThat().statusCode(is(<span class="number">200</span>));
-    }
-
-}
-</code></pre>
-<p>当downstream服务非常<code>不稳定</code>的时候，我们会通过<code>wiremock</code>作为proxy对请求和响应进行录制，使用wiremock做测试替身，隔离外部调用，避免多服务间的复杂情况（网络，其他团队服务可用性等），并以可重复的方式模拟任何场景（超时，Down机，SSL验证失败，丢失HTTP头，请求响应不匹配等），运行稳定，且反馈周期短。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://www.pact.net.cn/best_practices/consumer.html" target="_blank" rel="noopener">https://www.pact.net.cn/best_practices/consumer.html</a></li>
-<li><a href="https://martinfowler.com/articles/consumerDrivenContracts.html" target="_blank" rel="noopener">https://martinfowler.com/articles/consumerDrivenContracts.html</a></li>
-<li><a href="https://github.com/realestate-com-au/pact" target="_blank" rel="noopener">https://github.com/realestate-com-au/pact</a></li>
+</li>
+</ul>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/internal-temporary-tables.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/8.0/en/internal-temporary-tables.html</a></li>
 </ul>
 
       
@@ -453,11 +440,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
-          
-            <a href="/tags/测试/" rel="tag"># 测试</a>
-          
-            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
           
         </div>
       
@@ -470,8 +453,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/22/spring-cloud-based-microservice/" rel="next" title="基于Spring Cloud的微服务架构">
-                <i class="fa fa-chevron-left"></i> 基于Spring Cloud的微服务架构
+              <a href="/2018/09/01/distributed-tx-solutions/" rel="next" title="微服务架构：最终一致性 + 事务补偿">
+                <i class="fa fa-chevron-left"></i> 微服务架构：最终一致性 + 事务补偿
               </a>
             
           </div>
@@ -479,10 +462,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/26/rxjava-programming/" rel="prev" title="异步编程神器RxJava">
-                异步编程神器RxJava <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -660,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试金字塔"><span class="nav-number">1.</span> <span class="nav-text">测试金字塔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不得不说的契约测试"><span class="nav-number">2.</span> <span class="nav-text">不得不说的契约测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消费者驱动的契约测试"><span class="nav-number">2.1.</span> <span class="nav-text">消费者驱动的契约测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#契约测试的好处"><span class="nav-number">2.2.</span> <span class="nav-text">契约测试的好处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#契约测试的应用场景"><span class="nav-number">2.3.</span> <span class="nav-text">契约测试的应用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应该关注"><span class="nav-number">2.4.</span> <span class="nav-text">应该关注</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不应该关注"><span class="nav-number">2.5.</span> <span class="nav-text">不应该关注</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不得不说的集成测试"><span class="nav-number">3.</span> <span class="nav-text">不得不说的集成测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mysql存储引擎"><span class="nav-number">1.</span> <span class="nav-text">Mysql存储引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表连接的类型"><span class="nav-number">2.</span> <span class="nav-text">表连接的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#临时表的使用"><span class="nav-number">3.</span> <span class="nav-text">临时表的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见优化方式"><span class="nav-number">4.</span> <span class="nav-text">常见优化方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -810,9 +789,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/08/24/consumer-driven-contract-testing/';
-          this.page.identifier = '2018/08/24/consumer-driven-contract-testing/';
-          this.page.title = '不得不说的微服务测试';
+          this.page.url = 'http://yoursite.com/2018/09/10/mysql-sql-optimization/';
+          this.page.identifier = '2018/09/10/mysql-sql-optimization/';
+          this.page.title = 'Mysql调优：表连接优化';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
