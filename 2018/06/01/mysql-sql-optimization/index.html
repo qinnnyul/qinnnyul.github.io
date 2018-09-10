@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="架构," />
+  <meta name="keywords" content="数据库," />
 
 
 
@@ -94,18 +94,22 @@
 
 
 
-<meta name="description" content="当我们在为新的产品或者项目进行系统架构设计、制定演进路线、技术选型的时候，我们需要一些架构原则，来指导我们的架构设计和选型。 架构解决的问题架构作为构架在业务与技术之间鸿沟的桥梁，e.g：业务需求 –&amp;gt; 架构 –&amp;gt; 技术实现其主要目的：   为了解决当下或未来软件系统复杂度带来的问题，而架构其实并非设计出来，而是随着业务的发展逐步演变出来的结果  架构的一些原则1.Security -">
-<meta name="keywords" content="架构">
+<meta name="description" content="Mysql存储引擎 MyISAM不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY存储引擎使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因">
+<meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="企业级架构设计原则">
-<meta property="og:url" content="http://yoursite.com/2018/07/10/enterprise-design-principal/index.html">
+<meta property="og:title" content="Mysql调优：表连接优化">
+<meta property="og:url" content="http://yoursite.com/2018/06/01/mysql-sql-optimization/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="当我们在为新的产品或者项目进行系统架构设计、制定演进路线、技术选型的时候，我们需要一些架构原则，来指导我们的架构设计和选型。 架构解决的问题架构作为构架在业务与技术之间鸿沟的桥梁，e.g：业务需求 –&amp;gt; 架构 –&amp;gt; 技术实现其主要目的：   为了解决当下或未来软件系统复杂度带来的问题，而架构其实并非设计出来，而是随着业务的发展逐步演变出来的结果  架构的一些原则1.Security -">
+<meta property="og:description" content="Mysql存储引擎 MyISAM不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY存储引擎使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-15T11:26:59.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-34e670e1c66b5e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-54b2e5b9ee36cc42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-10T13:37:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="企业级架构设计原则">
-<meta name="twitter:description" content="当我们在为新的产品或者项目进行系统架构设计、制定演进路线、技术选型的时候，我们需要一些架构原则，来指导我们的架构设计和选型。 架构解决的问题架构作为构架在业务与技术之间鸿沟的桥梁，e.g：业务需求 –&amp;gt; 架构 –&amp;gt; 技术实现其主要目的：   为了解决当下或未来软件系统复杂度带来的问题，而架构其实并非设计出来，而是随着业务的发展逐步演变出来的结果  架构的一些原则1.Security -">
+<meta name="twitter:title" content="Mysql调优：表连接优化">
+<meta name="twitter:description" content="Mysql存储引擎 MyISAM不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY存储引擎使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -134,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/10/enterprise-design-principal/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/01/mysql-sql-optimization/"/>
 
 
 
 
 
-  <title>企业级架构设计原则 | 魔镜的技术心经</title>
+  <title>Mysql调优：表连接优化 | 魔镜的技术心经</title>
   
 
 
@@ -292,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/10/enterprise-design-principal/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/01/mysql-sql-optimization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -309,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">企业级架构设计原则</h1>
+          <h1 class="post-title" itemprop="name headline">Mysql调优：表连接优化</h1>
         
 
         <div class="post-meta">
@@ -321,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T17:37:00+08:00">
-                2018-07-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-01T20:31:00+08:00">
+                2018-06-01
               </time>
             
 
@@ -340,9 +344,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/10/enterprise-design-principal/#comments" itemprop="discussionUrl">
+                <a href="/2018/06/01/mysql-sql-optimization/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/07/10/enterprise-design-principal/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/06/01/mysql-sql-optimization/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -370,103 +374,42 @@
       
 
       
-        <p>当我们在为新的产品或者项目进行系统架构设计、制定演进路线、技术选型的时候，我们需要一些架构原则，来指导我们的架构设计和选型。</p>
-<h2 id="架构解决的问题"><a href="#架构解决的问题" class="headerlink" title="架构解决的问题"></a>架构解决的问题</h2><p>架构作为构架在业务与技术之间鸿沟的桥梁，e.g：业务需求 –&gt; 架构 –&gt; 技术实现<br>其主要目的： </p>
-<blockquote>
-<p>为了解决当下或未来软件系统复杂度带来的问题，而架构其实并非设计出来，而是随着业务的发展逐步演变出来的结果</p>
-</blockquote>
-<h2 id="架构的一些原则"><a href="#架构的一些原则" class="headerlink" title="架构的一些原则"></a>架构的一些原则</h2><p>1.<strong>Security - Built security in</strong>， “安全”带来的品牌名声损失、用户流失、金钱的直接损失，都是企业级应用不能容忍的事故。</p>
-<p>可参考的实践：</p>
-<ul>
-<li><p>端到端的加密，传输的数据通过SSL加密，e.g:  Request -&gt; ELB(https) -&gt; EC2(https)</p>
-</li>
-<li><p>根据系统不同的用途，将各个系统进行网络分区，设置不同的防火墙</p>
-</li>
+        <h4 id="Mysql存储引擎"><a href="#Mysql存储引擎" class="headerlink" title="Mysql存储引擎"></a>Mysql存储引擎</h4><ul>
+<li>MyISAM不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。 </li>
+<li>InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。</li>
+<li>MEMORY存储引擎使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数据是放在内存中的，并且默认使用HASH索引。<br><img src="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
 </ul>
-<p>2.<strong>Scalability - 动态伸缩</strong>， 至少支持两个维度的伸缩，比如水平伸缩和垂直伸缩。</p>
-<p>可参考的实践：</p>
-<ul>
-<li><p>根据用户访问量或系统负载，进行水平的增加或者减少服务器实例</p>
-</li>
-<li><p>可根据Segment分流，比如产品线类型，多品牌划分。</p>
-</li>
+<h4 id="表连接的类型"><a href="#表连接的类型" class="headerlink" title="表连接的类型"></a>表连接的类型</h4><ul>
+<li>Left Join</li>
+<li>Right Join</li>
+<li>Inner Join</li>
+<li>Full Join（Do not support）</li>
 </ul>
-<p>3.<strong>Resilient to Failures - 健壮性，容错</strong></p>
-<p>可参考的实践：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-34e670e1c66b5e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="临时表的使用"><a href="#临时表的使用" class="headerlink" title="临时表的使用"></a>临时表的使用</h4><p>一旦涉及排序和分组，就很大可能会使用临时表，而临时表分两类：</p>
 <ul>
-<li><p>为API设置timeouts，重试机制</p>
-</li>
-<li><p>异步优于同步集成</p>
-</li>
-<li><p>设置自动熔断，做到服务降级的同时，为终端用户提供有意义的信息</p>
-</li>
-<li><p>防御性代码和测试</p>
-</li>
-<li><p>通过ELB或者F5，隔离内部服务与用户的交互的直接交互，屏蔽内部服务状态变化对用户操作的影响。</p>
-</li>
+<li>内存临时表 - MEMORY Engine</li>
+<li>磁盘临时表 - MyISAM Engine</li>
 </ul>
-<p>4.<strong>Logs，Instrumented and Monitored - 日志与监控</strong></p>
-<p>可参考的实践：</p>
+<p>根据临时表的大小（<code>tmp_table_size</code>），mysql会决定使用哪种临时表；众所周知，内存的IO速度远远超过了磁盘的IO速度，所以在做优化的时候，尽量避免使用<code>磁盘临时表</code>的情况。</p>
+<h4 id="常见优化方式"><a href="#常见优化方式" class="headerlink" title="常见优化方式"></a>常见优化方式</h4><ul>
+<li>使用<code>explain</code>查看SQL的执行计划，如果出现<code>Using temporary</code>的字段，就意味着Query使用了临时表，如下图：</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-54b2e5b9ee36cc42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <ul>
-<li><p>分布式追踪， e.g： dynatrace，zipkin等</p>
-</li>
-<li><p>中心化日志管理， e.g： splunk</p>
-</li>
-<li><p>服务监控与告警， 定义监控指标，设置告警触发条件</p>
-</li>
+<li>对<code>Order by</code>或者<code>Group by</code>的字段建立索引</li>
+<li>拆分SQL语句，将查询与排序进行分离，为了减少临时表的大小，可以先找到符合条件的查询结果集，然后通过<code>IN</code>或者<code>NOT IN</code>的方式连接在一起。</li>
+<li>业务变通，了解业务的真正需求，比如查询是否一定要实时，数据是否需要强一致性，是否可以<code>以空间换时间</code>的做法解决问题。<ul>
+<li>物化视图，预先将需要关联或者汇总的数据，通过实体表存放起来，避免Join查询</li>
+<li>增加冗余字段，减少连表查询</li>
+<li>增加冗余表，比如统计汇总表</li>
+<li>缓存， 数据库缓存或者程序的缓存</li>
+<li>增加索引</li>
 </ul>
-<p>5.<strong>Configurable - 可配置，将系统容易变化的部分，通过配置进行管理</strong></p>
-<p>可参考的实践：</p>
-<ul>
-<li><p>前端样式styleguide的可配置，可以轻易更换网站风格（换皮肤）</p>
 </li>
-<li><p>功能的可配置，比如feature toggle</p>
-</li>
-<li><p>熔断器的可配置</p>
-</li>
-<li><p>配置服务器，比如Spring cloud config server，实现配置的动态管理</p>
-</li>
+<li>应用层的优化，比如将不变的数据，从数据库读取出来后，就保存到内存中，直接调用相应的静态方法或者Map，减少和数据库的交互次数。</li>
 </ul>
-<p>6.<strong>Automated - 自动化一切可以自动化的任务</strong></p>
-<p>可参考的实践：</p>
-<ul>
-<li>CI &amp; CD</li>
-</ul>
-<p>7.<strong>Modular - 模块化</strong></p>
-<p>可参考的实践： </p>
-<ul>
-<li><p>划分清楚的职责 - Single responsibility of a component (done well)</p>
-</li>
-<li><p>关注点分离</p>
-</li>
-<li><p>高内聚，低耦合</p>
-</li>
-<li><p>Just good enough - not over engineered</p>
-</li>
-</ul>
-<p>8.<strong>Reuse - 重用已用API资产，避免不必要的重复构建</strong></p>
-<p>可参考的实践：</p>
-<ul>
-<li><p>API文档，e.g： SwaggerUI</p>
-</li>
-<li><p>API资产管理，比如有些商用的API Gateway， Axway能够集中管理所有注册的API生命周期</p>
-</li>
-</ul>
-<p>9.<strong>Predictable - Release - 可控发布，而不是祈祷式发布</strong></p>
-<p>可参考的实践：</p>
-<ul>
-<li><p>增量发布</p>
-</li>
-<li><p>回滚计划</p>
-</li>
-<li><p>蓝绿部署</p>
-</li>
-<li><p>灰度发布</p>
-</li>
-<li><p>隔离持续集成和持续部署</p>
-</li>
-</ul>
-<p>10.<strong>Consume over Rent over Buy over Build</strong>，除非需要构建Core能力，优先选择Build，否则依次考虑Consume &gt; Rent &gt; Buy &gt; Build</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://dev.mysql.com/doc/refman/8.0/en/internal-temporary-tables.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/8.0/en/internal-temporary-tables.html</a></p>
 
       
     </div>
@@ -484,7 +427,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
           
         </div>
       
@@ -497,18 +440,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/13/post-incident-review-jvm/" rel="next" title="回忆录： 一次GC引发的产品事故">
-                <i class="fa fa-chevron-left"></i> 回忆录： 一次GC引发的产品事故
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/26/api-concpet/" rel="prev" title="API到底是什么？">
-                API到底是什么？ <i class="fa fa-chevron-right"></i>
+              <a href="/2018/06/13/post-incident-review-jvm/" rel="prev" title="回忆录： 一次GC引发的产品事故">
+                回忆录： 一次GC引发的产品事故 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -687,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构解决的问题"><span class="nav-number">1.</span> <span class="nav-text">架构解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构的一些原则"><span class="nav-number">2.</span> <span class="nav-text">架构的一些原则</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mysql存储引擎"><span class="nav-number">1.</span> <span class="nav-text">Mysql存储引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表连接的类型"><span class="nav-number">2.</span> <span class="nav-text">表连接的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#临时表的使用"><span class="nav-number">3.</span> <span class="nav-text">临时表的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见优化方式"><span class="nav-number">4.</span> <span class="nav-text">常见优化方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -837,9 +776,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/07/10/enterprise-design-principal/';
-          this.page.identifier = '2018/07/10/enterprise-design-principal/';
-          this.page.title = '企业级架构设计原则';
+          this.page.url = 'http://yoursite.com/2018/06/01/mysql-sql-optimization/';
+          this.page.identifier = '2018/06/01/mysql-sql-optimization/';
+          this.page.title = 'Mysql调优：表连接优化';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
