@@ -94,21 +94,21 @@
 
 
 
-<meta name="description" content="Mysql存储引擎 MyISAM不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY存储引擎使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因">
+<meta name="description" content="Mysql存储引擎 MyISAM，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数">
 <meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql调优：表连接优化">
 <meta property="og:url" content="http://yoursite.com/2018/06/01/mysql-sql-optimization/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="Mysql存储引擎 MyISAM不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY存储引擎使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因">
+<meta property="og:description" content="Mysql存储引擎 MyISAM，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-34e670e1c66b5e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-54b2e5b9ee36cc42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-10T13:37:27.000Z">
+<meta property="og:updated_time" content="2018-09-10T13:48:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql调优：表连接优化">
-<meta name="twitter:description" content="Mysql存储引擎 MyISAM不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY存储引擎使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因">
+<meta name="twitter:description" content="Mysql存储引擎 MyISAM，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -375,9 +375,9 @@
 
       
         <h4 id="Mysql存储引擎"><a href="#Mysql存储引擎" class="headerlink" title="Mysql存储引擎"></a>Mysql存储引擎</h4><ul>
-<li>MyISAM不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。 </li>
-<li>InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。</li>
-<li>MEMORY存储引擎使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数据是放在内存中的，并且默认使用HASH索引。<br><img src="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+<li><code>MyISAM</code>，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。 </li>
+<li><code>InnoDB</code>，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。</li>
+<li><code>MEMORY</code>， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数据是放在内存中的，并且默认使用HASH索引。<br><img src="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
 </ul>
 <h4 id="表连接的类型"><a href="#表连接的类型" class="headerlink" title="表连接的类型"></a>表连接的类型</h4><ul>
 <li>Left Join</li>
