@@ -531,7 +531,7 @@ Full Join（Do not support）
 
 根据临时表的大小（tmp_table_size），mysql会决定使用哪种临时表；众所周知，内存的IO速度远远超过了磁盘的IO速度，所以在做优化的时候，尽量避免使用磁盘临时表的情况。
 常见优化方式
-使用explain查看SQL的执行计划，如果出现Usi
+先定位慢查询 show status like ‘sl
           ...
           <!--noindex-->
           <div class="post-button text-center">

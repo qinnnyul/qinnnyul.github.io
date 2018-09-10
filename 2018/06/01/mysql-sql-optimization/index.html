@@ -105,7 +105,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7f097bc506b6b5d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-34e670e1c66b5e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-54b2e5b9ee36cc42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-10T13:48:11.000Z">
+<meta property="og:updated_time" content="2018-09-10T14:58:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql调优：表连接优化">
 <meta name="twitter:description" content="Mysql存储引擎 MyISAM，不支持事务、也不支持外键，但其访问速度快，对事务完整性没有要求。  InnoDB，提供了具有提交、回滚和崩溃恢复能力的事务安全。但是比起MyISAM存储引擎，InnoDB写的处理效率差一些并且会占用更多的磁盘空间以保留数据和索引。 MEMORY， 使用存在内存中的内容来创建表。 每个MEMORY表只实际对应一个磁盘文件。MEMORY类型的表访问非常得快，因为它的数">
@@ -393,6 +393,7 @@
 </ul>
 <p>根据临时表的大小（<code>tmp_table_size</code>），mysql会决定使用哪种临时表；众所周知，内存的IO速度远远超过了磁盘的IO速度，所以在做优化的时候，尽量避免使用<code>磁盘临时表</code>的情况。</p>
 <h4 id="常见优化方式"><a href="#常见优化方式" class="headerlink" title="常见优化方式"></a>常见优化方式</h4><ul>
+<li>先定位慢查询 <code>show status like ‘slow_queries’;</code></li>
 <li>使用<code>explain</code>查看SQL的执行计划，如果出现<code>Using temporary</code>的字段，就意味着Query使用了临时表，如下图：</li>
 </ul>
 <p><img src="https://upload-images.jianshu.io/upload_images/12636540-54b2e5b9ee36cc42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
@@ -407,9 +408,21 @@
 <li>增加索引</li>
 </ul>
 </li>
-<li>应用层的优化，比如将不变的数据，从数据库读取出来后，就保存到内存中，直接调用相应的静态方法或者Map，减少和数据库的交互次数。</li>
+<li>应用层的优化<ul>
+<li>业务代码进行结果集的组装（排序或者分组），减少数据库的Join。</li>
+<li>将不变的数据，从数据库读取出来后，就保存到内存中，直接调用相应的静态方法或者Map，减少和数据库的交互次数。</li>
 </ul>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://dev.mysql.com/doc/refman/8.0/en/internal-temporary-tables.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/8.0/en/internal-temporary-tables.html</a></p>
+</li>
+<li>架构层面优化<ul>
+<li>读写分离，通过slave节点，分担读的压力，提高性能（与硬件升级类似）</li>
+<li>分库分表，会使Join更加复杂和麻烦（特别是如何保证高效的分布式事务一致性），不到万不得已，千万别使用。</li>
+<li>Join太多，是否意味着这种多表联合查询，放在大数据分析里面会更合适？ </li>
+</ul>
+</li>
+</ul>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/internal-temporary-tables.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/8.0/en/internal-temporary-tables.html</a></li>
+</ul>
 
       
     </div>
