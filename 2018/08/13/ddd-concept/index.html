@@ -97,7 +97,7 @@
 <meta name="description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
 <meta name="keywords" content="微服务,领域驱动设计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="领域驱动设计之战略篇">
+<meta property="og:title" content="领域驱动设计：服务边界划分">
 <meta property="og:url" content="http://yoursite.com/2018/08/13/ddd-concept/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
 <meta property="og:description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
@@ -107,9 +107,9 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-97e6a79b03bb0d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-443773ceb5f6ad79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-a225bff26a7c1417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-24T12:33:27.000Z">
+<meta property="og:updated_time" content="2018-09-12T11:51:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="领域驱动设计之战略篇">
+<meta name="twitter:title" content="领域驱动设计：服务边界划分">
 <meta name="twitter:description" content="DDD是什么？ 领域驱动设计是一种处理高度复杂域的设计方法，试图分离技术实现的复杂性，围绕业务概念构建领域模型来控制业务的复杂性，以解决软件难以理解，难以演化等问题。团队应用它可以成功地开发复杂业务软件系统，使系统在演进时任然保持敏捷。  另外一种解读：DDD不是语言，不是框架，不是架构，而是一种思想，一种套路，它可以分离业务复杂度和技术复杂度，DDD也并不是一个新的事物，它是面向对象的拔高，最终">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-dcf7d99b28f0c249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
@@ -146,7 +146,7 @@
 
 
 
-  <title>领域驱动设计之战略篇 | 魔镜的技术心经</title>
+  <title>领域驱动设计：服务边界划分 | 魔镜的技术心经</title>
   
 
 
@@ -315,7 +315,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">领域驱动设计之战略篇</h1>
+          <h1 class="post-title" itemprop="name headline">领域驱动设计：服务边界划分</h1>
         
 
         <div class="post-meta">
@@ -337,6 +337,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/微服务/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -560,12 +582,21 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
           
 
           
@@ -633,6 +664,10 @@
               
                 <li class="links-of-blogroll-item">
                   <a href="http://www.himateng.com/" title="小马哥的管理日记" target="_blank">小马哥的管理日记</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://netium.gitlab.io" title="TechX空间" target="_blank">TechX空间</a>
                 </li>
               
             </ul>
@@ -806,7 +841,7 @@
         var disqus_config = function () {
           this.page.url = 'http://yoursite.com/2018/08/13/ddd-concept/';
           this.page.identifier = '2018/08/13/ddd-concept/';
-          this.page.title = '领域驱动设计之战略篇';
+          this.page.title = '领域驱动设计：服务边界划分';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
