@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="API," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="背景很多团队都在构建API，并且声称自己团队创建的API都是足够的RESTful，今天我们简单聊下RESTful API相关的一些概念和设计实践。 定义 REST(Representational State Transfer) - 表述性状态转移  简单一句是就指： 服务器发送表述用于描述资源的当前状态，客户端发送表述用于描述客服端希望资源拥有的状态。  REST 是一种架构风格。定义了分布式系">
+<meta name="keywords" content="API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你构建的API够RESTful？">
+<meta property="og:url" content="http://yoursite.com/2018/07/17/restful-api-concept/index.html">
+<meta property="og:site_name" content="魔镜的技术心经">
+<meta property="og:description" content="背景很多团队都在构建API，并且声称自己团队创建的API都是足够的RESTful，今天我们简单聊下RESTful API相关的一些概念和设计实践。 定义 REST(Representational State Transfer) - 表述性状态转移  简单一句是就指： 服务器发送表述用于描述资源的当前状态，客户端发送表述用于描述客服端希望资源拥有的状态。  REST 是一种架构风格。定义了分布式系">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-707e5b1308f78d98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T14:08:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你构建的API够RESTful？">
+<meta name="twitter:description" content="背景很多团队都在构建API，并且声称自己团队创建的API都是足够的RESTful，今天我们简单聊下RESTful API相关的一些概念和设计实践。 定义 REST(Representational State Transfer) - 表述性状态转移  简单一句是就指： 服务器发送表述用于描述资源的当前状态，客户端发送表述用于描述客服端希望资源拥有的状态。  REST 是一种架构风格。定义了分布式系">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-707e5b1308f78d98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/17/restful-api-concept/"/>
+
+
+
+
+
+  <title>你构建的API够RESTful？ | 魔镜的技术心经</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123487001-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">魔镜的技术心经</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一叶知秋</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/restful-api-concept/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你构建的API够RESTful？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T20:21:00+08:00">
+                2018-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/API/" itemprop="url" rel="index">
+                    <span itemprop="name">API</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/17/restful-api-concept/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/17/restful-api-concept/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>很多团队都在构建API，并且声称自己团队创建的API都是足够的RESTful，今天我们简单聊下RESTful API相关的一些概念和设计实践。</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>REST(Representational State Transfer) - 表述性状态转移</p>
+</blockquote>
+<p>简单一句是就指： 服务器发送表述用于描述资源的当前状态，客户端发送表述用于描述客服端希望资源拥有的状态。</p>
+<blockquote>
+<p>REST 是一种架构风格。定义了分布式系统中，各个组件之间的交互方式。</p>
+</blockquote>
+<h3 id="Richardson成熟度模型"><a href="#Richardson成熟度模型" class="headerlink" title="Richardson成熟度模型"></a>Richardson成熟度模型</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-707e5b1308f78d98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li><strong>LEVEL 0</strong>， 只用HTTP作为传输通道，不会使用HTTP的任何额外机制。例如SOAP、 RPC</li>
+<li><p><strong>LEVEL 1</strong>， 引入资源的概念，使用不同的URI完成不同的功能。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">GET /books?author=“john”</span><br><span class="line"></span><br><span class="line">Response:</span><br><span class="line">[</span><br><span class="line">&#123;“id”:11, “Game of thrones”&#125;,</span><br><span class="line">&#123;“id”:22, “Notre Dame de Paris”&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">GET /orders?action=create&amp;bookId=11&amp;quantity=2</span><br><span class="line"></span><br><span class="line">Response:</span><br><span class="line">&#123;</span><br><span class="line">“id”: 3,</span><br><span class="line">“book-id”: 11,</span><br><span class="line">“quantity”: 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">GET /orders/3/delete</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>LEVEL 2</strong>, 用不同的URI定位资源，用不同的HTTP方法操作资源-CRUD。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">GET /books?author=“john”</span><br><span class="line"></span><br><span class="line">200 OK</span><br><span class="line">[</span><br><span class="line">&#123;“id”:11, “Game of thrones”&#125;,</span><br><span class="line">&#123;“id”:22, “Notre Dame de Paris”&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">POST /orders</span><br><span class="line">&#123;</span><br><span class="line">“bookId”: 11</span><br><span class="line">“quantity”: 2,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">201 CREATED</span><br><span class="line">Location: /orders/3</span><br><span class="line"> </span><br><span class="line">&#123;</span><br><span class="line">“id”: “3”</span><br><span class="line">“bookId”: 11</span><br><span class="line">“quantity”: 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DELETE /orders/3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>LEVEL 3</strong> - HATEOAS, 在返回的Representation中包含了与该资源相关资源的链接, 降低客户端编程错误(<code>大约90%的错误出现在为服务器构造正确URI的过程中</code>), 减少无效的状态转换调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">GET /books?author=“john”</span><br><span class="line"></span><br><span class="line">200 OK</span><br><span class="line">&#123;</span><br><span class="line">“data”: &#123;</span><br><span class="line">[</span><br><span class="line">&#123;“id”:11, “Game of thrones”&#125;,</span><br><span class="line">&#123;“id”:22, “Notre Dame de Paris”&#125;</span><br><span class="line">]</span><br><span class="line">&#125;,</span><br><span class="line">“links”: &#123;</span><br><span class="line">“self”: “/books?author=john”</span><br><span class="line">“order”: “/orders”</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">POST /orders</span><br><span class="line">&#123;</span><br><span class="line">“bookId”: 11</span><br><span class="line">“quantity”: 2,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">201 CREATED</span><br><span class="line">Location: /orders/3</span><br><span class="line"> </span><br><span class="line">&#123;</span><br><span class="line">“data”:&#123;</span><br><span class="line">“id”: “3”</span><br><span class="line">“bookId”: 11</span><br><span class="line">“quantity”: 2</span><br><span class="line">&#125;,</span><br><span class="line">“links”: &#123;</span><br><span class="line">“self”: “/orders/3”,</span><br><span class="line">“payment”: “/payments?discount=95”</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DELETE /orders/3</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>对照以上的成熟度模型，我们可以比较明确的知道我们自己的API，属于哪个LEVEL?</p>
+<h3 id="API规范"><a href="#API规范" class="headerlink" title="API规范"></a>API规范</h3><h4 id="无状态原则"><a href="#无状态原则" class="headerlink" title="无状态原则"></a>无状态原则</h4><p>服务端必须是<code>没有状态</code>的，换句话说，客户端的所有请求必须包括服务端完成请求的所有信息（e.g: 认证信息，表单数据）；客户端不能假设服务端有任何的状态信息，所有的状态信息只有两种方式保持：</p>
+<ul>
+<li>资源状态</li>
+<li>客户端保存</li>
+</ul>
+<p>服务无状态，很好的方便了水平扩展，高可用。</p>
+<h4 id="幂等原则"><a href="#幂等原则" class="headerlink" title="幂等原则"></a>幂等原则</h4><blockquote>
+<p>一次和多次请求某一个资源应该具有相同的副作用</p>
+</blockquote>
+<p>幂等的方法意味着请求成功执行所得到的结果不依赖于该方法被执行的次数；这在分布式事务-特别是最终一致性的时候，我们都需要保证业务服务的幂等性息息相关。</p>
+<p>在常见的HTTP Verbs里面，GET是天然的满足幂等性，为缓存提供了条件；DELETE和PUT/PATCH都可以实现幂等。</p>
+<h4 id="可缓存原则"><a href="#可缓存原则" class="headerlink" title="可缓存原则"></a>可缓存原则</h4><p>在请求和响应的过程中，任何一个节点都可能会”缓存“响应数据， 因此响应都会显式或者隐式的包含”能否被缓存“的信息， 客服端和中间涉及的节点会根据这些信息，来进行后续处理。<br>比如： 服务端可以使用<code>Cache-Control</code>等Http Header字段来控制缓存的期限，良好的缓存策略可以减少客户端-服务端的交互，降低服务端的负载，从而提供性能和可扩展性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Fri, 26 Mar 2018 09:33:49 GMT</span><br><span class="line">Cache-Control: max-age=3600 </span><br><span class="line">Last-Modified: Fri, 26 Mar 2018 09:33:49 GMT </span><br><span class="line">ETag: cde893c4</span><br></pre></td></tr></table></figure></p>
+<h4 id="安全原则"><a href="#安全原则" class="headerlink" title="安全原则"></a>安全原则</h4><p>在做API设计的的时候，以下是在实际开发中常遇到的安全问题：</p>
+<ul>
+<li><strong>缺失了对资源从属关系的检查</strong>，对于URL中只出现一个资源的情况，绝大多数开发者都会知道做安全防御，然而，问题往往出现在包括多个资源的时候，e.g： /users/1/orders/239843，应用只检查了当前请求发起者是否是编号 为1的用户,以及编号为239843的订单是否存在,有很大的概率没有检查URL中的订单和用户之间的从属关系</li>
+<li><strong>HTTP响应中缺失必要的Security Header</strong>， 请合理使用以下的Header，可使得你开发的API具备更高的安全性。<ul>
+<li>X-XSS-Protection</li>
+<li>Strict-Transport-Security</li>
+<li>X-Content-Type-Options</li>
+<li>X-Frame-Options</li>
+</ul>
+</li>
+<li><strong>泄露业务信息</strong>，在返回体中，不要暴露多余的信息，特别是铭感信息。</li>
+<li><strong>API缺乏速率限制的保护</strong></li>
+</ul>
+<h4 id="兼容性原则"><a href="#兼容性原则" class="headerlink" title="兼容性原则"></a>兼容性原则</h4><ul>
+<li>当API出现较大升级并且包含破坏性改动的时候，服务提供者需要提供新的API版本，与此同时，需要保持对老版本API的支持，直到达到弃用的标准。<ul>
+<li>常将API版本放在URL中，比如/v2/users/{uid}； </li>
+<li>或者放在http header中， <code>Accept: application/vnd.api+json;version=2</code></li>
+</ul>
+</li>
+<li>在更改已有API的时候，不能更改字段的含义，只添加可选字段，不添加必选字段，当资源URL发生变化的时候，支持重定向。</li>
+</ul>
+<h3 id="API设计"><a href="#API设计" class="headerlink" title="API设计"></a>API设计</h3><p>API的设计遵循上面的四个原则，同时需要根据业务定义资源，用URI定位资源，并用HTTP verb来操作资源。</p>
+<h4 id="定义Resource"><a href="#定义Resource" class="headerlink" title="定义Resource"></a>定义Resource</h4><p>一切可以被命名的信息都可以叫做资源(Resource)，资源是名词，不要是动词，e.g: 一个用户关注了另一个用户，这个资源应该被定义成“关系(relationship)”，而不是“关注(follow)”。</p>
+<h4 id="用URI定位资源"><a href="#用URI定位资源" class="headerlink" title="用URI定位资源"></a>用URI定位资源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /users/&#123;id&#125;</span><br><span class="line">POST /users</span><br><span class="line">PUT/PATCH /users/&#123;id&#125;</span><br><span class="line">DELETE /users/&#123;id&#125;</span><br></pre></td></tr></table></figure>
+<p>在我们团队中，定义了设计URL的<strong>军规</strong>：</p>
+<ul>
+<li>使用<strong>复数</strong>，不管它代表的是一个资源还是一个资源集合 GET /users/123/orders/345 </li>
+<li>使用“-”，分离多个单词，而不是驼峰， e.g: GET /users/{id}/account-type</li>
+</ul>
+<h3 id="JSON-API"><a href="#JSON-API" class="headerlink" title="JSON-API"></a>JSON-API</h3><p>最后，开发API的过程中，会花很多时间去和API的消费者沟通API接口的具体格式。例如Content-Type，JSON的字段的定义等等，需要耗费大量的精力，如果遵循共同的约定，可以提高开发效率，利用更普遍的工具，使开发者更加专注于开发重点，这里向大家推荐：JSON API Specification: <a href="http://jsonapi.org" target="_blank" rel="noopener">http://jsonapi.org</a></p>
+<ul>
+<li>meta：辅助信息</li>
+<li>data：主体信息</li>
+<li>attributes：资源的数据</li>
+<li>errors：错误</li>
+<li>links：链接<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">GET /users/123</span><br><span class="line">&#123;</span><br><span class="line">”meta”: &#123;…&#125;,</span><br><span class="line">“data”: &#123;</span><br><span class="line">“type”: “user”,</span><br><span class="line">“id”: “123”,</span><br><span class="line">“attributes”: &#123;&#125;,</span><br><span class="line">“relationships”: &#123;&#125;,</span><br><span class="line">&#125;,</span><br><span class="line">“errors”: [],</span><br><span class="line">“links”: &#123;…&#125;,</span><br><span class="line">“included”: &#123;…&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://martinfowler.com/articles/richardsonMaturityModel.html" target="_blank" rel="noopener">http://martinfowler.com/articles/richardsonMaturityModel.html</a></li>
+<li><a href="http://jsonapi.org/" target="_blank" rel="noopener">http://jsonapi.org/</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/API/" rel="tag"># API</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/10/enterprise-design-principal/" rel="next" title="企业级架构设计原则">
+                <i class="fa fa-chevron-left"></i> 企业级架构设计原则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/26/api-concpet/" rel="prev" title="API到底是什么？">
+                API到底是什么？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/3600881"
+               alt="Qin Yulin" />
+          <p class="site-author-name" itemprop="name">Qin Yulin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinnnyul" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.jianshu.com/u/f557906ceafc" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.huangyunkun.com/" title="夜明的孤行灯" target="_blank">夜明的孤行灯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zhewuzhou.github.io/" title="硬核技术" target="_blank">硬核技术</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.himateng.com/" title="小马哥的管理日记" target="_blank">小马哥的管理日记</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://netium.gitlab.io" title="TechX空间" target="_blank">TechX空间</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Richardson成熟度模型"><span class="nav-number">3.</span> <span class="nav-text">Richardson成熟度模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API规范"><span class="nav-number">4.</span> <span class="nav-text">API规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无状态原则"><span class="nav-number">4.1.</span> <span class="nav-text">无状态原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#幂等原则"><span class="nav-number">4.2.</span> <span class="nav-text">幂等原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可缓存原则"><span class="nav-number">4.3.</span> <span class="nav-text">可缓存原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全原则"><span class="nav-number">4.4.</span> <span class="nav-text">安全原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#兼容性原则"><span class="nav-number">4.5.</span> <span class="nav-text">兼容性原则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API设计"><span class="nav-number">5.</span> <span class="nav-text">API设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义Resource"><span class="nav-number">5.1.</span> <span class="nav-text">定义Resource</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用URI定位资源"><span class="nav-number">5.2.</span> <span class="nav-text">用URI定位资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-API"><span class="nav-number">6.</span> <span class="nav-text">JSON-API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin Yulin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://qinnnyul-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/07/17/restful-api-concept/';
+          this.page.identifier = '2018/07/17/restful-api-concept/';
+          this.page.title = '你构建的API够RESTful？';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

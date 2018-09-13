@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="微服务,领域驱动设计," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="战术设计在DDD中，分两部分，战略设计和战术设计，战略设计很好的帮助我们理清问题域，划分服务，具体可参见： 领域驱动设计：服务划分。今天我们重点聊聊战术设计，如何通过它，指导我们的编码，着眼于单个界限上下文。 概念篇在战术部分，DDD有很多的概念，这里我们聊聊一些重要的概念，各个概念所在层级和调用关系如下： 应用服务 很薄的一层， 与业务用例一一对应，非CRUD 协调代理的作用 其本身不包含业务逻">
+<meta name="keywords" content="微服务,领域驱动设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="领域驱动设计：构建你的代码蓝图">
+<meta property="og:url" content="http://yoursite.com/2018/09/13/ddd-practice-level-concept/index.html">
+<meta property="og:site_name" content="魔镜的技术心经">
+<meta property="og:description" content="战术设计在DDD中，分两部分，战略设计和战术设计，战略设计很好的帮助我们理清问题域，划分服务，具体可参见： 领域驱动设计：服务划分。今天我们重点聊聊战术设计，如何通过它，指导我们的编码，着眼于单个界限上下文。 概念篇在战术部分，DDD有很多的概念，这里我们聊聊一些重要的概念，各个概念所在层级和调用关系如下： 应用服务 很薄的一层， 与业务用例一一对应，非CRUD 协调代理的作用 其本身不包含业务逻">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-c095b15c20ea355c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-88351fac87a4af55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-57c5027efd4ff74e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-87c200f6fa4830db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-13T14:21:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="领域驱动设计：构建你的代码蓝图">
+<meta name="twitter:description" content="战术设计在DDD中，分两部分，战略设计和战术设计，战略设计很好的帮助我们理清问题域，划分服务，具体可参见： 领域驱动设计：服务划分。今天我们重点聊聊战术设计，如何通过它，指导我们的编码，着眼于单个界限上下文。 概念篇在战术部分，DDD有很多的概念，这里我们聊聊一些重要的概念，各个概念所在层级和调用关系如下： 应用服务 很薄的一层， 与业务用例一一对应，非CRUD 协调代理的作用 其本身不包含业务逻">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-c095b15c20ea355c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/13/ddd-practice-level-concept/"/>
+
+
+
+
+
+  <title>领域驱动设计：构建你的代码蓝图 | 魔镜的技术心经</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123487001-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">魔镜的技术心经</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一叶知秋</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/13/ddd-practice-level-concept/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">领域驱动设计：构建你的代码蓝图</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-13T23:21:00+08:00">
+                2018-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/微服务/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/13/ddd-practice-level-concept/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/13/ddd-practice-level-concept/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="战术设计"><a href="#战术设计" class="headerlink" title="战术设计"></a>战术设计</h3><p>在DDD中，分两部分，战略设计和战术设计，战略设计很好的帮助我们理清问题域，划分服务，具体可参见： <a href="https://qinnnyul.github.io/2018/08/13/ddd-concept/" target="_blank" rel="noopener">领域驱动设计：服务划分</a>。今天我们重点聊聊战术设计，如何通过它，指导我们的编码，着眼于单个界限上下文。</p>
+<h3 id="概念篇"><a href="#概念篇" class="headerlink" title="概念篇"></a>概念篇</h3><p>在战术部分，DDD有很多的概念，这里我们聊聊一些重要的概念，各个概念所在层级和调用关系如下：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-c095b15c20ea355c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="应用服务"><a href="#应用服务" class="headerlink" title="应用服务"></a>应用服务</h4><ul>
+<li>很薄的一层， 与业务用例一一对应，非CRUD</li>
+<li>协调代理的作用</li>
+<li>其本身不包含业务逻辑</li>
+<li>可以作为事务的边界<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserApplicationService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(UserApplicationService.class);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EmailService emailService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RegisterService registerService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">register</span><span class="params">(RegisterCommand command)</span> </span>&#123;</span><br><span class="line">        User user = registerService.createUser(command.getOwnerEmail(), command.getPolicyNumber());</span><br><span class="line">        String uuid = user.getUuid();</span><br><span class="line">        userRepository.save(user);</span><br><span class="line">        emailService.sendEmail(uuid);</span><br><span class="line">        logger.info(<span class="string">"Create user with email [&#123;&#125;]"</span>, command.getOwnerEmail());</span><br><span class="line">        <span class="keyword">return</span> uuid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initPassword</span><span class="params">(InitPasswordCommand command)</span> </span>&#123;</span><br><span class="line">        User user = userRepository.findByUuid(command.getUuid());</span><br><span class="line">        user.initPassWord(command.getPassword());</span><br><span class="line">        logger.info(<span class="string">"Set password with uuid[&#123;&#125;]"</span>, command.getUuid());</span><br><span class="line">        userRepository.save(user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h4><p>那业务逻辑到底放在什么地方呢？ </p>
+<blockquote>
+<p>聚合是一组相关领域对象，其目的是要确保业务规则在领域对象的各个生命周期都得以执行。</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-88351fac87a4af55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>如图，每个聚合都有<strong>聚合根</strong>，它具备如下的一些特征：</p>
+<ul>
+<li>核心领域对象，高度内聚。</li>
+<li>其内部的所有业务操作都必须经过聚合根，对外提供一致性的边界。</li>
+<li>聚合根之间的数据一致性一般通过最终一致性来保证。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Good</span></span><br><span class="line">order.removeItem(item);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Bad</span></span><br><span class="line">List&lt;Item&gt; items = order.getItems();</span><br><span class="line">items.remove(item);</span><br></pre></td></tr></table></figure>
+<h4 id="领域对象"><a href="#领域对象" class="headerlink" title="领域对象"></a>领域对象</h4><p>它包括实体（Entity）和值对象（Value Object）</p>
+<ul>
+<li><p><strong>实体</strong></p>
+<ul>
+<li>具有唯一标识</li>
+<li>持久化</li>
+<li>具有生命周期</li>
+<li>通过ID判断相等性</li>
+<li>可变</li>
+</ul>
+</li>
+<li><p><strong>值对象</strong></p>
+<ul>
+<li>无唯一标识</li>
+<li>用完就丢，主要起描述性作用</li>
+<li>通过属性判断相等性，实现Equals方法</li>
+<li>不可变 </li>
+</ul>
+</li>
+</ul>
+<h4 id="领域服务"><a href="#领域服务" class="headerlink" title="领域服务"></a>领域服务</h4><p>有时领域逻辑放在领域对象上面不合适的情况，这时我们将逻辑放在领域服务里面，下图展示了领域服务和应用服务的区别：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-57c5027efd4ff74e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="资源库"><a href="#资源库" class="headerlink" title="资源库"></a>资源库</h4><p>DDD中的持久化组件，也是聚合根的集合，它屏蔽了底层的数据获取细节，分离业务复杂度和数据库操作带来的技术复杂度。注意：只对聚合根建立对应的资源库；不要将事务放在这一层。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserRepository</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">User <span class="title">findByUuid</span><span class="params">(String uuid)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">User <span class="title">findByEmail</span><span class="params">(String email)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">existByEmail</span><span class="params">(String email)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="领域事件"><a href="#领域事件" class="headerlink" title="领域事件"></a>领域事件</h4><blockquote>
+<p>An event is something that has happened in the past.</p>
+</blockquote>
+<p>领域专家所关心的具有显著业务意义的事件，或者是需要发布到另一个界限上下文的事件以实现最终一致性。</p>
+<p>常在<code>应用服务</code>或者<code>资源库</code>中发布领域事件：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PolicyApplicationService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> PolicyRepository policyRepository;</span><br><span class="line">    <span class="keyword">private</span> DomainEventPublisher domainEventPublisher;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PolicyApplicationService</span><span class="params">(PolicyRepository policyRepository, DomainEventPublisher domainEventPublisher)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.policyRepository = policyRepository;</span><br><span class="line">        <span class="keyword">this</span>.domainEventPublisher = domainEventPublisher;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">renew</span><span class="params">(RenewCommand renewCommand)</span> </span>&#123;</span><br><span class="line">        Policy policy = policyRepository.byPolicyNumber(renewCommand.getPolicyNumber());</span><br><span class="line">        policy.updateStatus(renewCommand);</span><br><span class="line">        policyRepository.save(policy);</span><br><span class="line">        PolicyRenewedEvent domainEvent =</span><br><span class="line">                <span class="keyword">new</span> PolicyRenewedEvent(renewCommand.getPolicyNumber(), renewCommand.getCardNumber(), renewCommand.getPrice());</span><br><span class="line">        domainEventPublisher.publish(domainEvent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>DDD中的概念很多，但这些在面向对象编程里面，或多或少都接触过，对这些概念的掌握，可以方便我们了解各个层级和领域对象的职责，下次我们可以继续聊下DDD中常见的架构模式，比如：四层架构，六边形架构，洋葱模型，Clean架构等<br><img src="https://upload-images.jianshu.io/upload_images/12636540-87c200f6fa4830db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/10/mysql-sql-optimization/" rel="next" title="Mysql调优：表连接优化">
+                <i class="fa fa-chevron-left"></i> Mysql调优：表连接优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/3600881"
+               alt="Qin Yulin" />
+          <p class="site-author-name" itemprop="name">Qin Yulin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinnnyul" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.jianshu.com/u/f557906ceafc" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.huangyunkun.com/" title="夜明的孤行灯" target="_blank">夜明的孤行灯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zhewuzhou.github.io/" title="硬核技术" target="_blank">硬核技术</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.himateng.com/" title="小马哥的管理日记" target="_blank">小马哥的管理日记</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://netium.gitlab.io" title="TechX空间" target="_blank">TechX空间</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#战术设计"><span class="nav-number">1.</span> <span class="nav-text">战术设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念篇"><span class="nav-number">2.</span> <span class="nav-text">概念篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#应用服务"><span class="nav-number">2.1.</span> <span class="nav-text">应用服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚合"><span class="nav-number">2.2.</span> <span class="nav-text">聚合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#领域对象"><span class="nav-number">2.3.</span> <span class="nav-text">领域对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#领域服务"><span class="nav-number">2.4.</span> <span class="nav-text">领域服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#资源库"><span class="nav-number">2.5.</span> <span class="nav-text">资源库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#领域事件"><span class="nav-number">2.6.</span> <span class="nav-text">领域事件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin Yulin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://qinnnyul-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/09/13/ddd-practice-level-concept/';
+          this.page.identifier = '2018/09/13/ddd-practice-level-concept/';
+          this.page.title = '领域驱动设计：构建你的代码蓝图';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
