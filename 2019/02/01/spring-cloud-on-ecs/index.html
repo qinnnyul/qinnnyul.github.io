@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="微服务," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="背景如果只是在一台主机或者虚拟机上面运行一个容器，那么Docker命令行就足够了，e.g: docker run xxximage。 但是如果需要管理一个100X的容器集群，就比较有挑战了。在AWS众多服务中，就有提供集群资源管理和服务调度的服务，比如EKS和ECS, 由于EKS还没有进入中国区，本篇博客重点介绍在ECS上面运行基于Spring Cloud全家桶的微服务架构。 ECS的工作原理我们">
+<meta name="keywords" content="微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Cloud On ECS">
+<meta property="og:url" content="http://yoursite.com/2019/02/01/spring-cloud-on-ecs/index.html">
+<meta property="og:site_name" content="魔镜的技术心经">
+<meta property="og:description" content="背景如果只是在一台主机或者虚拟机上面运行一个容器，那么Docker命令行就足够了，e.g: docker run xxximage。 但是如果需要管理一个100X的容器集群，就比较有挑战了。在AWS众多服务中，就有提供集群资源管理和服务调度的服务，比如EKS和ECS, 由于EKS还没有进入中国区，本篇博客重点介绍在ECS上面运行基于Spring Cloud全家桶的微服务架构。 ECS的工作原理我们">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-b4c0098a78ba8c3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-ce360594c43b39c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7bbf02ef98b97462.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-4f893336355a6c8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-02T08:31:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Cloud On ECS">
+<meta name="twitter:description" content="背景如果只是在一台主机或者虚拟机上面运行一个容器，那么Docker命令行就足够了，e.g: docker run xxximage。 但是如果需要管理一个100X的容器集群，就比较有挑战了。在AWS众多服务中，就有提供集群资源管理和服务调度的服务，比如EKS和ECS, 由于EKS还没有进入中国区，本篇博客重点介绍在ECS上面运行基于Spring Cloud全家桶的微服务架构。 ECS的工作原理我们">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-b4c0098a78ba8c3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/01/spring-cloud-on-ecs/"/>
+
+
+
+
+
+  <title>Spring Cloud On ECS | 魔镜的技术心经</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123487001-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">魔镜的技术心经</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一叶知秋</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/01/spring-cloud-on-ecs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Cloud On ECS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-01T23:21:00+08:00">
+                2019-02-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/微服务/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/01/spring-cloud-on-ecs/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/02/01/spring-cloud-on-ecs/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>如果只是在一台主机或者虚拟机上面运行一个容器，那么Docker命令行就足够了，e.g: <code>docker run xxximage</code>。 但是如果需要管理一个100X的容器集群，就比较有挑战了。<br>在AWS众多服务中，就有提供集群资源管理和服务调度的服务，比如<code>EKS</code>和<code>ECS</code>, 由于<code>EKS</code>还没有进入中国区，本篇博客重点介绍在<code>ECS</code>上面运行基于Spring Cloud全家桶的微服务架构。</p>
+<h3 id="ECS的工作原理"><a href="#ECS的工作原理" class="headerlink" title="ECS的工作原理"></a>ECS的工作原理</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-b4c0098a78ba8c3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ECS-picture.png"><br>我们将基于上面的ECS架构图，简单介绍下ECS的一些重要组件和工作原理。</p>
+<ul>
+<li><code>ECS agent</code>, 在每一个实例，它都有一个运行的docker进程，它就是<code>ECS agent</code>,  其主要负责接收ECS的命令，并且将这些命令转化为docker对应的命令；所以它能够控制EC2实例，什么时候启动、停止容器并且监控已经使用的和空闲的资源情况。</li>
+<li><code>ECS pause</code>, 第一启动的容器，协调以后容器进行协议的分配，防止冲突。</li>
+<li><code>Cluster mangement Engine</code>负责协调整个集群的实例，它可以被认为是虚拟的资源池，比如内存、存储、CPU、网络等；所以通过它，能够知道整个集群的资源现状。</li>
+<li><code>Scheduler</code>负责调度容器或者<code>tasks</code>的执行；它能知道每个task的运行状态，是否是alive或者dead，是否需要rescheduled等。</li>
+<li><code>Kev-Value Store</code>, 负责整个集群状态的管理。</li>
+<li><code>API</code>,  ECS另一个比较独特的地方，在于它将容器的调度从集群管理中解耦出来，并且提供一些的API，以供使用者使用。</li>
+</ul>
+<h3 id="演示介绍"><a href="#演示介绍" class="headerlink" title="演示介绍"></a>演示介绍</h3><p>基于Spring Cloud全家桶的微服务架构，如何运行在ECS容器云平台上面，本文准备了三个服务，用于演示：</p>
+<ul>
+<li>服务一： <code>simple-application</code>,  使用<a href="https://start.spring.io/进行创建，主要用于从配置服务器获取动态配置。" target="_blank" rel="noopener">https://start.spring.io/进行创建，主要用于从配置服务器获取动态配置。</a> </li>
+<li>服务二： <code>simple-config-server</code>, 主要用于配置服务器，进行微服务配置的管理。</li>
+<li>服务三： <code>simple-eureka</code>, 主要用于服务注册与发现。</li>
+</ul>
+<p>每个服务基于docker，需要通过<code>./mvn clean package</code>的方式，进行打包和构建新的docker镜像，然后通过下面类似的命令，将最新的镜像发布到ECR镜像注册服务器上面。</p>
+<ul>
+<li><p>在ECR创建对应的镜像库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(aws ecr get-login --no-include-email --region ap-southeast-1)</span><br><span class="line">aws ecr create-repository --repository-name simple-cluster/simple-application</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将最新的镜像，发布到ECR对应的镜像库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">docker tag simple-cluster/simple-application:latest 613175009525.[dkr.ecr.ap-southeast-1.amazonaws.com/simple-cluster/simple-application:latest](http://dkr.ecr.ap-southeast-1.amazonaws.com/simple-cluster/simple-application:latest)</span><br><span class="line"></span><br><span class="line">docker push 613175009525.[dkr.ecr.ap-southeast-1.amazonaws.com/simple-cluster/simple-application:latest](http://dkr.ecr.ap-southeast-1.amazonaws.com/simple-cluster/simple-application:latest)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发布成功之后，更新Cloudformation对应的镜像仓库地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Sample:</span><br><span class="line">     cpu: 512</span><br><span class="line">     mem: 1024</span><br><span class="line">     javaopt: &quot;-Xms512m -Xmx1024m -Xss512k&quot;</span><br><span class="line">     port: 3000</span><br><span class="line">     hostport: 9050</span><br><span class="line">     name: simple-sample</span><br><span class="line">     context: /simple-application</span><br><span class="line">     taskcount: 1</span><br><span class="line">     minhealthcount: 50</span><br><span class="line">     maxhealthcount: 200</span><br><span class="line">     HealthCheckGracePeriodSeconds: 300</span><br><span class="line">     logPrefix: simple-application</span><br><span class="line">     image: &apos;613175009525.dkr.ecr.ap-southeast-1.amazonaws.com/simple-cluster/simple-application:latest&apos;</span><br><span class="line">     HealthCheckIntervalSeconds: 30</span><br><span class="line">     HealthCheckPath: /simple-application/actuator/info</span><br><span class="line">     HealthCheckPort: traffic-port</span><br><span class="line">     HealthCheckProtocol: HTTP</span><br><span class="line">     HealthCheckTimeoutSeconds: 5</span><br><span class="line">     HealthyThresholdCount: 5</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="ECS集群："><a href="#ECS集群：" class="headerlink" title="ECS集群："></a>ECS集群：</h4><p>可以通过命令行工具<code>ecs-cli up</code>进行创建，或者使用<code>Cloudformation</code>进行创建，本文演示基于Cloudformation的创建方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ aws cloudformation create-stack --stack-name simple-ecs-cluster-cf-template --template-body file://simple-ecs-cluster-cf.yaml --region ap-southeast-1 --parameters ParameterKey=EcsInstanceType,ParameterValue=t2.medium,ParameterKey=KeyName,ParameterValue=aws-singapore-key,ParameterKey=VpcId,ParameterValue=vpc-0cbbd87895dbbfc5b</span><br><span class="line">&#123;</span><br><span class="line">    &quot;StackId&quot;: &quot;arn:aws:cloudformation:ap-southeast-1:613175009525:stack/simple-ecs-cluster-cf-template/008ff110-2685-11e9-94ea-064b1a6199c8&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建成功界面如下：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-ce360594c43b39c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>请指定正确的VPC，Subnet，SG和指定EC2的类型，数量，AMI，EBS和key pair，之后ECS会自动创建EC2，并且为其配置如下信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;#!/bin/bash\n&quot;,&quot;echo ECS_CLUSTER=&quot;,!Ref EcsClusterName,&quot; &gt;&gt; /etc/ecs/ecs.config\n&quot;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>创建公共的ALB,  并且根据path进行微服务的分发，对外提供接口。<br><img src="https://upload-images.jianshu.io/upload_images/12636540-7bbf02ef98b97462.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+</ul>
+<p>部分相关Cloudformation配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">###############   ALB Default Target-Group ####################</span><br><span class="line">  DefaultALBListener:</span><br><span class="line">    Type: AWS::ElasticLoadBalancingV2::Listener</span><br><span class="line">    Condition: CreateSpringCloud</span><br><span class="line">    Properties:</span><br><span class="line">      DefaultActions:</span><br><span class="line">      - Type: forward</span><br><span class="line">        TargetGroupArn: !Ref DefaultTargetGroup</span><br><span class="line">      LoadBalancerArn: !Ref PublicApplicationLoadBalancer</span><br><span class="line">      Port: 80</span><br><span class="line">      Protocol: HTTP</span><br><span class="line"></span><br><span class="line">  DefaultTargetGroup:</span><br><span class="line">    Type: AWS::ElasticLoadBalancingV2::TargetGroup</span><br><span class="line">    Condition: CreateSpringCloud</span><br><span class="line">    DependsOn: PublicApplicationLoadBalancer</span><br><span class="line">    Properties:</span><br><span class="line">      HealthCheckIntervalSeconds: !FindInMap [ SpringCloudMiddlewares, Eureka, HealthCheckIntervalSeconds ]</span><br><span class="line">      HealthCheckPath: !FindInMap [ SpringCloudMiddlewares, Eureka, HealthCheckPath ]</span><br><span class="line">      HealthCheckPort: !FindInMap [ SpringCloudMiddlewares, Eureka, HealthCheckPort ]</span><br><span class="line">      HealthCheckProtocol: !FindInMap [ SpringCloudMiddlewares, Eureka, HealthCheckProtocol ]</span><br><span class="line">      HealthCheckTimeoutSeconds: !FindInMap [ SpringCloudMiddlewares, Eureka, HealthCheckTimeoutSeconds ]</span><br><span class="line">      HealthyThresholdCount: !FindInMap [ SpringCloudMiddlewares, Eureka, HealthyThresholdCount ]</span><br><span class="line">      Matcher:</span><br><span class="line">        HttpCode: 200</span><br><span class="line">      Name: default-target-group</span><br><span class="line">      Port: 80</span><br><span class="line">      Protocol: HTTP</span><br><span class="line">      TargetGroupAttributes:</span><br><span class="line">        -</span><br><span class="line">          Key: deregistration_delay.timeout_seconds</span><br><span class="line">          Value: 300</span><br><span class="line">        -</span><br><span class="line">          Key: slow_start.duration_seconds</span><br><span class="line">          Value: 0</span><br><span class="line">        -</span><br><span class="line">          Key: stickiness.enabled</span><br><span class="line">          Value: false</span><br><span class="line">      VpcId: !Ref VpcId</span><br><span class="line"></span><br><span class="line">##############   Spring Cloud Sample Resources start ####################</span><br><span class="line">  SpringCloudSampleECSALBListenerRule:</span><br><span class="line">    Type: AWS::ElasticLoadBalancingV2::ListenerRule</span><br><span class="line">    Condition: CreateSampleTask</span><br><span class="line">    DependsOn: DefaultALBListener</span><br><span class="line">    Properties:</span><br><span class="line">      Actions:</span><br><span class="line">      - Type: forward</span><br><span class="line">        TargetGroupArn: !Ref SpringCloudSampleTargetGroup</span><br><span class="line">      Conditions:</span><br><span class="line">      - Field: path-pattern</span><br><span class="line">        Values: [/simple-application*]</span><br><span class="line">      ListenerArn: !Ref DefaultALBListener</span><br><span class="line">      Priority: 3</span><br></pre></td></tr></table></figure>
+<ul>
+<li>指定服务运行环境：<br>方法一： 通过ECS task配置环境变量<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">environment&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;name&quot;: &quot;JAVA_OPTS&quot;,</span><br><span class="line">          &quot;value&quot;: &quot;-Dspring.profiles.active=aws&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>方法二： 通过Cloudformation配置环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Environment:</span><br><span class="line">           -</span><br><span class="line">             Name: JAVA_OPTS</span><br><span class="line">             Value: !FindInMap [ SpringCloudMiddlewares, ConfigServer, javaopt ]</span><br><span class="line">           -</span><br><span class="line">             Name: EUREKA_URL</span><br><span class="line">             Value: !Join [ &quot;&quot; , [ &quot;http://&quot;, !GetAtt PublicApplicationLoadBalancer.DNSName, &quot;/simple-eureka/eureka&quot;]]</span><br><span class="line">           -</span><br><span class="line">             Name: SPRING_PROFILES_ACTIVE</span><br><span class="line">             Value: aws</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>确保端口动态绑定(非静态绑定)，防止端口冲突问题：</li>
+</ul>
+<p>方法一： ECS的task配置，hostPost设置为0.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;portMappings&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;hostPort&quot;: 0,</span><br><span class="line">          &quot;protocol&quot;: &quot;tcp&quot;,</span><br><span class="line">          &quot;containerPort&quot;: 8080</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br></pre></td></tr></table></figure></p>
+<p>方法二： 通过Cloudformation配置动态端口绑定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-</span><br><span class="line">  ContainerPort: !FindInMap [ SpringCloudMiddlewares, ConfigServer, port ]</span><br><span class="line">  HostPort: 0</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>确保SG安全组，允许在动态端口范围内的访问：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-4f893336355a6c8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>创建Task的时候，确保每个task里面都开启了日志记录：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;logConfiguration&quot;: &#123;</span><br><span class="line">        &quot;logDriver&quot;: &quot;awslogs&quot;,</span><br><span class="line">        &quot;options&quot;: &#123;</span><br><span class="line">          &quot;awslogs-group&quot;: &quot;simple-ecs-cluster-log&quot;,</span><br><span class="line">          &quot;awslogs-region&quot;: &quot;cn-northwest-1&quot;,</span><br><span class="line">          &quot;awslogs-stream-prefix&quot;: &quot;simple-application&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">###############  CloudWatchLog  start ####################</span><br><span class="line">  ECSCloudWatchLogGroup:</span><br><span class="line">    Type: AWS::Logs::LogGroup</span><br><span class="line">    Properties:</span><br><span class="line">      LogGroupName: !Join [ &quot;-&quot; , [ !Ref EcsClusterName, !Ref ECSCloudWatchLogGroupName]]</span><br><span class="line">      RetentionInDays: !Ref ECSCloudWatchLogGroupRetentionInDays</span><br><span class="line">###############  CloudWatchLog  end ####################</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建Task的时候，确保每个task里面都拥有足够多的访问权限，比如你的服务需要访问SQS，Redis，S3等。</li>
+</ul>
+<h3 id="时区的一致性："><a href="#时区的一致性：" class="headerlink" title="时区的一致性："></a>时区的一致性：</h3><ul>
+<li>EC2上面的时区一致性：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">for ec2 in 10.208.195.1xx 10.208.194.xx 10.208.194.1xx </span><br><span class="line">do</span><br><span class="line">echo $ec2;</span><br><span class="line">ssh -i ~/.ssh/yourkey.pem ec2-user@$ec2  &lt;&lt; sshoff</span><br><span class="line">    sudo yum -y erase &apos;ntp*&apos;</span><br><span class="line">    sudo yum -y install chrony</span><br><span class="line">    sudo service chronyd start</span><br><span class="line">    sudo chkconfig chronyd on</span><br><span class="line">    sudo sed -i &apos;s/ZONE=\&quot;UTC/ZONE=\&quot;Asia\/Shanghai/g&apos; /etc/sysconfig/clock</span><br><span class="line">    sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">    exit</span><br><span class="line">sshoff</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>RDS上面的时区一致性：</p>
+<p>  设置Parameter Group，并且重启实例。</p>
+</li>
+<li><p>Docker上面的时区一致性：</p>
+<p>  重新构建满足条件的base镜像，并更新响应的配置文件pom.xml或者dockerfile</p>
+</li>
+<li><p>编码上，保证时区的方法：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(&quot;user.timezone&quot;,&quot;Asia/Shanghai&quot;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过传递参数的方式，保证时区的方法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Duser.timezone=GMT+8</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="源代码："><a href="#源代码：" class="headerlink" title="源代码："></a>源代码：</h3><ul>
+<li><a href="https://github.com/qinnnyul/simple-application" target="_blank" rel="noopener">https://github.com/qinnnyul/simple-application</a></li>
+<li><a href="https://github.com/qinnnyul/simple-config-server" target="_blank" rel="noopener">https://github.com/qinnnyul/simple-config-server</a></li>
+<li><a href="https://github.com/qinnnyul/simple-eureka" target="_blank" rel="noopener">https://github.com/qinnnyul/simple-eureka</a></li>
+<li><a href="https://github.com/qinnnyul/simple-ecs-cluster-cf-template" target="_blank" rel="noopener">https://github.com/qinnnyul/simple-ecs-cluster-cf-template</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/16/office365-wopi-integration/" rel="next" title="Office365：WOPI集成">
+                <i class="fa fa-chevron-left"></i> Office365：WOPI集成
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/3600881"
+               alt="Qin Yulin" />
+          <p class="site-author-name" itemprop="name">Qin Yulin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinnnyul" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.jianshu.com/u/f557906ceafc" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.huangyunkun.com/" title="夜明的孤行灯" target="_blank">夜明的孤行灯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zhewuzhou.github.io/" title="硬核技术" target="_blank">硬核技术</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.himateng.com/" title="小马哥的管理日记" target="_blank">小马哥的管理日记</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://netium.gitlab.io" title="TechX空间" target="_blank">TechX空间</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ECS的工作原理"><span class="nav-number">2.</span> <span class="nav-text">ECS的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#演示介绍"><span class="nav-number">3.</span> <span class="nav-text">演示介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ECS集群："><span class="nav-number">3.1.</span> <span class="nav-text">ECS集群：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时区的一致性："><span class="nav-number">4.</span> <span class="nav-text">时区的一致性：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码："><span class="nav-number">5.</span> <span class="nav-text">源代码：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin Yulin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://qinnnyul-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2019/02/01/spring-cloud-on-ecs/';
+          this.page.identifier = '2019/02/01/spring-cloud-on-ecs/';
+          this.page.title = 'Spring Cloud On ECS';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

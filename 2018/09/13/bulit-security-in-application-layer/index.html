@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="架构,微服务,测试," />
+  <meta name="keywords" content="微服务," />
 
 
 
@@ -94,22 +94,23 @@
 
 
 
-<meta name="description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
-<meta name="keywords" content="架构,微服务,测试">
+<meta name="description" content="背景根据一份报告显示，大约80%的安全问题发生在应用层，但是在应用层的投入相对匮乏。  造成上面的原因很多，其中比较突出和普遍的原因就是研发团队没有足够的安全意识，常常把安全放在最后，作为一种nice to have的事情，由于交付压力，安全测试常常被砍掉。 自动化安全之前常常通过新闻的渠道才知道某某库出现了安全漏洞，然后通过手动的方式去查看，这种方式非常的耗时，低效。 所以我们做自动化安全，把安">
+<meta name="keywords" content="微服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不得不说的微服务测试">
-<meta property="og:url" content="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/index.html">
+<meta property="og:title" content="应用层安全方案">
+<meta property="og:url" content="http://yoursite.com/2018/09/13/bulit-security-in-application-layer/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
+<meta property="og:description" content="背景根据一份报告显示，大约80%的安全问题发生在应用层，但是在应用层的投入相对匮乏。  造成上面的原因很多，其中比较突出和普遍的原因就是研发团队没有足够的安全意识，常常把安全放在最后，作为一种nice to have的事情，由于交付压力，安全测试常常被砍掉。 自动化安全之前常常通过新闻的渠道才知道某某库出现了安全漏洞，然后通过手动的方式去查看，这种方式非常的耗时，低效。 所以我们做自动化安全，把安">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-b15d3c16e24d23ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-8bdf4aba4416c85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-12T11:51:42.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-36760069b8f80fca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-965199824ffef4a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-610cf61d792b8ef4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-bc1b1df05583e441.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T05:34:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不得不说的微服务测试">
-<meta name="twitter:description" content="在微服务架构下，给我们测试带来了如下挑战：  验证成本高，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。 结果不稳定， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临网络延时、超时、带宽等因素，容易导致不稳定的测试结果。 反馈周期长， 相比单体应用而言，微服务架构下，可独立部署的单元多，">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="应用层安全方案">
+<meta name="twitter:description" content="背景根据一份报告显示，大约80%的安全问题发生在应用层，但是在应用层的投入相对匮乏。  造成上面的原因很多，其中比较突出和普遍的原因就是研发团队没有足够的安全意识，常常把安全放在最后，作为一种nice to have的事情，由于交付压力，安全测试常常被砍掉。 自动化安全之前常常通过新闻的渠道才知道某某库出现了安全漏洞，然后通过手动的方式去查看，这种方式非常的耗时，低效。 所以我们做自动化安全，把安">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-36760069b8f80fca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -138,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/13/bulit-security-in-application-layer/"/>
 
 
 
 
 
-  <title>不得不说的微服务测试 | 魔镜的技术心经</title>
+  <title>应用层安全方案 | 魔镜的技术心经</title>
   
 
 
@@ -296,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/24/consumer-driven-contract-testing/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/13/bulit-security-in-application-layer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -313,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">不得不说的微服务测试</h1>
+          <h1 class="post-title" itemprop="name headline">应用层安全方案</h1>
         
 
         <div class="post-meta">
@@ -325,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-24T23:21:00+08:00">
-                2018-08-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-13T23:21:00+08:00">
+                2018-09-13
               </time>
             
 
@@ -348,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/微服务/" itemprop="url" rel="index">
-                    <span itemprop="name">微服务</span>
+                  <a href="/categories/安全/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
                   </a>
                 </span>
 
@@ -366,9 +367,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/24/consumer-driven-contract-testing/#comments" itemprop="discussionUrl">
+                <a href="/2018/09/13/bulit-security-in-application-layer/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/24/consumer-driven-contract-testing/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/09/13/bulit-security-in-application-layer/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,68 +397,30 @@
       
 
       
-        <p>在微服务架构下，给我们测试带来了如下挑战：</p>
-<ul>
-<li><strong>验证成本高</strong>，为了验证多个服务协作后的功能正确与否，需要为每个服务搭建基础设施（包括数据库、缓存等），并执行部署、配置等步骤，以确保服务能正确运行。</li>
-<li><strong>结果不稳定</strong>， 分布式系统，服务之间的通信都是通过网络调用，然而在网络上传送，都会面临<code>网络延时</code>、<code>超时</code>、<code>带宽</code>等因素，容易导致不稳定的测试结果。</li>
-<li><strong>反馈周期长</strong>， 相比单体应用而言，微服务架构下，可独立部署的单元多，因此集成测试的反馈周期比之前会更长，定位问题的时间就会更久。</li>
-<li><strong>沟通成本高</strong>， 微服务常由不同团队开发并维护，当服务频繁进行改动和版本升级的时候，很容易导致不兼容，加大团队之间的沟通成本。</li>
-</ul>
-<h3 id="测试金字塔"><a href="#测试金字塔" class="headerlink" title="测试金字塔"></a>测试金字塔</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-7d491b1dc36c744e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>测试金字塔很好的帮助我们在制定测试策略的时候，区分不同层次测试关注点，同时，一般来说，测试颗粒度越粗，越脆弱，执行的时间越长，维护成本也越高。</p>
-<h3 id="不得不说的契约测试"><a href="#不得不说的契约测试" class="headerlink" title="不得不说的契约测试"></a>不得不说的契约测试</h3><p>在微服务中，不得不聊聊消费者契约测试，</p>
-<blockquote>
-<p>契约，一种定义在Consumer与Provider之间的交互方式</p>
-</blockquote>
-<h4 id="消费者驱动的契约测试"><a href="#消费者驱动的契约测试" class="headerlink" title="消费者驱动的契约测试"></a>消费者驱动的契约测试</h4><p><img src="https://upload-images.jianshu.io/upload_images/12636540-b15d3c16e24d23ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>契约是Consumer和Provider团队之间达成的交互协议，更多的看中的是请求和响应的Payload结构（<code>Schema</code>），由服务消费者构建并生成contract，然后将contact上传到Pact broker or server； 对应的服务提供者，需要在Pipeline中，有一个task进行契约的验证，保证契约不会被破坏。</p>
-<h4 id="契约测试的好处"><a href="#契约测试的好处" class="headerlink" title="契约测试的好处"></a>契约测试的好处</h4><ul>
-<li><strong>测试分层</strong>，Consumer和Provider分别测试。</li>
-<li><strong>测试前移</strong>，为Consumer提供Mock，不需要真实的集成环境，<code>稳定性高</code>。</li>
-<li><strong>反馈周期短</strong>，单元测试级别，测试运行快，<code>毫米级</code>。</li>
-<li><strong>沟通成本底</strong></li>
-</ul>
-<p>为服务消费者提供了信心，更为服务提供者提供了更大的价值（通过与不同消费者约定的契约，可以保证服务安全的升级变迁，不会破坏之前已有的功能）<br><img src="https://upload-images.jianshu.io/upload_images/12636540-8bdf4aba4416c85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="契约测试的应用场景"><a href="#契约测试的应用场景" class="headerlink" title="契约测试的应用场景"></a>契约测试的应用场景</h4><ul>
-<li>一个服务需要被多个消费者使用，每个消费者的诉求并不完全一样（一对一的场景，没有太大意义）。</li>
-<li>服务消费者与服务提供者由不同的团队开发维护。</li>
-<li>服务消费者与服务提供者，一定要对契约达成一致，并一直保持这种<code>约束</code>（如果有一方没有遵守，比如提供者根本不将契约验证集成到流水线中，那么就没有任何意义），契约的不符合预期的变化应当会造成测试的失败。</li>
-</ul>
-<h4 id="应该关注"><a href="#应该关注" class="headerlink" title="应该关注"></a>应该关注</h4><ul>
-<li>检查Consumer构建的请求是否匹配到了对应的Contract</li>
-<li>检查Provider的响应是否满足Consumer的需要</li>
-</ul>
-<h4 id="不应该关注"><a href="#不应该关注" class="headerlink" title="不应该关注"></a>不应该关注</h4><ul>
-<li>Provider的业务逻辑是否正确</li>
-<li>Consumer的处理响应的逻辑</li>
-</ul>
-<p>可参考的工具： <code>Pact</code>, <code>Spring Cloud Contract</code>等</p>
-<h3 id="不得不说的集成测试"><a href="#不得不说的集成测试" class="headerlink" title="不得不说的集成测试"></a>不得不说的集成测试</h3><p>集成测试验证服务或者组件之间的<code>连通性</code>和<code>交互</code>以检查接口缺陷，集成测试旨在通过集成不同的Downstream服务，来覆盖基本的成功和错误的场景，在我们项目中，选用<code>REST Assured</code>作为集成测试工具，使用非常方便:</p>
-<pre><code class="java"><span class="meta">@RunWith</span>(SpringRunner.class)
-<span class="meta">@SpringBootTest</span>(webEnvironment = WebEnvironment.RANDOM_PORT)
-<span class="meta">@AutoConfigureRestDocs</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDocumentationTests</span> </span>{
-
-    <span class="meta">@LocalServerPort</span>
-    <span class="keyword">private</span> <span class="keyword">int</span> port;
-
-    <span class="meta">@Autowired</span>
-    <span class="keyword">private</span> RequestSpecification documentationSpec;
-
-    <span class="meta">@Test</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">listUsers</span><span class="params">()</span> </span>{
-        given(<span class="keyword">this</span>.documentationSpec).filter(document(<span class="string">"list-users"</span>)).when()
-                .port(<span class="keyword">this</span>.port).get(<span class="string">"/"</span>).then().assertThat().statusCode(is(<span class="number">200</span>));
-    }
-
-}
-</code></pre>
-<p>当downstream服务非常<code>不稳定</code>的时候，我们会通过<code>wiremock</code>作为proxy对请求和响应进行录制，使用wiremock做测试替身，隔离外部调用，避免多服务间的复杂情况（网络，其他团队服务可用性等），并以可重复的方式模拟任何场景（超时，Down机，SSL验证失败，丢失HTTP头，请求响应不匹配等），运行稳定，且反馈周期短。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://www.pact.net.cn/best_practices/consumer.html" target="_blank" rel="noopener">https://www.pact.net.cn/best_practices/consumer.html</a></li>
-<li><a href="https://martinfowler.com/articles/consumerDrivenContracts.html" target="_blank" rel="noopener">https://martinfowler.com/articles/consumerDrivenContracts.html</a></li>
-<li><a href="https://github.com/realestate-com-au/pact" target="_blank" rel="noopener">https://github.com/realestate-com-au/pact</a></li>
-</ul>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>根据一份报告显示，大约80%的安全问题发生在应用层，但是在应用层的投入相对匮乏。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-36760069b8f80fca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>造成上面的原因很多，其中比较突出和普遍的原因就是研发团队没有足够的安全意识，常常把安全放在最后，作为一种nice to have的事情，由于交付压力，安全测试常常被砍掉。</p>
+<h3 id="自动化安全"><a href="#自动化安全" class="headerlink" title="自动化安全"></a>自动化安全</h3><p>之前常常通过新闻的渠道才知道某某库出现了安全漏洞，然后通过手动的方式去查看，这种方式非常的耗时，低效。</p>
+<p>所以我们做自动化安全，把安全相关的检测和测试，集成到jenkins流水线中，持续的获取到我们应用的安全状态，并做持续改进，避免安全造成的公司财务或者名誉损失。</p>
+<p>自动化流水线：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-965199824ffef4a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="源码安全扫描"><a href="#源码安全扫描" class="headerlink" title="源码安全扫描"></a>源码安全扫描</h4><p>常见的源码级别的静态安全扫描有<code>Fortify（收费）</code>,<code>FindSecurityBugs</code>,<code>Sonar+FindBugs</code>,通过这些工具，它们可以快速识别代码中的安全风险，并给出修复提示。<br>如图“Sonar+FindBugs插件”：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-610cf61d792b8ef4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="sonar.png"><br>具体配置请参考：<a href="https://find-sec-bugs.github.io/" target="_blank" rel="noopener">https://find-sec-bugs.github.io/</a></p>
+<h4 id="第三方依赖安全监测工具"><a href="#第三方依赖安全监测工具" class="headerlink" title="第三方依赖安全监测工具"></a>第三方依赖安全监测工具</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">80%的代码不是你写的，而来至于第三方依赖</span><br></pre></td></tr></table></figure>
+<p>比如知名的Apache structs2有一个版本就有<code>远程代码执行漏洞</code>，OpenSSL Heartbleed就存在过<code>服务器内存泄露</code>等问题，一般针对JAVA应用，推荐使用<code>OWASP DependencyCheck</code>来做三方依赖的安全监测工具，只需要引入Maven或者gradle插件即可。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;project&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        ...</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            ...</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">              &lt;groupId&gt;org.owasp&lt;/groupId&gt;</span><br><span class="line">              &lt;artifactId&gt;dependency-check-maven&lt;/artifactId&gt;</span><br><span class="line">              &lt;version&gt;4.0.0&lt;/version&gt;</span><br><span class="line">              &lt;executions&gt;</span><br><span class="line">                  &lt;execution&gt;</span><br><span class="line">                      &lt;goals&gt;</span><br><span class="line">                          &lt;goal&gt;check&lt;/goal&gt;</span><br><span class="line">                      &lt;/goals&gt;</span><br><span class="line">                  &lt;/execution&gt;</span><br><span class="line">              &lt;/executions&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">            ...</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">        ...</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<p>具体配置请参见： <a href="https://jeremylong.github.io/DependencyCheck/dependency-check-maven/" target="_blank" rel="noopener">https://jeremylong.github.io/DependencyCheck/dependency-check-maven/</a></p>
+<h4 id="应用渗透测试工具"><a href="#应用渗透测试工具" class="headerlink" title="应用渗透测试工具"></a>应用渗透测试工具</h4><p>常见的开源安全工具<code>ZAP</code>，它是一个黑盒测试，即在应用程序处于运行状态下对其进行测试，其优点是：无须获取源代码，可发现不安全的配置、页面安全缺陷、以及第三方接口安全问题。</p>
+<p>运行界面如下：<br><img src="https://upload-images.jianshu.io/upload_images/12636540-bc1b1df05583e441.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><code>ZAP</code>也提供了Jenkins插件和docker镜像，很容易将其集成进我们的流水线，成为持续集成中的一部分。</p>
+<p>具体配置请参见：<br><a href="https://wiki.jenkins.io/display/JENKINS/zap+plugin" target="_blank" rel="noopener">https://wiki.jenkins.io/display/JENKINS/zap+plugin</a></p>
+<h4 id="常见安全注意事项"><a href="#常见安全注意事项" class="headerlink" title="常见安全注意事项"></a>常见安全注意事项</h4><ol>
+<li>响应头和错误页面中不要包含服务器的版本信息</li>
+<li>响应中添加安全响应头:X-Frame-Options、X-XSS-Protection、X-Content-<br>Type-Options、HSTS</li>
+<li>关闭spring的actuator接口</li>
+<li>错误响应( 如400、500)中 要包含 感信息( 如错误堆栈)</li>
+<li>如果使用tomcat,注意关闭管理接口</li>
+<li>如果使用swagger，关闭在产品环境下的接口</li>
+</ol>
 
       
     </div>
@@ -475,11 +438,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
-          
             <a href="/tags/微服务/" rel="tag"># 微服务</a>
-          
-            <a href="/tags/测试/" rel="tag"># 测试</a>
           
         </div>
       
@@ -492,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/22/spring-cloud-based-microservice/" rel="next" title="基于Spring Cloud的微服务架构">
-                <i class="fa fa-chevron-left"></i> 基于Spring Cloud的微服务架构
+              <a href="/2018/09/13/ddd-practice-level-concept/" rel="next" title="领域驱动设计：构建你的代码蓝图">
+                <i class="fa fa-chevron-left"></i> 领域驱动设计：构建你的代码蓝图
               </a>
             
           </div>
@@ -502,8 +461,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/26/rxjava-programming/" rel="prev" title="异步编程神器RxJava">
-                异步编程神器RxJava <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/16/office365-wopi-integration/" rel="prev" title="Office365：WOPI集成">
+                Office365：WOPI集成 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -695,7 +654,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试金字塔"><span class="nav-number">1.</span> <span class="nav-text">测试金字塔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不得不说的契约测试"><span class="nav-number">2.</span> <span class="nav-text">不得不说的契约测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消费者驱动的契约测试"><span class="nav-number">2.1.</span> <span class="nav-text">消费者驱动的契约测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#契约测试的好处"><span class="nav-number">2.2.</span> <span class="nav-text">契约测试的好处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#契约测试的应用场景"><span class="nav-number">2.3.</span> <span class="nav-text">契约测试的应用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应该关注"><span class="nav-number">2.4.</span> <span class="nav-text">应该关注</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不应该关注"><span class="nav-number">2.5.</span> <span class="nav-text">不应该关注</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不得不说的集成测试"><span class="nav-number">3.</span> <span class="nav-text">不得不说的集成测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动化安全"><span class="nav-number">2.</span> <span class="nav-text">自动化安全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#源码安全扫描"><span class="nav-number">2.1.</span> <span class="nav-text">源码安全扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三方依赖安全监测工具"><span class="nav-number">2.2.</span> <span class="nav-text">第三方依赖安全监测工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用渗透测试工具"><span class="nav-number">2.3.</span> <span class="nav-text">应用渗透测试工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见安全注意事项"><span class="nav-number">2.4.</span> <span class="nav-text">常见安全注意事项</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -845,9 +804,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/08/24/consumer-driven-contract-testing/';
-          this.page.identifier = '2018/08/24/consumer-driven-contract-testing/';
-          this.page.title = '不得不说的微服务测试';
+          this.page.url = 'http://yoursite.com/2018/09/13/bulit-security-in-application-layer/';
+          this.page.identifier = '2018/09/13/bulit-security-in-application-layer/';
+          this.page.title = '应用层安全方案';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
