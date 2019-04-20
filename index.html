@@ -398,11 +398,10 @@
 ###修改权限chmod 600 ~/.ssh/jump-server-pri.key
 Linux-like 系统下在终端中使用如下的命令, 将在后台建立到数据库的连接通道：
 1ssh -fNT -L 5432:XXXX.rds.cn-northwest-1.amazonaws.com.cn:5432 -i ~/.ssh/jump-server-pri.key dbuser@52.xx.xx.xx
+本命令借助了SSH的轻量级代理机制 - -L参数会在本地监听一个端口，转发数据到远程主机上
 本地测试通过如下命令，进行端口监听检查：
 1lsof -nP -i4TCP:5432 | grep LISTEN
-本地所有访问127.0.0.1:5432的请求，将被转发到对应的RDS服务器。
-Windows 系统下
-下载Putty 软件
+本地所有访问127.0.0.1:
           ...
           <!--noindex-->
           <div class="post-button text-center">

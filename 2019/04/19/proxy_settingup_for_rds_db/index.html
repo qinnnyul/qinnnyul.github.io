@@ -106,7 +106,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7bc12ab65bfff7ea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-f2fc0dca9e6e75b2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-da831950e8c966bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-04-20T06:53:01.000Z">
+<meta property="og:updated_time" content="2019-04-20T06:59:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库代理访问">
 <meta name="twitter:description" content="我们常常在开发中，需要连接数据库，然而数据库的安全组，一般都是受限制的（为了做网络隔离，只有特定的网段能够访问），比较好的做法就是通过跳板机或者堡垒机来做代理，以下就是如何在liunx-like系统和windows系统中进行代理访问的配置。 下载私钥将堡垒机的SSH私秘，下载并保存在本地的私钥目录，例如 ~/.ssh/jump-server-pri.key ###修改权限chmod 600 ~/.">
@@ -402,6 +402,7 @@
 <p>###修改权限<br>chmod 600 ~/.ssh/jump-server-pri.key</p>
 <h2 id="Linux-like-系统下"><a href="#Linux-like-系统下" class="headerlink" title="Linux-like 系统下"></a>Linux-like 系统下</h2><p>在终端中使用如下的命令, 将在后台建立到数据库的连接通道：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -fNT -L 5432:XXXX.rds.cn-northwest-1.amazonaws.com.cn:5432 -i ~/.ssh/jump-server-pri.key dbuser@52.xx.xx.xx</span><br></pre></td></tr></table></figure>
+<p>本命令借助了SSH的轻量级代理机制 - <code>-L参数会在本地监听一个端口，转发数据到远程主机上</code></p>
 <h3 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h3><p>通过如下命令，进行端口监听检查：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -nP -i4TCP:5432 | grep LISTEN</span><br></pre></td></tr></table></figure>
 <p>本地所有访问127.0.0.1:5432的请求，将被转发到对应的RDS服务器。</p>
