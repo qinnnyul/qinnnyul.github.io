@@ -289,6 +289,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/ddd_layers_architecture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin Yulin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔镜的技术心经">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/20/ddd_layers_architecture/" itemprop="url">领域驱动设计：分层架构</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T23:21:00+08:00">
+                2019-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/微服务/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/20/ddd_layers_architecture/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/04/20/ddd_layers_architecture/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          分层架构是运用最为广泛的架构模式， 几乎每个软件系统都需要通过层来隔离不同的关注点，以此应对不同的需要变化，使得这种变化可以独立进行，此外，分层架构模式还可以用于隔离业务复杂度和技术复杂度。
+Robert Martin认为单一职责原则就是”一个类应该只有一个引起它变化的原因”，换句话，就是如果有两个引起类变化的原因，就需要分离。单一职责原则可以理解为架构原则， 这里我们考虑的不是类，而且层次，这就是为什么我们需要将业务和基础设施进行分开的原因。
+分层架构演进
+左边为传统的经典三层架构，在此基础上，领域驱动里面提出了四层架构，由原来的业务层分为应用层和领域层。
+
+“新增的应用层”主要负责：协调对领域对象的操作，分配工作，与其它系统的应用层进行交互的必要渠道,  本身不包括业务逻辑,  是非常薄的一层， 与业务用例一一对应
+领域层： 负责表达业务概念，业务状态信息以及业务规则。
+基础设施层： 向其他层提供通用的技术能力， 为应用层传递消息，为领域层提供持久化机制，为用户界面层绘制屏幕组件等。
+
+分层依赖关系
+一般的分层架构都是，上层依赖下层，从上自下的依赖关系， 但是DDD中，我们推荐应该
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/20/ddd_layers_architecture/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/proxy_settingup_for_rds_db/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1802,208 +1971,6 @@ RxJava简单来说是建立在观察者模式上面的编程范式，它一定�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/22/spring-cloud-based-microservice/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Qin Yulin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/3600881">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="魔镜的技术心经">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/22/spring-cloud-based-microservice/" itemprop="url">基于Spring Cloud的微服务架构</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-22T23:21:00+08:00">
-                2018-08-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/微服务/" itemprop="url" rel="index">
-                    <span itemprop="name">微服务</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/22/spring-cloud-based-microservice/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/22/spring-cloud-based-microservice/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          Spring Cloud
-
-
-发布于2015年3月
-引入NetflixOSS的开源技术栈
-基于Spring boot
-构建了分布式系统的公共模式
-
-Spring boot是Spring框架对“约定优于配置”理念的最佳实践的产物，比如自动配置，它背后通过了Springfactoriesloader，它属于Spring框架私有的一种扩展方案（类似于Java的SPI-Service provider interface）， 其主要的功能就是从指定的配置文件meta-inf/spring.factories加载配置。
-常见的微服务组件
-服务端负载均衡
-HTTP重定向负载均衡（类似DNS域名解析负载均衡）
-优点
-实现比较简单
-
-
-缺点
-浏览器需要两次请求才能完成一次访问
-性能较差
-重定向服务器自身的处理能力有可能成为瓶颈
-
-
-
-
-
-
-
-反向代理均衡器的优点（以Nginx，HA Proxy为代表）
-比较简单
-可以利用反向代理缓存资源
-改善网站的性能
-
-
-反向代理均衡器的缺点
-所有请求和响应的中转站
-其性能可能会成为瓶颈
-
-
-
-
-
-数据链路层的负载均衡优点
-不需要修改数据包的源地址
-响应数据不需要通
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/22/spring-cloud-based-microservice/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2054,7 +2021,7 @@ HTTP重定向负载均衡（类似DNS域名解析负载均衡）
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

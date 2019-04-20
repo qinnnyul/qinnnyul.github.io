@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="架构,微服务," />
+  <meta name="keywords" content="微服务,领域驱动设计," />
 
 
 
@@ -94,28 +94,23 @@
 
 
 
-<meta name="description" content="背景随着微服务的兴起，我们强调业务(服务)进程的隔离性，且为了保证服务的高可用和高性能，避免单点事故，我们常常都会通过冗余的方式，会启多个进程来提供相同的服务。那么在基础设施层面来说，我们通常有以下几种方式：  传统的方式，一台物理机上面部署多个应用进程。 点评：自建基础设施，前期投入大,  需要维护的东西很多，一般借助虚拟化技术，比如vSphere, vCloud等技术来实现计算资源的分配管理；">
-<meta name="keywords" content="架构,微服务">
+<meta name="description" content="分层架构是运用最为广泛的架构模式， 几乎每个软件系统都需要通过层来隔离不同的关注点，以此应对不同的需要变化，使得这种变化可以独立进行，此外，分层架构模式还可以用于隔离业务复杂度和技术复杂度。 Robert Martin认为单一职责原则就是”一个类应该只有一个引起它变化的原因”，换句话，就是如果有两个引起类变化的原因，就需要分离。单一职责原则可以理解为架构原则， 这里我们考虑的不是类，而且层次，这就">
+<meta name="keywords" content="微服务,领域驱动设计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="微服务下： Serverless实践">
-<meta property="og:url" content="http://yoursite.com/2018/06/01/serverless-in-production/index.html">
+<meta property="og:title" content="领域驱动设计：分层架构">
+<meta property="og:url" content="http://yoursite.com/2019/04/20/ddd_layers_architecture/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="背景随着微服务的兴起，我们强调业务(服务)进程的隔离性，且为了保证服务的高可用和高性能，避免单点事故，我们常常都会通过冗余的方式，会启多个进程来提供相同的服务。那么在基础设施层面来说，我们通常有以下几种方式：  传统的方式，一台物理机上面部署多个应用进程。 点评：自建基础设施，前期投入大,  需要维护的东西很多，一般借助虚拟化技术，比如vSphere, vCloud等技术来实现计算资源的分配管理；">
+<meta property="og:description" content="分层架构是运用最为广泛的架构模式， 几乎每个软件系统都需要通过层来隔离不同的关注点，以此应对不同的需要变化，使得这种变化可以独立进行，此外，分层架构模式还可以用于隔离业务复杂度和技术复杂度。 Robert Martin认为单一职责原则就是”一个类应该只有一个引起它变化的原因”，换句话，就是如果有两个引起类变化的原因，就需要分离。单一职责原则可以理解为架构原则， 这里我们考虑的不是类，而且层次，这就">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-28de76ad258c5fef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-aebd84cc4ad3c09c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-485beb09925857c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-95ba387651833a3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-876152a54baa8bac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-c00be66fc734fa2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-60bbadfdb91ad3e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7186d2f623cb5aaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-72a5692561697e34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-12T11:55:06.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-ca3d33ca679dfeca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-f4b1f69bb10289d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-f346447525c4e805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-c138ddd049eb27f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-20T07:35:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微服务下： Serverless实践">
-<meta name="twitter:description" content="背景随着微服务的兴起，我们强调业务(服务)进程的隔离性，且为了保证服务的高可用和高性能，避免单点事故，我们常常都会通过冗余的方式，会启多个进程来提供相同的服务。那么在基础设施层面来说，我们通常有以下几种方式：  传统的方式，一台物理机上面部署多个应用进程。 点评：自建基础设施，前期投入大,  需要维护的东西很多，一般借助虚拟化技术，比如vSphere, vCloud等技术来实现计算资源的分配管理；">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-28de76ad258c5fef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="领域驱动设计：分层架构">
+<meta name="twitter:description" content="分层架构是运用最为广泛的架构模式， 几乎每个软件系统都需要通过层来隔离不同的关注点，以此应对不同的需要变化，使得这种变化可以独立进行，此外，分层架构模式还可以用于隔离业务复杂度和技术复杂度。 Robert Martin认为单一职责原则就是”一个类应该只有一个引起它变化的原因”，换句话，就是如果有两个引起类变化的原因，就需要分离。单一职责原则可以理解为架构原则， 这里我们考虑的不是类，而且层次，这就">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-ca3d33ca679dfeca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -144,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/01/serverless-in-production/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/04/20/ddd_layers_architecture/"/>
 
 
 
 
 
-  <title>微服务下： Serverless实践 | 魔镜的技术心经</title>
+  <title>领域驱动设计：分层架构 | 魔镜的技术心经</title>
   
 
 
@@ -302,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/01/serverless-in-production/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/ddd_layers_architecture/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -319,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">微服务下： Serverless实践</h1>
+          <h1 class="post-title" itemprop="name headline">领域驱动设计：分层架构</h1>
         
 
         <div class="post-meta">
@@ -331,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-01T21:31:00+08:00">
-                2018-06-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T23:21:00+08:00">
+                2019-04-20
               </time>
             
 
@@ -372,9 +367,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/06/01/serverless-in-production/#comments" itemprop="discussionUrl">
+                <a href="/2019/04/20/ddd_layers_architecture/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/06/01/serverless-in-production/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2019/04/20/ddd_layers_architecture/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -402,106 +397,34 @@
       
 
       
-        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>随着微服务的兴起，我们强调业务(服务)进程的隔离性，且为了保证服务的高可用和高性能，避免单点事故，我们常常都会通过冗余的方式，会启多个进程来提供相同的服务。那么在基础设施层面来说，我们通常有以下几种方式：</p>
+        <p>分层架构是运用最为广泛的架构模式， 几乎每个软件系统都需要通过层来隔离不同的关注点，以此应对不同的需要变化，使得这种变化可以独立进行，此外，分层架构模式还可以用于隔离业务复杂度和技术复杂度。</p>
+<p>Robert Martin认为单一职责原则就是”一个类应该只有一个引起它变化的原因”，换句话，就是如果有两个引起类变化的原因，就需要分离。单一职责原则可以理解为架构原则， 这里我们考虑的不是类，而且层次，这就是为什么我们需要将业务和基础设施进行分开的原因。</p>
+<h3 id="分层架构演进"><a href="#分层架构演进" class="headerlink" title="分层架构演进"></a>分层架构演进</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-ca3d33ca679dfeca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>左边为传统的经典三层架构，在此基础上，领域驱动里面提出了四层架构，由原来的业务层分为<code>应用层</code>和<code>领域层</code>。</p>
 <ul>
-<li>传统的方式，一台物理机上面部署多个应用进程。<ul>
-<li>点评：自建基础设施，前期投入大,  需要维护的东西很多，一般借助虚拟化技术，比如<code>vSphere</code>, <code>vCloud</code>等技术来实现计算资源的分配管理；一般由专门的团队负责，不提供自助服务，资源的申请流程很长。</li>
+<li>“新增的应用层”主要负责：<code>协调对领域对象的操作，分配工作，与其它系统的应用层进行交互的必要渠道,  本身不包括业务逻辑,  是非常薄的一层， 与业务用例一一对应</code></li>
+<li>领域层： 负责表达业务概念，业务状态信息以及业务规则。</li>
+<li>基础设施层： 向其他层提供通用的技术能力， 为应用层传递消息，为领域层提供持久化机制，为用户界面层绘制屏幕组件等。</li>
 </ul>
-</li>
-<li><code>云时代</code>，比如亚马逊提供的IAAS服务，已经把服务器抽象成了一种可灵活使用的资源，屏蔽了基础设施层的管理（计算，存储，网络），AWS的成功, 引导开发者将应用转移到云上, 解决了硬件管理的问题，而软件配置和管理相关的问题利用自动化配置工具Ansible、Chef等解决；一般会将一个服务部署到一个EC2实例上面。<ul>
-<li>点评：通过EC2做到了业务进程的隔离，屏蔽了业务进程之间的相互影响</li>
-</ul>
-</li>
-<li><code>容器时代</code>，Docker把服务器抽象成了镜像，保证一个包含环境和部署软件的镜像在任何地方运行都能保证行为一致。Platform As A Service平台，比如redhat的Openshift，它基于K8S做容器的编排，通过docker做资源和进程的隔离，可以做到在一个虚拟机上面运行多个docker容器，优化了资源利用率。<ul>
-<li>点评： 容器与虚拟机相比有如下的优点<ul>
-<li><code>启动速度</code>，容器通常在一秒内可以启动，而虚拟机通常要1分钟或更久</li>
-<li><code>资源利用率</code>， 一台普通物理PC可以跑几百上千个容器，VM上面一般最多几十个</li>
-<li><code>性能开销</code>， VM通常需要额外的CPU和内存来完成硬件模拟，Docker接近原生</li>
-<li><code>隔离性</code>， VM单独内核， 完全隔离； Docker共享内核，通过namespace安全隔离</li>
-<li><code>轻量级</code>， VM一般为GB级，Docker容器一般为MB </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>Serverless</code>， 为了进一步的让开发团队只关注业务，<code>无服务器架构</code>，进一步按需启动容器，按需扩展，根据代码运行时间付费，对外提供服务，最大程度的提高了资源利用率, 减少资源碎片的情况。</li>
-</ul>
-<p>整体平台演进路线图，概括如下：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-28de76ad258c5fef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><ul>
-<li>与微服务的契合<blockquote>
-<p>Serverless is lightweight event-based microservices.</p>
-</blockquote>
-</li>
-<li>无状态</li>
-<li>负载起伏明显</li>
-<li>对延时不敏感（事件驱动，最终一致性）</li>
-</ul>
-<h3 id="AWS-Lambda"><a href="#AWS-Lambda" class="headerlink" title="AWS Lambda"></a>AWS Lambda</h3><blockquote>
-<p>AWS Lambda is a compute service that lets you run code without provisioning or managing servers</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-aebd84cc4ad3c09c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<ul>
-<li>每个月前一百万的请求免费</li>
-<li>0.20美元/百万请求，每个请求接近$0.0000002美元，对于很多流量小的服务，费用可以忽略</li>
-</ul>
-<h4 id="事件源"><a href="#事件源" class="headerlink" title="事件源"></a>事件源</h4><p><img src="https://upload-images.jianshu.io/upload_images/12636540-485beb09925857c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>支持多种事件源触发机制，事件获取既有“推”又有“拉”的方式。</p>
-<p>同步调用方式：</p>
-<ul>
-<li>API gateway</li>
-<li>AWS SDK</li>
-</ul>
-<p>异步调用方式：</p>
-<ul>
-<li>S3</li>
-<li>SNS<br>……</li>
-</ul>
-<h4 id="部署方式"><a href="#部署方式" class="headerlink" title="部署方式"></a>部署方式</h4><ul>
-<li>可使用传统的Jenkins结合Serverless插件实现持续集成</li>
-<li>集成包括编译，静态扫描，单元测试，mock集成测试等</li>
-<li>打包为ZIP文件，上传到AWS S3上以供使用，如下图：</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-95ba387651833a3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<ul>
-<li>一些部署限制：</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-876152a54baa8bac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<ul>
-<li>也可以基于Cloudformation的部署方式，如下图（这里有多年前用<code>typescript</code> + <code>serverless framework</code>写的演示代码： <a href="https://github.com/qinnnyul/serverless-aws-lambda-typescript；" target="_blank" rel="noopener">https://github.com/qinnnyul/serverless-aws-lambda-typescript；</a> 除此之外，还可以参考的框架有<code>SAM</code>和<code>Claudia.js</code>，他们都是基于CF做Infrastructure as code）：</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-c00be66fc734fa2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p><strong><em>运行时异常的捕获</em></strong></p>
-<ul>
-<li>超时 - Timeout</li>
-<li>内存不足 - Out of memory</li>
-<li>错误配置 - Miss configuration</li>
-</ul>
-<p>提供了Dead Letter Queues机制，以防止数据的丢失，方便做事后补偿（可以是自动或者人工的方式）。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-60bbadfdb91ad3e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><ul>
-<li>用于数据流的处理， 这个案例中使用了发布订阅（SNS）的方式，当数据被存在S3上面的时候，触发了S3事件，然后所有订阅SNS topic的订阅者（这里是多个Lambda），会被触发，实现相应的数据转存，不同的服务对数据进行了侧重点不同的消费（比如数据分析和数据查询）</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-7186d2f623cb5aaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<h4 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h4><ul>
-<li>首次启动响应时间<ul>
-<li>项目中启动Spring boot的项目的时候，有些服务启动延时多达10秒以上</li>
-<li>AWS lambda在一段闲置状态后（4小时内，这个数据是与AWS咨询师确认后得知，官网没有），一般会收回计算资源。</li>
-<li>基于动态语言的服务，比如nodejs或者python，没有这个问题，一般延时在几百毫秒。 </li>
-</ul>
-</li>
-<li>强第三方依赖<ul>
-<li>Serverless框架本身是平台托管的，比如AWS Lambda与AWS绑定，事件源也和平台相关。</li>
-<li>转化平台的代价大。 </li>
-</ul>
-</li>
-<li>不适合所有场景<ul>
-<li>有状态的服务</li>
-<li>长时间运行的服务（lambda的最长运行时间为5分钟）  </li>
-</ul>
-</li>
-<li>环境资源的限制</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-72a5692561697e34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="分层依赖关系"><a href="#分层依赖关系" class="headerlink" title="分层依赖关系"></a>分层依赖关系</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-f4b1f69bb10289d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>一般的分层架构都是，上层依赖下层，从上自下的依赖关系， 但是DDD中，我们推荐应该依赖抽象，而不是具体的实现，所以领域层不会直接依赖基础设施层，而是依赖与接口，比如这里的资源库就是接口，然后基础设施层，也依赖于资源库，并通过依赖注入或者控制反转的方式，提供具体的底层实现； 这样很好的做的了技术复杂度和业务复杂度的隔离。即使底层技术实现细节的变更，也不会影响到领域层。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A. 高层次的模块不应该依赖于低层次的模块，它们都应该依赖于抽象。</span><br><span class="line">B. 抽象不应该依赖于具体实现细节，具体实现细节应该依赖于抽象。</span><br><span class="line">- Robert C. Martin</span><br></pre></td></tr></table></figure>
+<p>根据面向对象设计里面的依赖倒置原则，我们可以把它用于架构设计的参考原则，其实就是面向接口的设计原则，就像构建房屋一样，我们需要稳定的地基，那么在编程的世界，抽象和接口是相对稳定的，所以我们的分层架构，可以不像传统的三层架构那样，从上到下的进行依赖。 </p>
+<h3 id="分层架构类比"><a href="#分层架构类比" class="headerlink" title="分层架构类比"></a>分层架构类比</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-f346447525c4e805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>洋葱架构，六边形架构，整洁架构，都是分层架构，他们只是更好的表达出了，领域逻辑处于系统架构核心的位置。</p>
+<p>比如，出名的六边形架构，它通过内外两个六边形，进行技术复杂度和业务复杂度的隔离，这里的分层，只是名字不同，和我们上面提高的分层架构能一一对应上，比如领域模型对应领域层，应用程序对应应用层，端口和适配器对应基础设施层。</p>
+<p>同理，整洁架构里面的enties对应领域层，Use cases对应应用层，controllers，gateways和presenters对应我们的基础设施层。</p>
+<p><code>总体来说，他们更好的表达了领域逻辑的核心地位。</code></p>
+<h3 id="分层架构代码模型"><a href="#分层架构代码模型" class="headerlink" title="分层架构代码模型"></a>分层架构代码模型</h3><p>代码模型属于软件架构的一部分，通过它展现了模块的划分，我们的分层更多的是逻辑上的水平分层，体现在代码上面，主要是通过包或者模块。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12636540-c138ddd049eb27f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>各个层的职责和关系如下：</p>
+<ol>
+<li>domain层内要有Repository负责存取对象、factory负责创建对象、domain service负责做领域层大的业务 </li>
+<li>Repository接口要在domain层 </li>
+<li>Repository的实现要在Domain层外 </li>
+<li>实现依赖Domain层，Domain层不依赖实现 </li>
+<li>application层（包括resource目录和facade目录）在domain层外，不能有业务逻辑，只负责调度不同聚合的domain service。application service 可以依赖domain层的一切对象，但是domain层一切对象都不依赖外部对象 </li>
+<li>不同聚合的domain不在一个包里，彼此的访问通过application service转发</li>
+</ol>
 
       
     </div>
@@ -519,9 +442,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
-          
             <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
           
         </div>
       
@@ -534,15 +457,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/04/19/proxy_settingup_for_rds_db/" rel="next" title="数据库代理访问">
+                <i class="fa fa-chevron-left"></i> 数据库代理访问
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/13/post-incident-review-jvm/" rel="prev" title="回忆录： 一次GC引发的产品事故">
-                回忆录： 一次GC引发的产品事故 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -733,7 +656,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景"><span class="nav-number">1.1.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-Lambda"><span class="nav-number">2.</span> <span class="nav-text">AWS Lambda</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事件源"><span class="nav-number">2.1.</span> <span class="nav-text">事件源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署方式"><span class="nav-number">2.2.</span> <span class="nav-text">部署方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常处理"><span class="nav-number">2.3.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例"><span class="nav-number">2.4.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#局限性"><span class="nav-number">2.5.</span> <span class="nav-text">局限性</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分层架构演进"><span class="nav-number">1.</span> <span class="nav-text">分层架构演进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分层依赖关系"><span class="nav-number">2.</span> <span class="nav-text">分层依赖关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分层架构类比"><span class="nav-number">3.</span> <span class="nav-text">分层架构类比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分层架构代码模型"><span class="nav-number">4.</span> <span class="nav-text">分层架构代码模型</span></a></li></ol></div>
             
 
           </div>
@@ -883,9 +806,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/06/01/serverless-in-production/';
-          this.page.identifier = '2018/06/01/serverless-in-production/';
-          this.page.title = '微服务下： Serverless实践';
+          this.page.url = 'http://yoursite.com/2019/04/20/ddd_layers_architecture/';
+          this.page.identifier = '2019/04/20/ddd_layers_architecture/';
+          this.page.title = '领域驱动设计：分层架构';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
