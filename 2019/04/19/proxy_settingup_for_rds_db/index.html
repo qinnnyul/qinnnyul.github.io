@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="架构,微服务," />
+  <meta name="keywords" content="云原生应用," />
 
 
 
@@ -94,22 +94,23 @@
 
 
 
-<meta name="description" content="分布式事务产生的原因 数据库分库分表 微服务化 在微服务架构中，每个服务在用本地事务的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入协调者TM，负责协调参与者RM的行为，并最终决定这些参与者是否把事务进行提交。  随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？ 刚性事务">
-<meta name="keywords" content="架构,微服务">
+<meta name="description" content="我们常常在开发中，需要连接数据库，然而数据库的安全组，一般都是受限制的（为了做网络隔离，只有特定的网段能够访问），比较好的做法就是通过跳板机或者堡垒机来做代理，以下就是如何在liunx-like系统和windows系统中进行代理访问的配置。 下载私钥将堡垒机的SSH私秘，下载并保存在本地的私钥目录，例如 ~/.ssh/jump-server-pri.key ###修改权限chmod 600 ~/.">
+<meta name="keywords" content="云原生应用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="微服务架构：最终一致性 + 事务补偿">
-<meta property="og:url" content="http://yoursite.com/2018/09/01/distributed-tx-solutions/index.html">
+<meta property="og:title" content="数据库代理访问">
+<meta property="og:url" content="http://yoursite.com/2019/04/19/proxy_settingup_for_rds_db/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="分布式事务产生的原因 数据库分库分表 微服务化 在微服务架构中，每个服务在用本地事务的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入协调者TM，负责协调参与者RM的行为，并最终决定这些参与者是否把事务进行提交。  随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？ 刚性事务">
+<meta property="og:description" content="我们常常在开发中，需要连接数据库，然而数据库的安全组，一般都是受限制的（为了做网络隔离，只有特定的网段能够访问），比较好的做法就是通过跳板机或者堡垒机来做代理，以下就是如何在liunx-like系统和windows系统中进行代理访问的配置。 下载私钥将堡垒机的SSH私秘，下载并保存在本地的私钥目录，例如 ~/.ssh/jump-server-pri.key ###修改权限chmod 600 ~/.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-14935184856aa087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-66bd988a7b9406dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-0d5cb7143fe38db6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-12T11:51:42.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-4af947703c7522fd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-7bc12ab65bfff7ea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-f2fc0dca9e6e75b2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-da831950e8c966bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-20T06:53:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微服务架构：最终一致性 + 事务补偿">
-<meta name="twitter:description" content="分布式事务产生的原因 数据库分库分表 微服务化 在微服务架构中，每个服务在用本地事务的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入协调者TM，负责协调参与者RM的行为，并最终决定这些参与者是否把事务进行提交。  随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？ 刚性事务">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-14935184856aa087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="数据库代理访问">
+<meta name="twitter:description" content="我们常常在开发中，需要连接数据库，然而数据库的安全组，一般都是受限制的（为了做网络隔离，只有特定的网段能够访问），比较好的做法就是通过跳板机或者堡垒机来做代理，以下就是如何在liunx-like系统和windows系统中进行代理访问的配置。 下载私钥将堡垒机的SSH私秘，下载并保存在本地的私钥目录，例如 ~/.ssh/jump-server-pri.key ###修改权限chmod 600 ~/.">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-4af947703c7522fd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -138,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/01/distributed-tx-solutions/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/04/19/proxy_settingup_for_rds_db/"/>
 
 
 
 
 
-  <title>微服务架构：最终一致性 + 事务补偿 | 魔镜的技术心经</title>
+  <title>数据库代理访问 | 魔镜的技术心经</title>
   
 
 
@@ -296,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/01/distributed-tx-solutions/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/proxy_settingup_for_rds_db/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -313,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">微服务架构：最终一致性 + 事务补偿</h1>
+          <h1 class="post-title" itemprop="name headline">数据库代理访问</h1>
         
 
         <div class="post-meta">
@@ -325,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-01T23:21:00+08:00">
-                2018-09-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T23:21:00+08:00">
+                2019-04-19
               </time>
             
 
@@ -348,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/微服务/" itemprop="url" rel="index">
-                    <span itemprop="name">微服务</span>
+                  <a href="/categories/云原生应用/" itemprop="url" rel="index">
+                    <span itemprop="name">云原生应用</span>
                   </a>
                 </span>
 
@@ -366,9 +367,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/09/01/distributed-tx-solutions/#comments" itemprop="discussionUrl">
+                <a href="/2019/04/19/proxy_settingup_for_rds_db/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/09/01/distributed-tx-solutions/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2019/04/19/proxy_settingup_for_rds_db/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,50 +397,25 @@
       
 
       
-        <h3 id="分布式事务产生的原因"><a href="#分布式事务产生的原因" class="headerlink" title="分布式事务产生的原因"></a>分布式事务产生的原因</h3><ul>
-<li>数据库分库分表</li>
-<li>微服务化</li>
-<li>在微服务架构中，每个服务在用<code>本地事务</code>的时候，知道自己执行的事务是成功还是失败，但是无法知道其他服务节点的事务执行情况，因此需要引入<code>协调者TM</code>，负责协调<code>参与者RM</code>的行为，并最终决定这些参与者是否把事务进行提交。</li>
-</ul>
-<p>随着微服务架构的流行，让分布式事务问题日益突出， 那么常见的分布式事务解决方案有哪些呢？ 如何理解最终一致性和它的事务补偿机制呢？</p>
-<h3 id="刚性事务-强一致性"><a href="#刚性事务-强一致性" class="headerlink" title="刚性事务 - 强一致性"></a>刚性事务 - 强一致性</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-14935184856aa087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>如上图，这是个标准的全局事务，<code>事务管理器</code>控制着全局事务，管理事务的生命周期，并通过XA协议与<code>资源管理器</code>协调资源；资源管理器负责控制和管理实际的资源 （这里的资源管理器，可以是一个DBMS，或者消息服务管理系统）</p>
-<h4 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h4><p>它是XA用于在全局事务中协调多个资源的机制，常用于<code>事务管理器</code>和<code>资源管理器</code>之间，解决一致性问题，分两阶段：</p>
-<ul>
-<li>提交事务请求</li>
-<li>执行事务请求</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-66bd988a7b9406dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="2PC的问题"><a href="#2PC的问题" class="headerlink" title="2PC的问题"></a>2PC的问题</h4><ul>
-<li>效率低，与本地事务相比，XA协议的系统开销比较大（数据被锁定的时间跨度整个事务，直到全局事务的结束），只有支持XA协议的资源才能参与分布式事务。</li>
-<li>2PC是反可伸缩模式的，在事务处理过程中，参与者需要一直持有资源直到整个事务的结束，这样当业务规模越来越大的情况下，它的局限性就越明显。</li>
-<li>数据不一致，在2pc中的第二阶段时，当TM向RM发送提交请求之后，发生局部的网络异常或者在发送提交请求过程中TM发生故障， 这会导致只有一部分RM收到了提交请求，然后没有收到提交请求的RM不会执行事务的提交，于是整个分布式系统便会出现数据不一致。</li>
-<li>单点故障， 由于TM的重要性，一旦发生故障，整个事务失效</li>
-</ul>
-<h4 id="3PC的改进"><a href="#3PC的改进" class="headerlink" title="3PC的改进"></a>3PC的改进</h4><p>增加了<code>超时机制</code>， 主要解决单点故障问题，并减少资源锁定时间，一旦RM无法及时收到来至TM的信息之后，它会默认执行Commit操作， 而不会一直持有事务资源并处于阻塞状态。但是这种机制同样会导致数据不一致的问题，由于网络的原因，TM发送的回滚动作，没有被RM及时的收到，那么RM等待超时后就执行了提交操作，这样就和收到回滚操作并执行的RM之间存在了数据不一致的情况。</p>
-<h3 id="柔性事务-最终一致性"><a href="#柔性事务-最终一致性" class="headerlink" title="柔性事务 - 最终一致性"></a>柔性事务 - 最终一致性</h3><p>在2008年，eBay公布了基于<code>BASE</code>准则的最终一致性解决方案，它主要采用了消息队列来辅助实现事务控制流程，其核心通过消息队列的方式来异步执行分布式处理的任务，如果事务失败，则可以发起人工重试的纠正流程（比如对账系统，对处于<code>dead letter queue</code>的问题进行处理）</p>
-<h4 id="消息发送一致性"><a href="#消息发送一致性" class="headerlink" title="消息发送一致性"></a>消息发送一致性</h4><p>微服务架构下，需要通过网络进行通信，就自然引入了数据传输的不确定性，也就是CAP原理中的P-分区容错，而这里的<code>消息发送一致性</code>是可靠消息的保证。</p>
-<blockquote>
-<p>生成消息的业务动作与消息发送的一致（e.g： 如果业务操作成功，那么由这个业务操作所产生的消息一定会成功投递出去，否则就丢失消息）</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-0d5cb7143fe38db6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="最终一致性.png"></p>
-<p>如上图，保证消息发送一致性的一般流程如下：</p>
-<ul>
-<li>Producer先把消息发送给消息中间件服务，消息的状态标记为<code>待确认</code>，这个状态并不会被Consumer消费，对于长期<code>待确认</code>的消息，消息中间件会调用Producer的查询接口，查看最新状态，根据结果决定是否删除消息。</li>
-<li>Producer执行完业务操作后，向消息中间件服务，发送确认消息 </li>
-<li>这时消息的状态会被更改为<code>待发送（可发送）</code></li>
-<li>Consumer监听并接收待发送状态的消息，执行业务处理</li>
-<li>Consumer业务处理后，向消息中间件服务发送<code>ACK</code>，确认消息已经收到（消息中间件服务将从队列中删除该消息）</li>
-</ul>
-<p><code>消息的ACK确认流程中，任何一个环节都可能会出问题！</code></p>
-<p>对<code>未ACK</code>的消息，采用按规则重新投递的方式进行处理（很多MQ都提供at least once的投递，持久化和重试机制），一般还会设置<code>重发</code>的次数， 超过次数的消息会进入<code>dead letter queue</code>，等待人工干预或者延后定时处理。</p>
-<h4 id="业务接口的幂等性"><a href="#业务接口的幂等性" class="headerlink" title="业务接口的幂等性"></a>业务接口的幂等性</h4><p>消息的重复发送会导致业务接口出现重复调用的问题，主要原因就是消息没有及时收到ACK确认导致的， 那如何实现幂等性设计呢？</p>
-<p>在实际的业务场景中， 业务接口的幂等性设计，常结合查询操作一起使用，</p>
-<p>比如根据<code>唯一标识</code>查询消息是否被处理过， 或者根据消费日志表，来维护消息消费的记录。</p>
-<h4 id="保证最终一致性的模式"><a href="#保证最终一致性的模式" class="headerlink" title="保证最终一致性的模式"></a>保证最终一致性的模式</h4><ul>
-<li><strong>可查询模式</strong>，任何一个服务操作都提供一个可查询接口，用来向外部输出操作执行的状态，下游Consumer可以通过接口得知服务操作执行的状态，然后根据不同的状态做不同的处理操作（执行或者取消）， 该模式对业务接口有一定侵入性。</li>
-<li><strong>补偿模式</strong>， 有了查询模式，我们能够知道操作的具体状态，如果处于不正常状态，我们可以<code>修正</code>操作中出现的问题，或许是重新执行，或许取消已经完成的操作，通过修复是的整个分布式系统达到最终一致。</li>
-<li><strong>最大努力通知模式</strong>， 在调用支付宝交易接口或微信支付接口时，一般会在回调页面和接口里，解密参数，然后调用系统中更新交易状态相关的服务，将订单更新为付款成功。同时，只有当回调页面中输出了success字样或者标识业务处理成功相应状态码时，支付宝才会停止回调请求。否则，支付宝会每间隔一段时间后，再向客户方发起回调请求，直到输出成功标识为止。</li>
+        <p>我们常常在开发中，需要连接数据库，然而数据库的安全组，一般都是受限制的（为了做网络隔离，只有特定的网段能够访问），比较好的做法就是通过跳板机或者堡垒机来做代理，以下就是如何在liunx-like系统和windows系统中进行代理访问的配置。</p>
+<h3 id="下载私钥"><a href="#下载私钥" class="headerlink" title="下载私钥"></a>下载私钥</h3><p>将堡垒机的SSH私秘，下载并保存在本地的私钥目录，例如 ~/.ssh/jump-server-pri.key</p>
+<p>###修改权限<br>chmod 600 ~/.ssh/jump-server-pri.key</p>
+<h2 id="Linux-like-系统下"><a href="#Linux-like-系统下" class="headerlink" title="Linux-like 系统下"></a>Linux-like 系统下</h2><p>在终端中使用如下的命令, 将在后台建立到数据库的连接通道：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -fNT -L 5432:XXXX.rds.cn-northwest-1.amazonaws.com.cn:5432 -i ~/.ssh/jump-server-pri.key dbuser@52.xx.xx.xx</span><br></pre></td></tr></table></figure>
+<h3 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h3><p>通过如下命令，进行端口监听检查：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -nP -i4TCP:5432 | grep LISTEN</span><br></pre></td></tr></table></figure>
+<p>本地所有访问127.0.0.1:5432的请求，将被转发到对应的RDS服务器。</p>
+<h2 id="Windows-系统下"><a href="#Windows-系统下" class="headerlink" title="Windows 系统下"></a>Windows 系统下</h2><ul>
+<li>下载Putty 软件</li>
+<li>下载ppk的私钥并保存</li>
+<li><p>设置Putty<br><img src="https://upload-images.jianshu.io/upload_images/12636540-4af947703c7522fd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="设置1.jpg"></p>
+</li>
+<li><p>Auth栏目导入ppk私钥<br><img src="https://upload-images.jianshu.io/upload_images/12636540-7bc12ab65bfff7ea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="认证导入.jpg"></p>
+</li>
+<li><p>Tunnels代理渠道设置<br><img src="https://upload-images.jianshu.io/upload_images/12636540-f2fc0dca9e6e75b2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="驱动.jpg"></p>
+</li>
+<li><p>点击Open按钮，建立连接<br><img src="https://upload-images.jianshu.io/upload_images/12636540-da831950e8c966bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="用户登录.jpg"></p>
+</li>
 </ul>
 
       
@@ -458,9 +434,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
-          
-            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+            <a href="/tags/云原生应用/" rel="tag"># 云原生应用</a>
           
         </div>
       
@@ -473,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/26/rxjava-programming/" rel="next" title="异步编程神器RxJava">
-                <i class="fa fa-chevron-left"></i> 异步编程神器RxJava
+              <a href="/2019/02/02/spring-cloud-on-ecs/" rel="next" title="Spring Cloud On ECS">
+                <i class="fa fa-chevron-left"></i> Spring Cloud On ECS
               </a>
             
           </div>
@@ -482,10 +456,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/10/mysql-sql-optimization/" rel="prev" title="Mysql调优：表连接优化">
-                Mysql调优：表连接优化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -676,7 +646,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式事务产生的原因"><span class="nav-number">1.</span> <span class="nav-text">分布式事务产生的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刚性事务-强一致性"><span class="nav-number">2.</span> <span class="nav-text">刚性事务 - 强一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#两阶段提交"><span class="nav-number">2.1.</span> <span class="nav-text">两阶段提交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2PC的问题"><span class="nav-number">2.2.</span> <span class="nav-text">2PC的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3PC的改进"><span class="nav-number">2.3.</span> <span class="nav-text">3PC的改进</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#柔性事务-最终一致性"><span class="nav-number">3.</span> <span class="nav-text">柔性事务 - 最终一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消息发送一致性"><span class="nav-number">3.1.</span> <span class="nav-text">消息发送一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#业务接口的幂等性"><span class="nav-number">3.2.</span> <span class="nav-text">业务接口的幂等性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保证最终一致性的模式"><span class="nav-number">3.3.</span> <span class="nav-text">保证最终一致性的模式</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载私钥"><span class="nav-number">1.</span> <span class="nav-text">下载私钥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-like-系统下"><span class="nav-number"></span> <span class="nav-text">Linux-like 系统下</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地测试"><span class="nav-number">1.</span> <span class="nav-text">本地测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-系统下"><span class="nav-number"></span> <span class="nav-text">Windows 系统下</span></a></div>
             
 
           </div>
@@ -826,9 +796,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/09/01/distributed-tx-solutions/';
-          this.page.identifier = '2018/09/01/distributed-tx-solutions/';
-          this.page.title = '微服务架构：最终一致性 + 事务补偿';
+          this.page.url = 'http://yoursite.com/2019/04/19/proxy_settingup_for_rds_db/';
+          this.page.identifier = '2019/04/19/proxy_settingup_for_rds_db/';
+          this.page.title = '数据库代理访问';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';
