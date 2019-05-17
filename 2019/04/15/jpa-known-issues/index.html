@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="API,架构," />
+  <meta name="keywords" content="领域驱动设计,微服务," />
 
 
 
@@ -94,22 +94,18 @@
 
 
 
-<meta name="description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
-<meta name="keywords" content="API,架构">
+<meta name="description" content="代码规范 包名请用单数 资源名称一般用单数 资源URL用复数 整体变量和方法的命名请使用驼峰规范 使用lombok，取代Getter，Setter和toString 实体可以统一继承AbstractEntity 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator request.XXXDTO用于数据的接收和字段校验, respons">
+<meta name="keywords" content="领域驱动设计,微服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="API异步 &amp; 同步的决策树">
-<meta property="og:url" content="http://yoursite.com/2018/07/29/async-sync-decision-tree/index.html">
+<meta property="og:title" content="DDD（JPA）设计和代码军规">
+<meta property="og:url" content="http://yoursite.com/2019/04/15/jpa-known-issues/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
-<meta property="og:description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
+<meta property="og:description" content="代码规范 包名请用单数 资源名称一般用单数 资源URL用复数 整体变量和方法的命名请使用驼峰规范 使用lombok，取代Getter，Setter和toString 实体可以统一继承AbstractEntity 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator request.XXXDTO用于数据的接收和字段校验, respons">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-ee2173db1814b1da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-dbe99efa996f3098.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-12T11:51:42.000Z">
+<meta property="og:updated_time" content="2019-05-17T06:11:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="API异步 &amp; 同步的决策树">
-<meta name="twitter:description" content="定义 Synchronous: A business transaction done in a single HTTP request/response exchange, which means that the HTTP response provides all data and associated resources resulting from the transaction   A">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="DDD（JPA）设计和代码军规">
+<meta name="twitter:description" content="代码规范 包名请用单数 资源名称一般用单数 资源URL用复数 整体变量和方法的命名请使用驼峰规范 使用lombok，取代Getter，Setter和toString 实体可以统一继承AbstractEntity 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator request.XXXDTO用于数据的接收和字段校验, respons">
 
 
 
@@ -138,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/29/async-sync-decision-tree/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/04/15/jpa-known-issues/"/>
 
 
 
 
 
-  <title>API异步 & 同步的决策树 | 魔镜的技术心经</title>
+  <title>DDD（JPA）设计和代码军规 | 魔镜的技术心经</title>
   
 
 
@@ -296,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/29/async-sync-decision-tree/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/jpa-known-issues/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qin Yulin">
@@ -313,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">API异步 & 同步的决策树</h1>
+          <h1 class="post-title" itemprop="name headline">DDD（JPA）设计和代码军规</h1>
         
 
         <div class="post-meta">
@@ -325,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T20:31:00+08:00">
-                2018-07-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T23:21:00+08:00">
+                2019-04-15
               </time>
             
 
@@ -348,8 +344,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/API/" itemprop="url" rel="index">
-                    <span itemprop="name">API</span>
+                  <a href="/categories/微服务/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
                   </a>
                 </span>
 
@@ -366,9 +362,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/29/async-sync-decision-tree/#comments" itemprop="discussionUrl">
+                <a href="/2019/04/15/jpa-known-issues/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/07/29/async-sync-decision-tree/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2019/04/15/jpa-known-issues/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,53 +392,135 @@
       
 
       
-        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
-<p>Synchronous: A business transaction done in <strong>a single</strong> HTTP request/response exchange, which means that the HTTP response provides <strong>all data</strong> and associated resources resulting from the transaction</p>
-</blockquote>
-<blockquote>
-<p>Asynchronous: A business transaction done <strong>over multiple</strong> HTTP request/response exchanges, which means that the initial HTTP response <strong>does not provide all data</strong> and associated resources resulting from the transaction, such data and resources can be obtained in subsequent interactions.</p>
-</blockquote>
-<h2 id="问题域"><a href="#问题域" class="headerlink" title="问题域"></a>问题域</h2><p><strong>HTTP是一个同步协议：</strong></p>
-<ul>
-<li>客户端和服务器端通过三次握手建立TCP连接。</li>
-<li>客户端发出请求，然后就等待响应。</li>
-<li>服务器端处理请求，并返回相应的状态码和数据。</li>
-<li>客户端完成接收，通过四次挥手，断开连接。</li>
+        <h2 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h2><ul>
+<li>包名请用单数</li>
+<li>资源名称一般用单数</li>
+<li>资源URL用复数</li>
+<li>整体变量和方法的命名请使用<code>驼峰规范</code></li>
+<li>使用lombok，取代Getter，Setter和toString</li>
+<li>实体可以统一继承<code>AbstractEntity</code></li>
+<li>实体的ID生成器，可以使用工具类里面的生成器，<code>SnowflakeIdGenerator</code>或者<code>UUIDGenerator</code></li>
+<li><code>request.XXXDTO</code>用于数据的接收和字段校验, <code>response.XXXDTO</code>可以统一使用<code>JNCResponseDTO</code>封装.</li>
+<li>应用层包括（Rest或者Controller和DTO），业务层包括（Service，实体和资源库接口），基础设施层（具体的技术实现）</li>
 </ul>
-<p>一些情况下，这种同步-blocking的通信方式，并不适合，比如以下的场景：</p>
-<ul>
-<li>复杂的服务编排， 比如一个请求需要通过调用多个downstream系统来更新或者创建一个资源（一个long running的http连接，可能会影响web server的性能或者API gateway的性能）。</li>
-<li>系统的可用性和稳定性， 比如一个后端系统，响应非常的慢，不稳定，甚至不可用（一个请求响应时间长短，直接影响到用户体验和转化率）。</li>
+<h2 id="Restful风格"><a href="#Restful风格" class="headerlink" title="Restful风格"></a>Restful风格</h2><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>动作</th>
+<th>路径</th>
+<th>响应</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建一个标准</td>
+<td>POST</td>
+<td>/api/v1/standards/</td>
+<td>201， 400， 401， 403，5XX</td>
+</tr>
+<tr>
+<td>获取标准列表</td>
+<td>GET</td>
+<td>/api/v1/standards/</td>
+<td>200,  400， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>获取某一个标准详情</td>
+<td>GET</td>
+<td>/api/v1/standards/{standard_id}</td>
+<td>200， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>创建一个政策</td>
+<td>POST</td>
+<td>/api/v1/policies</td>
+<td>201， 400， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>获取政策列表</td>
+<td>GET</td>
+<td>/api/v1/policies</td>
+<td>200， 400， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>搜索一个政策</td>
+<td>GET</td>
+<td>/api/v1/policies?name=XXX&amp;pageSize=20</td>
+<td>200， 400， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>获取一个政策详情</td>
+<td>GET</td>
+<td>/api/v1/policies/{policy_id}</td>
+<td>200， 400， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>报备一个活动</td>
+<td>POST</td>
+<td>/api/v1/activities/</td>
+<td>201， 400， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>获取活动列表</td>
+<td>GET</td>
+<td>/api/v1/activities/</td>
+<td>200， 400， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>修改一个活动</td>
+<td>PUT</td>
+<td>/api/v1/activities/{activity_id}</td>
+<td>200， 400， 401， 403， 5XX</td>
+</tr>
+<tr>
+<td>获取一个活动详情</td>
+<td>GET</td>
+<td>/api/v1/activities/{activity_id}</td>
+<td>200， 400， 401， 403， 5XX</td>
+</tr>
+</tbody>
+</table>
+<h2 id="聚合根原则"><a href="#聚合根原则" class="headerlink" title="聚合根原则"></a>聚合根原则</h2><ul>
+<li>聚合：由一组相关的领域对象组成，需要通过聚合根来进行统一的导航。</li>
+<li>一个聚合根对应的一个资源库。</li>
+<li>聚合根之间的引用必须通过ID，而不是对象引用。</li>
+<li>实体不一定是聚合根，聚合根一定是实体。</li>
 </ul>
-<h2 id="方法域"><a href="#方法域" class="headerlink" title="方法域"></a>方法域</h2><p>异步模式：</p>
-<ol>
-<li><strong>Web hook</strong></li>
-</ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-9cb5832b50a9b302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="web hook.png"></p>
-<ul>
-<li>作为Consumer，需要提供成功或者失败的回调接口</li>
-<li>作为Provider，需要在一次接收到请求的时候，返回202；需要在resource成功或者失败创建后，调用callback接口，通知Consumer； 如果consumer提供的callback接口，返回失败的status code，需要设置一定的retry机制。</li>
+<h2 id="强制检测"><a href="#强制检测" class="headerlink" title="强制检测"></a>强制检测</h2><ul>
+<li>Checkstyle编码风格。</li>
+<li>提交日志检测。e.g:“[Your name] commit messages”。</li>
+<li>测试覆盖率检测， 分支和语句覆盖率大于80%。</li>
+<li>Push前，强制运行mvn clean package。</li>
 </ul>
-<p>2.<strong>Asynchronous Notification</strong></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12636540-ee2173db1814b1da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="async-notification.png"></p>
-<h2 id="什么时候使用异步呢？"><a href="#什么时候使用异步呢？" class="headerlink" title="什么时候使用异步呢？"></a>什么时候使用异步呢？</h2><ol>
-<li><strong>根据HTTP操作来判断</strong>：</li>
-</ol>
-<ul>
-<li>HEAD, OPTIONS, CONNECT, TRACE等方法不能使用异步。</li>
-<li>GET方法通常不使用异步，如果你的GET请求时间太长，可以考虑以下的这些方法改进：e.g： 将你的聚合根拆分为更细粒度的resource、引入分页、引入缓存、将你的GET操作改为POST（比如search）。</li>
-<li>其他的HTTP操作，比如PUT, POST, PATCH和DELETE能够异步就尽量异步。</li>
+<h2 id="JPA-Inheritance-关系"><a href="#JPA-Inheritance-关系" class="headerlink" title="JPA Inheritance 关系"></a>JPA Inheritance 关系</h2><ul>
+<li>@MappedSuperclass: 普通的继承用法，既公用的字段放在父类里面，但是父类不是一张表，每个子类都是一张表.</li>
+<li>@Inheritance(strategy = InheritanceType.SINGLE_TABLE)，单表多态问题，同一张 Table，表示了不同的对象，通过一个字段来区分什么对象。</li>
+<li>多表多态，每一个子类一张表，父类的表拥有所有公用字段。通过 @Inheritance(strategy = InheritanceType.JOINED) 注解完成，父类和子类都是表，有公用的字段在父表里面；</li>
+<li>Object的继承，数据库里面表是每一张分开的，相互独立不影响。通过 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) 注解完成，父类（可以是一张表，也可以不是）和子类都是表，相互之间没有关系。</li>
 </ul>
-<ol start="2">
-<li><strong>根据响应时间来判断</strong>：</li>
-</ol>
+<h2 id="JPA-中-N-1-条-SQL-的问题"><a href="#JPA-中-N-1-条-SQL-的问题" class="headerlink" title="JPA 中 N+1 条 SQL 的问题"></a>JPA 中 N+1 条 SQL 的问题</h2><p>当我们使用@ManyToOne、@OneToMany、@ManyToMany的时候，之后出现 N+1条SQL的问题，<br>解决方案： </p>
 <ul>
-<li>如果你的API操作，大于5秒的时间，就选择异步。</li>
-<li>如果你的API操作，大于1秒并小于5秒，应选择异步。</li>
-<li>如果你的API操作，小于1秒，则可以选择同步。<br>P.S: 关于响应时间，根据用户行为调查，发现用户在等待大约5秒左右，就会失去耐心;  关于HTTP Client的timeout设置，浏览器，客户端JS库，服务器端http client库，他们的timeout设置都不一样，从20s到几分钟都有。</li>
+<li>@EntityGraph</li>
+<li>@Query</li>
 </ul>
-<h2 id="辅助决策树"><a href="#辅助决策树" class="headerlink" title="辅助决策树"></a>辅助决策树</h2><p><img src="https://upload-images.jianshu.io/upload_images/12636540-dbe99efa996f3098.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Sync &amp; Async decision tree .png"></p>
-<h2 id="异步参考资料"><a href="#异步参考资料" class="headerlink" title="异步参考资料"></a>异步参考资料</h2><p>[1]<a href="http://restcookbook.com/Resources/asynchroneous-operations/" target="_blank" rel="noopener">I cannot have my users wait on the API on finish</a><br>[2]<a href="http://jsonapi.org/recommendations/#asynchronous-processing" target="_blank" rel="noopener">http://jsonapi.org/recommendations/#asynchronous-processing</a></p>
+<h2 id="实体关系问题"><a href="#实体关系问题" class="headerlink" title="实体关系问题"></a>实体关系问题</h2><ul>
+<li>双向关系和单一关系，请使用双向关系。</li>
+<li>在使用双向关系的时候，一般由多的一方来做关系的主导，少的一般做mappedBy</li>
+<li>@ManytoOne，@OneToMany配合@JoinColumn使用</li>
+<li>@ManyToMany配合@JoinTable使用</li>
+<li>映射关系请统一写到字段上面，使用lombok取代了所有的getter和setter</li>
+</ul>
+<h2 id="级联策略"><a href="#级联策略" class="headerlink" title="级联策略"></a>级联策略</h2><ul>
+<li>@ManyToMany的时候，一定不能使用CascadeType.ALL</li>
+<li>在不清楚级联策略的时候，不要轻易使用CascadeType.Delete</li>
+<li>当我们使用关联操作的时候，建议大家先配置成cascade = CascadeType.PERSIST，级联更新或者级联删除的时候比较危险，建议考虑清楚后再使用。</li>
+</ul>
+<h2 id="序列化栈溢出问题"><a href="#序列化栈溢出问题" class="headerlink" title="序列化栈溢出问题"></a>序列化栈溢出问题</h2><ul>
+<li>JsonIgnore, 解决循环序列化问题</li>
+<li>ToString(exclude=), 解决ToString循环问题</li>
+<li>JsonIgnoreProperties</li>
+</ul>
 
       
     </div>
@@ -460,9 +538,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/API/" rel="tag"># API</a>
+            <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
           
         </div>
       
@@ -475,8 +553,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/26/api-concpet/" rel="next" title="API到底是什么？">
-                <i class="fa fa-chevron-left"></i> API到底是什么？
+              <a href="/2019/02/02/spring-cloud-on-ecs/" rel="next" title="Spring Cloud On ECS">
+                <i class="fa fa-chevron-left"></i> Spring Cloud On ECS
               </a>
             
           </div>
@@ -485,8 +563,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/04/event-driven-architecture/" rel="prev" title="事件驱动架构">
-                事件驱动架构 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/19/proxy_settingup_for_rds_db/" rel="prev" title="数据库代理访问">
+                数据库代理访问 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -678,7 +756,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题域"><span class="nav-number">2.</span> <span class="nav-text">问题域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法域"><span class="nav-number">3.</span> <span class="nav-text">方法域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候使用异步呢？"><span class="nav-number">4.</span> <span class="nav-text">什么时候使用异步呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助决策树"><span class="nav-number">5.</span> <span class="nav-text">辅助决策树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步参考资料"><span class="nav-number">6.</span> <span class="nav-text">异步参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码规范"><span class="nav-number">1.</span> <span class="nav-text">代码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Restful风格"><span class="nav-number">2.</span> <span class="nav-text">Restful风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合根原则"><span class="nav-number">3.</span> <span class="nav-text">聚合根原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制检测"><span class="nav-number">4.</span> <span class="nav-text">强制检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JPA-Inheritance-关系"><span class="nav-number">5.</span> <span class="nav-text">JPA Inheritance 关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JPA-中-N-1-条-SQL-的问题"><span class="nav-number">6.</span> <span class="nav-text">JPA 中 N+1 条 SQL 的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实体关系问题"><span class="nav-number">7.</span> <span class="nav-text">实体关系问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#级联策略"><span class="nav-number">8.</span> <span class="nav-text">级联策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化栈溢出问题"><span class="nav-number">9.</span> <span class="nav-text">序列化栈溢出问题</span></a></li></ol></div>
             
 
           </div>
@@ -828,9 +906,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/07/29/async-sync-decision-tree/';
-          this.page.identifier = '2018/07/29/async-sync-decision-tree/';
-          this.page.title = 'API异步 & 同步的决策树';
+          this.page.url = 'http://yoursite.com/2019/04/15/jpa-known-issues/';
+          this.page.identifier = '2019/04/15/jpa-known-issues/';
+          this.page.title = 'DDD（JPA）设计和代码军规';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://qinnnyul-github-io.disqus.com/embed.js';

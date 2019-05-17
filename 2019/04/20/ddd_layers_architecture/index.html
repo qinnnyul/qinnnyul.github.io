@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="微服务,领域驱动设计," />
+  <meta name="keywords" content="领域驱动设计,微服务," />
 
 
 
@@ -95,7 +95,7 @@
 
 
 <meta name="description" content="分层架构是运用最为广泛的架构模式， 几乎每个软件系统都需要通过层来隔离不同的关注点，以此应对不同的需要变化，使得这种变化可以独立进行，此外，分层架构模式还可以用于隔离业务复杂度和技术复杂度。 Robert Martin认为单一职责原则就是”一个类应该只有一个引起它变化的原因”，换句话，就是如果有两个引起类变化的原因，就需要分离。单一职责原则可以理解为架构原则， 这里我们考虑的不是类，而且层次，这就">
-<meta name="keywords" content="微服务,领域驱动设计">
+<meta name="keywords" content="领域驱动设计,微服务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="领域驱动设计：分层架构">
 <meta property="og:url" content="http://yoursite.com/2019/04/20/ddd_layers_architecture/index.html">
@@ -104,9 +104,9 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-ca3d33ca679dfeca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-f4b1f69bb10289d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-f346447525c4e805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-87c200f6fa4830db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12636540-c138ddd049eb27f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-04-20T07:35:15.000Z">
+<meta property="og:updated_time" content="2019-05-17T06:08:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="领域驱动设计：分层架构">
 <meta name="twitter:description" content="分层架构是运用最为广泛的架构模式， 几乎每个软件系统都需要通过层来隔离不同的关注点，以此应对不同的需要变化，使得这种变化可以独立进行，此外，分层架构模式还可以用于隔离业务复杂度和技术复杂度。 Robert Martin认为单一职责原则就是”一个类应该只有一个引起它变化的原因”，换句话，就是如果有两个引起类变化的原因，就需要分离。单一职责原则可以理解为架构原则， 这里我们考虑的不是类，而且层次，这就">
@@ -410,7 +410,8 @@
 <p>一般的分层架构都是，上层依赖下层，从上自下的依赖关系， 但是DDD中，我们推荐应该依赖抽象，而不是具体的实现，所以领域层不会直接依赖基础设施层，而是依赖与接口，比如这里的资源库就是接口，然后基础设施层，也依赖于资源库，并通过依赖注入或者控制反转的方式，提供具体的底层实现； 这样很好的做的了技术复杂度和业务复杂度的隔离。即使底层技术实现细节的变更，也不会影响到领域层。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A. 高层次的模块不应该依赖于低层次的模块，它们都应该依赖于抽象。</span><br><span class="line">B. 抽象不应该依赖于具体实现细节，具体实现细节应该依赖于抽象。</span><br><span class="line">- Robert C. Martin</span><br></pre></td></tr></table></figure>
 <p>根据面向对象设计里面的依赖倒置原则，我们可以把它用于架构设计的参考原则，其实就是面向接口的设计原则，就像构建房屋一样，我们需要稳定的地基，那么在编程的世界，抽象和接口是相对稳定的，所以我们的分层架构，可以不像传统的三层架构那样，从上到下的进行依赖。 </p>
-<h3 id="分层架构类比"><a href="#分层架构类比" class="headerlink" title="分层架构类比"></a>分层架构类比</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-f346447525c4e805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>洋葱架构，六边形架构，整洁架构，都是分层架构，他们只是更好的表达出了，领域逻辑处于系统架构核心的位置。</p>
+<h3 id="分层架构类比"><a href="#分层架构类比" class="headerlink" title="分层架构类比"></a>分层架构类比</h3><p><img src="https://upload-images.jianshu.io/upload_images/12636540-87c200f6fa4830db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>洋葱架构，六边形架构，整洁架构，都是分层架构，他们只是更好的表达出了，领域逻辑处于系统架构核心的位置。</p>
 <p>比如，出名的六边形架构，它通过内外两个六边形，进行技术复杂度和业务复杂度的隔离，这里的分层，只是名字不同，和我们上面提高的分层架构能一一对应上，比如领域模型对应领域层，应用程序对应应用层，端口和适配器对应基础设施层。</p>
 <p>同理，整洁架构里面的enties对应领域层，Use cases对应应用层，controllers，gateways和presenters对应我们的基础设施层。</p>
 <p><code>总体来说，他们更好的表达了领域逻辑的核心地位。</code></p>
@@ -418,12 +419,12 @@
 <p><img src="https://upload-images.jianshu.io/upload_images/12636540-c138ddd049eb27f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>各个层的职责和关系如下：</p>
 <ol>
-<li>domain层内要有Repository负责存取对象、factory负责创建对象、domain service负责做领域层大的业务 </li>
-<li>Repository接口要在domain层 </li>
+<li>Domain层内要有Repository负责存取对象、Factory负责创建对象、Domain service负责做领域层大的业务 </li>
+<li>Repository接口要在Domain层 </li>
 <li>Repository的实现要在Domain层外 </li>
 <li>实现依赖Domain层，Domain层不依赖实现 </li>
-<li>application层（包括resource目录和facade目录）在domain层外，不能有业务逻辑，只负责调度不同聚合的domain service。application service 可以依赖domain层的一切对象，但是domain层一切对象都不依赖外部对象 </li>
-<li>不同聚合的domain不在一个包里，彼此的访问通过application service转发</li>
+<li>Application层（包括resource目录和facade目录）在Domain层外，不能有业务逻辑，只负责调度不同聚合的Domain service。Application service 可以依赖domain层的一切对象，但是domain层一切对象都不依赖外部对象 </li>
+<li>不同聚合的Domain不在一个包里，彼此的访问通过Application service转发</li>
 </ol>
 
       
@@ -442,9 +443,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/微服务/" rel="tag"># 微服务</a>
-          
             <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
           
         </div>
       
@@ -549,7 +550,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
