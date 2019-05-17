@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="领域驱动设计,微服务," />
+  <meta name="keywords" content="微服务,领域驱动设计," />
 
 
 
@@ -95,14 +95,14 @@
 
 
 <meta name="description" content="代码规范 包名请用单数 资源名称一般用单数 资源URL用复数 整体变量和方法的命名请使用驼峰规范 使用lombok，取代Getter，Setter和toString 实体可以统一继承AbstractEntity 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator request.XXXDTO用于数据的接收和字段校验, respons">
-<meta name="keywords" content="领域驱动设计,微服务">
+<meta name="keywords" content="微服务,领域驱动设计">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DDD（JPA）设计和代码军规">
 <meta property="og:url" content="http://yoursite.com/2019/04/15/jpa-known-issues/index.html">
 <meta property="og:site_name" content="魔镜的技术心经">
 <meta property="og:description" content="代码规范 包名请用单数 资源名称一般用单数 资源URL用复数 整体变量和方法的命名请使用驼峰规范 使用lombok，取代Getter，Setter和toString 实体可以统一继承AbstractEntity 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator request.XXXDTO用于数据的接收和字段校验, respons">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-17T06:11:26.000Z">
+<meta property="og:updated_time" content="2019-05-17T23:45:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DDD（JPA）设计和代码军规">
 <meta name="twitter:description" content="代码规范 包名请用单数 资源名称一般用单数 资源URL用复数 整体变量和方法的命名请使用驼峰规范 使用lombok，取代Getter，Setter和toString 实体可以统一继承AbstractEntity 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator request.XXXDTO用于数据的接收和字段校验, respons">
@@ -484,7 +484,12 @@
 <h2 id="聚合根原则"><a href="#聚合根原则" class="headerlink" title="聚合根原则"></a>聚合根原则</h2><ul>
 <li>聚合：由一组相关的领域对象组成，需要通过聚合根来进行统一的导航。</li>
 <li>一个聚合根对应的一个资源库。</li>
-<li>聚合根之间的引用必须通过ID，而不是对象引用。</li>
+<li>聚合根之间的引用必须通过ID，而不是对象引用。<ul>
+<li>聚合根之间如果是多对多的关系，可以将其分解为一对多的关系，然后由一方存放一个List<string> ids；</string></li>
+<li>如果要持久化，需要通过一个<code>wrapper</code>来包装成一个对象，然后以Json字符串存储；</li>
+<li>为了更好的实现面向对象，需要实现一个<code>converter</code>,来做对象和Json字符串的互转。</li>
+</ul>
+</li>
 <li>实体不一定是聚合根，聚合根一定是实体。</li>
 </ul>
 <h2 id="强制检测"><a href="#强制检测" class="headerlink" title="强制检测"></a>强制检测</h2><ul>
@@ -501,7 +506,11 @@
 </ul>
 <h2 id="JPA-中-N-1-条-SQL-的问题"><a href="#JPA-中-N-1-条-SQL-的问题" class="headerlink" title="JPA 中 N+1 条 SQL 的问题"></a>JPA 中 N+1 条 SQL 的问题</h2><p>当我们使用@ManyToOne、@OneToMany、@ManyToMany的时候，之后出现 N+1条SQL的问题，<br>解决方案： </p>
 <ul>
-<li>@EntityGraph</li>
+<li>@EntityGraph<ul>
+<li>多个一对多的时候，需要配合Set集合，以及重写Hashcode和equals方法</li>
+<li>在资源库方法上面，增加类似注释： <code>@EntityGraph(attributePaths = {&quot;many1&quot;, &quot;many2&quot;})</code></li>
+</ul>
+</li>
 <li>@Query</li>
 </ul>
 <h2 id="实体关系问题"><a href="#实体关系问题" class="headerlink" title="实体关系问题"></a>实体关系问题</h2><ul>
@@ -538,9 +547,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
-          
             <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/tags/领域驱动设计/" rel="tag"># 领域驱动设计</a>
           
         </div>
       
