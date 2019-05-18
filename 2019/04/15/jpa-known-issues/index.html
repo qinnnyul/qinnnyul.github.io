@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="魔镜的技术心经">
 <meta property="og:description" content="代码规范 包名请用单数 资源名称一般用单数 资源URL用复数 整体变量和方法的命名请使用驼峰规范 使用lombok，取代Getter，Setter和toString 实体可以统一继承AbstractEntity 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator request.XXXDTO用于数据的接收和字段校验, respons">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-17T23:45:31.000Z">
+<meta property="og:updated_time" content="2019-05-18T02:22:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DDD（JPA）设计和代码军规">
 <meta name="twitter:description" content="代码规范 包名请用单数 资源名称一般用单数 资源URL用复数 整体变量和方法的命名请使用驼峰规范 使用lombok，取代Getter，Setter和toString 实体可以统一继承AbstractEntity 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator request.XXXDTO用于数据的接收和字段校验, respons">
@@ -400,7 +400,7 @@
 <li>使用lombok，取代Getter，Setter和toString</li>
 <li>实体可以统一继承<code>AbstractEntity</code></li>
 <li>实体的ID生成器，可以使用工具类里面的生成器，<code>SnowflakeIdGenerator</code>或者<code>UUIDGenerator</code></li>
-<li><code>request.XXXDTO</code>用于数据的接收和字段校验, <code>response.XXXDTO</code>可以统一使用<code>JNCResponseDTO</code>封装.</li>
+<li><code>request.XXXDTO</code>用于数据的接收和字段校验, <code>response.XXXDTO</code>可以统一使用<code>ResponseDTO</code>封装.</li>
 <li>应用层包括（Rest或者Controller和DTO），业务层包括（Service，实体和资源库接口），基础设施层（具体的技术实现）</li>
 </ul>
 <h2 id="Restful风格"><a href="#Restful风格" class="headerlink" title="Restful风格"></a>Restful风格</h2><table>

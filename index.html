@@ -737,7 +737,7 @@ Linux-like 系统下在终端中使用如下的命令, 将在后台建立到数�
 使用lombok，取代Getter，Setter和toString
 实体可以统一继承AbstractEntity
 实体的ID生成器，可以使用工具类里面的生成器，SnowflakeIdGenerator或者UUIDGenerator
-request.XXXDTO用于数据的接收和字段校验, response.XXXDTO可以统一使用JNCResponseDTO封装.
+request.XXXDTO用于数据的接收和字段校验, response.XXXDTO可以统一使用ResponseDTO封装.
 应用层包括（Rest或者Controller和DTO），业务层包括（Service，实体和资源库接口），基础设施层（具体的技术实现）
 
 Restful风格
@@ -766,7 +766,7 @@ GET
 获取某一个标准详情
 GET
 /api/v1/standards/{standard_id}
-200， 401， 403
+200， 401， 403， 5
           ...
           <!--noindex-->
           <div class="post-button text-center">
